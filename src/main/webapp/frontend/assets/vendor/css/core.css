@@ -2522,6 +2522,10 @@ textarea.form-control-lg {
   margin-right: 1rem;
 }
 
+.btn.btn-signup{
+  margin-top: 15% !important;
+}
+
 .btn-check {
   position: absolute;
   clip: rect(0, 0, 0, 0);
@@ -3191,18 +3195,136 @@ textarea.form-control-lg {
 /*****************************/
 .btn-group.btn-user-type{
   display:flex !important;
-  margin-bottom: 3rem !important;
+  margin-bottom: 1rem !important;
   min-height: 9rem;
+  gap: 10px;
 }
+
+.btn-group.btn-user-type > .btn-outline-primary{
+  border-radius: 10rem !important;
+  min-height: 10rem;
+  min-width: 10rem;
+  aspect-ratio: 1;
+  border-color: #ffffff !important;
+  text-align: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position:center;
+
+}
+
+.label-group{
+  display: flex !important;
+  margin-bottom: 7rem;
+  justify-content: space-evenly;
+  align-content: center;
+}
+.text-labels{
+  display: inline-flex;
+  font-size: medium;
+  width: 30%;
+  font-weight: bold;
+  color: #697a8d;
+  justify-content: center;
+}
+
+/****************************/
+/**********INPUT**********/
+/****************************/
+.input-container{
+  display: flex !important;
+  height: 48px !important;
+  /*margin-bottom: 3% !important;*/
+}
+.address-input-group{
+  width: 100%;
+}
+.address-input{
+  margin-bottom: 0.1rem !important;
+}
+.address-container{
+  width: auto;
+  display: inline-flex;
+}
+/*.input-container > .address-input{*/
+/*  width: 40% !important;*/
+/*  display: grid;*/
+/*}*/
+
+/*btn-check:checked.btn-outline-primary.btn-sticker{*/
+/*  background-color: #1e2c3c !important;*/
+/*  border-color: #1e2c3c;*/
+/*}*/
+
+/*.btn-group > .btn-check:checked.btn-sticker{*/
+/*  box-shadow: 10px 5px 5px #1e2c3c !important;*/
+
+/*}*/
 
 /*.btn.btn-outline-primary{*/
 /*  background-image: ;*/
 /*}*/
+.class-list{
+  width: 100%;
+  display: contents;
+  margin-bottom: 1rem;
+}
+
+.class-name-list{
+  width: 100%;
+  display: flex;
+  margin-bottom: 1rem;
+}
+.class-text-container{
+  width:100%;
+}
+
+.main-navbar#layout-navbar{
+
+}
+
+.navbar-nav.navbar-menus{
+  flex-direction : row !important;
+  gap: 30px;
+  margin-left: 1rem;
+}
+
+#btnAdd{
+  aspect-ratio: 1;
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+
+#btn-code{
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  width: 25%;
+}
+
+.btn-11{
+    aspect-ratio: 1;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+.btn-round{
+  padding: 0;
+  width: calc(1.5rem + 2px);
+  height: calc(1.5rem + 2px);
+  display: inline-flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;  aspect-ratio: 1;
+  font-size: 1.3rem;
+  background-color: #ff3f3f !important;
+  border-color: #ff3f3f !important;
+}
+
 
 .btn-container{
   display: flex;
-  margin-top: 5rem;
-  margin-bottom: 0.8rem;
+  margin-top: 15%;
+  margin-bottom: 1%;
 }
 
 
@@ -3329,6 +3451,15 @@ textarea.form-control-lg {
   pointer-events: none;
   cursor: default;
 }
+
+/*************************/
+/*************************/
+/*************************/
+.nav-tab-size{
+  /*height: 30px;*/
+  /*width: 30px;*/
+}
+
 
 .nav-tabs {
   border-bottom: 1px solid #fff;
@@ -7253,6 +7384,12 @@ button:focus {
   z-index: 1;
   position: relative;
 }
+
+.nav-align-top > .nav.nav-pills{
+  margin-top: -5%;
+
+}
+
 .nav-align-top > .nav .nav-link:hover, .nav-align-top > .nav .nav-link:focus,
 .nav-align-top > div > .nav .nav-link:hover,
 .nav-align-top > div > .nav .nav-link:focus,
@@ -9673,6 +9810,9 @@ button.list-group-item-gray.active {
 
 .mb-4 {
   margin-bottom: 1.5rem !important;
+}
+.mv-4{
+  margin-bottom: 2% !important;
 }
 
 .mb-5 {
@@ -15750,7 +15890,7 @@ html:not(.layout-footer-fixed) .content-wrapper {
 
 .app-brand.big-brand{
   margin-top: 6% !important;
-  margin-bottom: 20% !important;
+  margin-bottom: 17% !important;
 }
 
 .app-brand-text.big-brand-text{

@@ -6,4 +6,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class UserController {
 
+    //@TODO LOGIN
+//    ADMIN
+
+//    FAMILY
+
+    //@TODO SINGUP
+//    ADMIN
+
+
+    //@TODO PROFILE SETTING
+
 }

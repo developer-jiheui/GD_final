@@ -72,6 +72,9 @@
   />
 
   <!-- Page CSS -->
+<%--  <link rel="stylesheet" href="${contextPath}/frontend/assets/css/addition.css" />--%>
+  <!-- Page -->
+  <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/css/pages/page-misc.css" />
 
   <!-- Helpers -->
   <script src="${contextPath}/frontend/assets/vendor/js/helpers.js"></script>

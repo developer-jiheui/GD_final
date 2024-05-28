@@ -1,17 +1,38 @@
 /************************* 테이블 *************************/
 -- 회원정보 테이블 (관리자와 회원 모두 통합)
 CREATE TABLE USER_T (
-                        USER_NO            NUMBER             NOT NULL,
+                        USER_ID            NUMBER             NOT NULL,
                         USER_NAME          VARCHAR2(60 BYTE),
                         EMAIL              VARCHAR2(100 BYTE) NOT NULL UNIQUE,
                         PW                 VARCHAR2(64 BYTE),
                         USER_TYPE          NUMBER,     --관리자일경우 0, 일반회원은 1, 선생님들 2
-                        AGREED_EVENT       NUMBER
-
+/* 비밀번호수정일 */        PW_MODIFY_DT DATE,
+/* 가입일 */              SIGNUP_DT DATE,
+                        CONSTRAINT PK_USER PRIMARY KEY (USER_ID)
 );
 
+
+
+CREATE TABLE DAYCARE(
+    CENTER_ID NUMBER NOT NULL,
+    CENTER_ADDRESS VARCHAR2(100BYTE) NOT NULL,
+    CONSTRAINT PK_DAYCARE PRIMARY KEY (CENTER_ID)
+);
+
+CREATE TABLE CLASSES(
+    CLASS_ID NUMBER NOT NULL,
+    CLASS_NAME VARCHAR(20BYTE),
+    START_TIME VARCHAR2(60BYTE),
+    END_TIME VARCHAR2(60BYTE),
+    CATEGORY NUMBER, --0은 주말 1은 평일
+    TEACHER_ID NUMBER NOT NULL,
+    CONSTRAINT PK_CLASS PRIMARY KEY (CLASS_ID),
+    CONSTRAINT FK_TEACHER FOREIGN KEY (TEACHER_ID) REFERENCES USER_T(USER_ID)
+);
+
+
 CREATE TABLE PARENT_DETAIL(
-                            USER_NO             NUMBER NOT NULL,
+                            USER_ID             NUMBER NOT NULL,
                             USER_TYPE           NUMBER NOT NULL,
                             PARENT_NAME         VARCHAR2(100 BYTE),
                             DOG_NAME          VARCHAR2(100 BYTE),
@@ -26,9 +47,9 @@ CREATE TABLE PARENT_DETAIL(
                             INSTAGRAM_URL      VARCHAR2(100 BYTE),
                             LINKEDIN_URL       VARCHAR2(100 BYTE),
                             GITHUB_URL         VARCHAR2(100 BYTE),
-                            CONSTRAINT PK_USER PRIMARY KEY(USER_NO),
-                            CONSTRAINT  FK_USER FOREIGN KEY (USER_NO)
-                            REFERENCES USER_T (USER_NO) ON DELETE CASCADE,
+                            CONSTRAINT PK_F_USER PRIMARY KEY(USER_ID),
+                            CONSTRAINT  FK_USER FOREIGN KEY (USER_ID)
+                            REFERENCES USER_T (USER_ID) ON DELETE CASCADE,
                             CONSTRAINT FK_NAME FOREIGN KEY (DOG_NAME)
                             REFERENCES  USER_T (USER_NAME) ON DELETE CASCADE
 );
@@ -55,5 +76,24 @@ CREATE TABLE LEFT_USER_T (
                              LEAVE_DT      DATE,
                              CONSTRAINT PK_LEAVE_USER PRIMARY KEY(LEFT_USER_NO)
 );
+
+/*******************SEQUENCE***********************/
+CREATE SEQUENCE USER_ID NOCACHE;
+CREATE SEQUENCE CENTER_ID NOCACHE;
+CREATE SEQUENCE CLASS_ID NOCACHE;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

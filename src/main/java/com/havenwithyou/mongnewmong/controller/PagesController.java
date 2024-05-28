@@ -44,9 +44,12 @@ public class PagesController {
     @GetMapping(value = {"/register"})
     public String signUp(){ return "pages/frontpages/register";}
 
+    @GetMapping(value = {"/start"})
+    public String start(){ return "pages/frontpages/start";}
+
+
     @GetMapping(value = {"/userType"})
     public String userType(){ return "pages/frontpages/userType";}
-
 
     @GetMapping(value = {"/forgotPw"})
     public String pw(){ return "pages/frontpages/pw";}
