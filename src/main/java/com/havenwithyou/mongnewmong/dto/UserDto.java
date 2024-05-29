@@ -12,7 +12,7 @@ import java.sql.Date;
 @Data
 @Builder
 public class UserDto {
-  private int userNo, userType;
+  private int userid, userType;
   private String email, pw, name, phoneNo;
   private Date pwModifyDt, signupDt;
 }

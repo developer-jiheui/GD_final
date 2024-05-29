@@ -31,28 +31,28 @@ CREATE TABLE CLASSES(
 );
 
 
-CREATE TABLE PARENT_DETAIL(
-                            USER_ID             NUMBER NOT NULL,
-                            USER_TYPE           NUMBER NOT NULL,
-                            PARENT_NAME         VARCHAR2(100 BYTE),
-                            DOG_NAME          VARCHAR2(100 BYTE),
-                            PW_MODIFY_DT       DATE,
-                            SIGNUP_DT          DATE,
-                            ADDRESS           VARCHAR2(100 BYTE),
-                            PHONE_NUM          VARCHAR2(20 BYTE),
-                            EMERGENCY_NUM          VARCHAR2(20 BYTE),
-                            BIO                VARCHAR2(300 BYTE),
-                            JOB_TITLE          VARCHAR2(100 BYTE),
-                            BIRTHDAY           DATE,
-                            INSTAGRAM_URL      VARCHAR2(100 BYTE),
-                            LINKEDIN_URL       VARCHAR2(100 BYTE),
-                            GITHUB_URL         VARCHAR2(100 BYTE),
-                            CONSTRAINT PK_F_USER PRIMARY KEY(USER_ID),
-                            CONSTRAINT  FK_USER FOREIGN KEY (USER_ID)
-                            REFERENCES USER_T (USER_ID) ON DELETE CASCADE,
-                            CONSTRAINT FK_NAME FOREIGN KEY (DOG_NAME)
-                            REFERENCES  USER_T (USER_NAME) ON DELETE CASCADE
-);
+-- CREATE TABLE PARENT_DETAIL(
+--                             USER_ID             NUMBER NOT NULL,
+--                             USER_TYPE           NUMBER NOT NULL,
+--                             PARENT_NAME         VARCHAR2(100 BYTE),
+--                             DOG_NAME          VARCHAR2(100 BYTE),
+--                             PW_MODIFY_DT       DATE,
+--                             SIGNUP_DT          DATE,
+--                             ADDRESS           VARCHAR2(100 BYTE),
+--                             PHONE_NUM          VARCHAR2(20 BYTE),
+--                             EMERGENCY_NUM          VARCHAR2(20 BYTE),
+--                             BIO                VARCHAR2(300 BYTE),
+--                             JOB_TITLE          VARCHAR2(100 BYTE),
+--                             BIRTHDAY           DATE,
+--                             INSTAGRAM_URL      VARCHAR2(100 BYTE),
+--                             LINKEDIN_URL       VARCHAR2(100 BYTE),
+--                             GITHUB_URL         VARCHAR2(100 BYTE),
+--                             CONSTRAINT PK_F_USER PRIMARY KEY(USER_ID),
+--                             CONSTRAINT  FK_USER FOREIGN KEY (USER_ID)
+--                             REFERENCES USER_T (USER_ID) ON DELETE CASCADE,
+--                             CONSTRAINT FK_NAME FOREIGN KEY (DOG_NAME)
+--                             REFERENCES  USER_T (USER_NAME) ON DELETE CASCADE
+-- );
 
 
 -- 접속 기록

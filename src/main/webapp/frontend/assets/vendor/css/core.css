@@ -3297,10 +3297,15 @@ textarea.form-control-lg {
 
 #btn-code{
   margin-bottom: 1rem;
-  font-size: 2rem;
+  font-size: 1rem;
   width: 25%;
 }
 
+#btn-username{
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  width: 35%;
+}
 .btn-11{
     aspect-ratio: 1;
     margin-bottom: 1rem;
@@ -3323,7 +3328,7 @@ textarea.form-control-lg {
 
 .btn-container{
   display: flex;
-  margin-top: 15%;
+  margin-top: 10%;
   margin-bottom: 1%;
 }
 
@@ -7803,6 +7808,20 @@ button:focus {
   font-size: 1.125rem;
 }
 
+/*****************************/
+/*************MSG*************/
+/*****************************/
+.form-label-sm.error-msg{
+  margin-left: 0.5rem;
+  color: var(--bs-red) !important;
+}
+
+.form-label-sm.ok-msg{
+  margin-left: 0.5rem;
+  color: var(--bs-blue)!important;
+}
+
+
 .form-label,
 .col-form-label {
   font-size: 0.75rem;
@@ -9799,8 +9818,12 @@ button.list-group-item-gray.active {
   margin-bottom: 0.25rem !important;
 }
 
+.mv-2 {
+  margin-bottom: 0.5rem !important;
+}
+
+
 .mb-2 {
-  margin-top: 1.5rem !important;
   margin-bottom: 0.5rem !important;
 }
 
@@ -15889,8 +15912,8 @@ html:not(.layout-footer-fixed) .content-wrapper {
 /**********************/
 
 .app-brand.big-brand{
-  margin-top: 6% !important;
-  margin-bottom: 17% !important;
+  margin-top: 0% !important;
+  margin-bottom: 12% !important;
 }
 
 .app-brand-text.big-brand-text{

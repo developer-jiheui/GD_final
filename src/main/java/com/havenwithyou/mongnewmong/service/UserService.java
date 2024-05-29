@@ -25,4 +25,5 @@ public interface UserService {
     boolean hasUser(UserDto user);
     void naverSignin(HttpServletRequest request, UserDto naverUser);
 
+    ResponseEntity<Map<String, Object>> checkUserName(Map<String, Object> params);
 }

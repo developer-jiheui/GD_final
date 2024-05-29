@@ -126,18 +126,20 @@
 
                                     <%------------------------------SECOND TAB--%>
                                     <div class="tab-pane fade" id="tab2" role="tabpanel">
-                                        <h4 class="mb-2">기본 정보 입력️</h4>
+                                        <h4 class="mv-2">기본 정보 입력️</h4>
                                         <p class="mb-4">본인의 이름과 휴대전화번호 및 이메일을 모두 정확히 입력해주세요</p>
                                         <div class="mb-3">
-                                            <label for="username" class="form-label">이름</label>
+                                            <label for="name" class="form-label">이름</label>
                                             <input
                                                     type="text"
                                                     class="form-control"
-                                                    id="username"
-                                                    name="username"
+                                                    id="name"
+                                                    name="name"
                                                     placeholder="이름"
-                                                    autofocus1
+                                                    autofocus
                                             />
+                                            <div class="error-msg form-label-sm" id="msg-name"></div>
+
                                         </div>
                                         <div class="mb-3">
 
@@ -147,12 +149,13 @@
                                                 <input type="text" id="phone" name="phone"
                                                        class="form-control" placeholder="010-1234-5678">
                                             </div>
+                                            <div class="error-msg form-label-sm" id="msg-phoneNum"></div>
                                         </div>
                                         <div class="mb-3">
                                             <label for="email" class="form-label">이메일</label>
                                             <input type="text" class="form-control" id="email" name="email"
                                                    placeholder="Enter your email"/>
-                                            <div class="col-sm-3" id="msg-email"></div>
+                                            <div class="error-msg form-label-sm" id="msg-email"></div>
                                         </div>
 
                                         <div class="btn-container" role="tablist">
@@ -179,25 +182,25 @@
                                             <div class="input-container">
                                                 <div class="address-input-group" style="display: inline-flex;">
                                                     <div class="mb-3" style="width: 70%">
-                                                        <input type="text" id="item" class="form-control"
-                                                               placeholder="반 이름을 입력해주세요" class="add">
+                                                        <input type="text" id="code" name="code" class="form-control"
+                                                               placeholder="인증번호는 10분동안 유효합니다">
                                                     </div>
                                                     <div class="mb-3" style="width: 5%"></div>
                                                     <button id="btn-code" type="button"
                                                             class="btn btn-icon btn-primary btn-square">
-                                                            인증하기
+                                                        인증하기
                                                     </button>
                                                 </div>
                                             </div>
 
-                                            <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    id="code"
-                                                    name="code"
-                                                    placeholder="인증번호는 10분동안 유효합니다"
-                                                    autofocus
-                                            />
+                                            <%--                                            <input--%>
+                                            <%--                                                    type="text"--%>
+                                            <%--                                                    class="form-control"--%>
+                                            <%--                                                    id="code"--%>
+                                            <%--                                                    name="code"--%>
+                                            <%--                                                    placeholder="인증번호는 10분동안 유효합니다"--%>
+                                            <%--                                                    autofocus--%>
+                                            <%--                                            />--%>
                                         </div>
                                         <br>
                                         <br>
@@ -220,46 +223,60 @@
                                         <p class="mb-4">멈무에 로그인 시 사용할 아이디와 비밀번호를 입력해주세요</p>
 
                                         <form id="ss" class="mb-3" action="user/register" method="POST">
-                                            <div class="mb-3">
-                                                <label for="userid" class="form-label">아이디</label>
+                                            <label for="username" class="form-label">아이디</label>
+                                            <div class="address-input-group" style="display: inline-flex;">
+                                                <div class="mb-3" style="width: 60%">
                                                 <input
                                                         type="text"
                                                         class="form-control"
-                                                        id="userid"
-                                                        name="userid"
+                                                        id="username"
+                                                        name="username"
                                                         placeholder="Enter your username"
                                                         autofocus
-                                                />
+
+                                                /><div class="error-msg form-label-sm" id="msg-username"></div>
+                                                </div>
+                                                <div class="mb-3" style="width: 5%"></div>
+                                                <button id="btn-username" type="button"
+                                                        class="btn btn-icon btn-primary btn-square">
+                                                    중복확인
+                                                </button>
                                             </div>
+
+
                                             <div class="mb-3 form-password-toggle">
-                                                <label class="form-label" for="password">비밀번호</label>
+                                                <label class="form-label" for="pw">비밀번호</label>
                                                 <div class="input-group input-group-merge">
                                                     <input
                                                             type="password"
-                                                            id="password"
+                                                            id="pw"
                                                             class="form-control"
-                                                            name="password"
+                                                            name="pw"
                                                             placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                                             aria-describedby="password"
                                                     />
                                                     <span class="input-group-text cursor-pointer"><i
                                                             class="bx bx-hide"></i></span>
                                                 </div>
+                                                <div class="error-msg form-label-sm" id="msg-pw"></div>
+
                                             </div>
                                             <div class="mb-3 form-password-toggle">
-                                                <label class="form-label" for="pwcheck">비밀번호 재입력</label>
+                                                <label class="form-label" for="pw2">비밀번호 재입력</label>
                                                 <div class="input-group input-group-merge">
                                                     <input
                                                             type="password"
-                                                            id="pwcheck"
+                                                            id="pw2"
                                                             class="form-control"
-                                                            name="pwcheck"
+                                                            name="pw2"
                                                             placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                                             aria-describedby="password"
                                                     />
                                                     <span class="input-group-text cursor-pointer"><i
                                                             class="bx bx-hide"></i></span>
                                                 </div>
+                                                <div class="error-msg form-label-sm" id="msg-pw2"></div>
+
                                             </div>
                                             <br>
                                             <div class="btn-container" role="tablist">
@@ -268,8 +285,13 @@
                                                 >이전
                                                 </button>
                                                 <div style="width: 15%"></div>
-                                                <a href="${contextPath}/pages/start" type="button"
-                                                   class="btn btn-primary d-grid" style="width: 50%">다음</a>
+                                                <button id="btn-register-user" class="btn btn-primary d-grid"
+                                                        style="width: 50%"
+                                                        type="button"
+                                                >가입하기
+                                                </button>
+                                                <%--                                                <a href="${contextPath}/pages/start" type="button"--%>
+                                                <%--                                                   class="btn btn-primary d-grid" style="width: 50%">다음</a>--%>
                                             </div>
 
                                         </form>

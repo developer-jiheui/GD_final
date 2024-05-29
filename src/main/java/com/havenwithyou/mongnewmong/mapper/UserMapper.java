@@ -11,7 +11,10 @@ public interface UserMapper {
   UserDto getUserByMap(Map<String, Object> map);
   LeaveUserDto getLeaveUserByMap(Map<String, Object> map);
   int insertUser(UserDto user);
-  int deleteUser(int userNo);
+  int deleteUser(int userid);
   int insertAccessHistory(Map<String, Object> map);
   int updateAccessHistory(String sessionId);
+  int checkEmail(String email);
+
+  UserDto getDupUserName(Map<String, Object> params);
 }

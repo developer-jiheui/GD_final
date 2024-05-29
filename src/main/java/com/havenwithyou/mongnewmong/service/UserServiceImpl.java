@@ -21,7 +21,6 @@ import java.util.Map;
 @Service
 public class UserServiceImpl implements UserService{
 
-    @Autowired
     private final UserMapper userMapper;
     private final MyJavaMailUtils myJavaMailUtils;
     private final MyFileUtils myFileUtils;
@@ -35,10 +34,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public ResponseEntity<Map<String, Object>> checkEmail(Map<String, Object> params) {
-        boolean enableEmail = userMapper.getUserByMap(params) == null
-                && userMapper.getLeaveUserByMap(params) == null;
-        return new ResponseEntity<>(Map.of("enableEmail", enableEmail)
-                , HttpStatus.OK);    }
+        return new ResponseEntity<>(Map.of("enableEmail", userMapper.getUserByMap(params) == null)
+                , HttpStatus.OK);
+    }
 
     @Override
     public ResponseEntity<Map<String, Object>> sendCode(Map<String, Object> params) {
@@ -63,13 +61,14 @@ public class UserServiceImpl implements UserService{
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
-        String phone = request.getParameter("phone");
-        int userType = Integer.parseInt(request.getParameter("userType"));
+        //String phone = request.getParameter("phone");
+        //int userType = Integer.parseInt(request.getParameter("userType"));
 
         UserDto userDto = UserDto.builder()
                 .name(username).pw(password)
-                .email(email).phoneNo(phone)
-                .userType(userType).build();
+                .email(email)
+                //.phoneNo(phone)
+                .userType(0).build();
 
         int insertCount = userMapper.insertUser(userDto);
 
@@ -155,5 +154,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public void naverSignin(HttpServletRequest request, UserDto naverUser) {
 
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> checkUserName(Map<String, Object> params) {
+        return new ResponseEntity<>(Map.of("availableUserName", userMapper.getDupUserName(params) == null)
+                , HttpStatus.OK);
     }
 }
