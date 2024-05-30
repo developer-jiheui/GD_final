@@ -13,6 +13,6 @@ import java.sql.Date;
 @Builder
 public class UserDto {
   private int userid, userType;
-  private String email, pw, name, phoneNo;
+  private String email, pw, name,username, phoneNo, avatar;
   private Date pwModifyDt, signupDt;
 }

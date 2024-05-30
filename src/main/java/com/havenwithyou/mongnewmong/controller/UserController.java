@@ -38,8 +38,8 @@ public class UserController {
 
 
     @PostMapping("/signup.do")
-    public void signup(HttpServletRequest request, HttpServletResponse response) {
-        userService.signup(request, response);
+    public void signup(@RequestBody Map<String, Object> params,HttpServletResponse response,HttpServletRequest request ) {
+        userService.signup(params ,request, response);
     }
     //@TODO LOGIN
 //    ADMIN

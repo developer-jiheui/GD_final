@@ -28,7 +28,7 @@
                             </a>
                         </div>
                         <!-- /Logo -->
-                        <h4 class="mb-2">환영합니다 원장님❣️</h4>
+                        <h4 class="mb-2">환영합니다 ${sessionScope.user.name} 원장님❣️</h4>
                         <p class="mb-4">유치원의 기본 정보를 입력해주세요!</p>
 
                         <form id="formDaycare" class="mb-3" action="${contextPath}/admin/register" method="POST">
@@ -119,14 +119,14 @@
                             </div>
                             <div class="mb-3">
                                 <label for="dean_name" class="form-label">원장님 이름</label>
-                                <input type="text" class="form-control" id="dean_name" name="dean_name" placeholder="원장이름" readonly />
+                                <input type="text" class="form-control" id="dean_name" name="dean_name" placeholder="${sessionScope.user.name}" readonly />
                             </div>
                             <div class="mb-3">
                                 <label for="phone_no" class="form-label">유치원 전화번호</label>
                                 <input type="text" class="form-control" id="phone_no" name="phone_no" placeholder="010-0000-0000" />
                             </div>
 
-                            <button id="admin-submit" class="btn btn-primary d-grid w-100 btn-signup">다음 단계로 </button>
+                            <button id="admin-submit" type="button" class="btn btn-primary d-grid w-100 btn-signup">다음 단계로 </button>
                         </form>
 
                         <script>

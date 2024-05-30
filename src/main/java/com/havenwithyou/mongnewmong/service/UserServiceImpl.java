@@ -57,18 +57,32 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void signup(HttpServletRequest request, HttpServletResponse response) {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
-        //String phone = request.getParameter("phone");
+    public void signup(Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
+        String name = MySecurityUtils.getPreventXss((String) params.get("name"));
+        String email = (String) params.get("email");
+        String phone = (String) params.get("phone");
+        String username = (String) params.get("username");
+        String password = MySecurityUtils.getSha256((String) params.get("pw"));
         //int userType = Integer.parseInt(request.getParameter("userType"));
 
+        System.out.println("-------------------------------------");
+        System.out.println("-------------------------------------");
+        System.out.println("-------------------------------------");
+        System.out.println(name);
+        System.out.println(email);
+        System.out.println(phone);
+        System.out.println(username);
+        System.out.println(password);
+        System.out.println("-------------------------------------");
+        System.out.println("-------------------------------------");
+        System.out.println("-------------------------------------");
+
+
         UserDto userDto = UserDto.builder()
-                .name(username).pw(password)
-                .email(email)
-                //.phoneNo(phone)
-                .userType(0).build();
+                .name(name).email(email).phoneNo(phone)
+                .username(username).pw(password)
+                .username(username)
+                .userType(-1).build();
 
         int insertCount = userMapper.insertUser(userDto);
 
@@ -82,17 +96,17 @@ public class UserServiceImpl implements UserService{
             if(insertCount == 1) {
 
                 // Sign In 및 접속 기록을 위한 Map
-                Map<String, Object> params = Map.of("email", email
+                Map<String, Object> historyMap = Map.of("email", email
                         , "pw", password
                         , "ip", request.getRemoteAddr()
                         , "userAgent", request.getHeader("User-Agent")
                         , "sessionId", request.getSession().getId());
 
                 // Sign In (세션에 user 저장하기)
-                request.getSession().setAttribute("user", userMapper.getUserByMap(params));
+                request.getSession().setAttribute("user", userMapper.getUserByMap(historyMap));
 
                 // 접속 기록 남기기
-                userMapper.insertAccessHistory(params);
+                userMapper.insertAccessHistory(historyMap);
 
                 out.println("alert('회원 가입되었습니다.');");
                 out.println("location.href='" + request.getContextPath() + "/main.page';");

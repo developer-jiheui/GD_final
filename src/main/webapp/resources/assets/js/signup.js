@@ -12,8 +12,8 @@ let inpEmail;
 
 let userName ;
 let pw;
-
-
+let mobile;
+let uName;
 const nextButtons = Object.values(document.getElementsByClassName('btn-next'));
 
 nextButtons.forEach(nextButton => {
@@ -66,24 +66,38 @@ function fnBefore(e) {
 //     fnCheckCode()
 // })
 
-
+//------------------SIGN UP-------------------------
 document.getElementById('btn-register-user').addEventListener('click',(e)=>{
     fnCheckPassword();
     fnConfirmPassword();
     if(passwordCheck&&passwordConfirm){
+        console.log('--------------------------------');
+        console.log('--------------------------------');
+        console.log(uName);
+        console.log(inpEmail.value);
+        console.log(mobile);
+        console.log(userName.value);
+        console.log(pw);
+        console.log('--------------------------------');
+        console.log('--------------------------------');
+
         fetch( '/user/signup.do', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                'username': userName.value,
+                'name' : uName,
                 'email' : inpEmail.value,
-                'pw' : pw,
+                'phone' :mobile,
+                'username': userName.value,
+                'pw' : pw
+
             })
         })
             .then(response => response.json())  //
             .then(resData => {
+                location.href = '/pages/userType';
 
             })
     }
@@ -141,13 +155,14 @@ const fnCheckName = () => {
         msgName.innerHTML = '이름을 비울 수 없습니다';
     } else {
         nameCheck= true;
+        uName = name.value;
         msgName.innerHTML = '';
     }
 }
 
 const fnCheckMobile = () => {
     let inpMobile = document.getElementById('phone');
-    let mobile = inpMobile.value;
+    mobile = inpMobile.value;
     mobile = mobile.replaceAll(/[^0-9]/g, '');
     mobileCheck = /^010[0-9]{8}$/.test(mobile);
     let msgMobile = document.getElementById('msg-phoneNum');
@@ -183,6 +198,7 @@ const fnCheckUserName=()=>{
 
 }
 
+document.getElementById('btn-username').addEventListener('click',fnCheckUserName);
 
 const fnCheckEmail = ()=>{
 
@@ -313,22 +329,21 @@ const fnGetByte = (str) => {
 // }
 
 
-// document.getElementById('pw').addEventListener('keyup', fnCheckPassword);
-// document.getElementById('pw2').addEventListener('blur', fnConfirmPassword);
-// document.getElementById('userName').addEventListener('blur', fnCheckName);
-// document.getElementById('phone').addEventListener('blur', fnCheckMobile);
-// fnSignup();
+document.getElementById('pw').addEventListener('keyup', fnCheckPassword);
+document.getElementById('pw2').addEventListener('blur', fnConfirmPassword);
+document.getElementById('username').addEventListener('blur', fnCheckName);
+document.getElementById('phone').addEventListener('blur', fnCheckMobile);
+//fnSignup();
 
-const fnfetchJson = (url, method, sendData, callback) => {
+// const fnfetchJson = (url, method, sendData, callback) => {
+//
+//     fetch(getContextPath() + url, {
+//         method: method,
+//         headers: { 'Content-Type': 'application/json' },
+//         body: sendData
+//     })
+//         .then(response => response.json())
+//         .then(resData => callback(resData))
+// }
 
-    fetch(getContextPath() + url, {
-        method: method,
-        headers: { 'Content-Type': 'application/json' },
-        body: sendData
-    })
-        .then(response => response.json())
-        .then(resData => callback(resData))
-}
-
-document.getElementById('btn-username').addEventListener('click',fnCheckUserName);
 
