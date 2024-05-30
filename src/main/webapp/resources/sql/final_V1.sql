@@ -6,22 +6,28 @@ CREATE SEQUENCE CLASS_SEQ NOCACHE;
 CREATE SEQUENCE  LEFT_USER_SEQ NOCACHE;
 /************************* 테이블 *************************/
 -- 회원정보 테이블 (관리자와 회원 모두 통합)
-CREATE TABLE USER_T (
-                        USER_ID            NUMBER             NOT NULL,
-                        NAME               VARCHAR2(60 BYTE)  NOT NULL,
-                        EMAIL              VARCHAR2(100 BYTE) NOT NULL UNIQUE,
-                        PHONE_NUM          VARCHAR2(20 BYTE)  NOT NULL,
-                        USER_NAME          VARCHAR2(60BYTE)   NOT NULL,
-                        PW                 VARCHAR2(64 BYTE)  NOT NULL,
-                        USER_TYPE          NUMBER,     --관리자일경우 0, 일반회원은 1, 선생님들 2
-/* 비밀번호수정일 */        PW_MODIFY_DT       DATE,
-/* 가입일 */              SIGNUP_DT          DATE,
-                        AVATAR VARCHAR2(200 BYTE),
-                        CONSTRAINT PK_USER PRIMARY KEY (USER_ID)
+CREATE TABLE USER_T
+(
+    USER_ID      NUMBER             NOT NULL,
+    NAME         VARCHAR2(60 BYTE)  NOT NULL,
+    EMAIL        VARCHAR2(100 BYTE) NOT NULL UNIQUE,
+    PHONE_NUM    VARCHAR2(20 BYTE)  NOT NULL,
+    USER_NAME    VARCHAR2(60 BYTE)  NOT NULL,
+    PW           VARCHAR2(64 BYTE)  NOT NULL,
+    USER_TYPE    NUMBER, --관리자일경우 0, 일반회원은 1, 선생님들 2
+/* 비밀번호수정일 */
+    PW_MODIFY_DT DATE,
+/* 가입일 */
+    SIGNUP_DT    DATE,
+    AVATAR       VARCHAR2(200 BYTE),
+    CENTER_ID    NUMBER             NOT NULL,
+    CONSTRAINT PK_USER PRIMARY KEY (USER_ID),
+        CONSTRAINT FK_CENTER FOREIGN KEY (CENTER_ID) REFERENCES DAYCARE(CENTER_ID)
 );
 
+
+
 DROP SEQUENCE CENTER_SEQ;
-DROP TABLE DAYCARE_ADMINS;
 DROP TABLE DAYCARE;
 
 CREATE TABLE DAYCARE(
@@ -32,13 +38,13 @@ CREATE TABLE DAYCARE(
                         CONSTRAINT PK_DAYCARE PRIMARY KEY (CENTER_ID)
 );
 
-CREATE TABLE DAYCARE_ADMINS(
-                               CENTER_ID NUMBER NOT NULL,
-                               USER_ID   NUMBER NOT NULL,
-                               CONSTRAINT PK_CENTER_ADMIN PRIMARY KEY (CENTER_ID, USER_ID),
-                               CONSTRAINT FK_CENTER FOREIGN KEY (CENTER_ID) REFERENCES DAYCARE(CENTER_ID),
-                               CONSTRAINT FK_ADMIN FOREIGN KEY (USER_ID) REFERENCES  USER_T(USER_ID)
-);
+-- CREATE TABLE DAYCARE_ADMINS(
+--                                CENTER_ID NUMBER NOT NULL,
+--                                USER_ID   NUMBER NOT NULL,
+--                                CONSTRAINT PK_CENTER_ADMIN PRIMARY KEY (CENTER_ID, USER_ID),
+--                                CONSTRAINT FK_CENTER FOREIGN KEY (CENTER_ID) REFERENCES DAYCARE(CENTER_ID),
+--                                CONSTRAINT FK_ADMIN FOREIGN KEY (USER_ID) REFERENCES  USER_T(USER_ID)
+-- );
 
 
 

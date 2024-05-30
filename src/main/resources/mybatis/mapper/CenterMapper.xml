@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.havenwithyou.mongnewmong.mapper.CenterMapper">
+
+    <resultMap id="centerMap" type="CenterDto">
+<!--        <id  property="centerid"	 column="USER_ID" />-->
+<!--        <id  property="name"	 column="NAME" />-->
+<!--        <id  property="email"	 column="EMAIL" />-->
+<!--        <id  property="phoneNo"   column="PHONE_NUM"/>-->
+<!--        <id  property="username"	 column="USER_NAME" />-->
+<!--        <id  property="pw"	 column="PW" />-->
+<!--        <id  property="userType"	 column="USER_TYPE" />-->
+<!--        <id  property="pwModifyDt"	 column="PW_MODIFY_DT" />-->
+<!--        <id  property="signupDt"	 column="SIGNUP_DT" />-->
+<!--        <id property="avatar" column="AVATAR"/>-->
+    </resultMap>
+
+
+    <insert id="insertCenter">
+        INSERT INTO DAYCARE (
+          CENTER_ID
+        , CENTER_ADDRESS
+        , CENTER_NAME
+        , CENTER_PHONE_NUM
+        ) VALUES (
+        CENTER_SEQ.NEXTVAL
+        , #{email}
+        , #{ip}
+        , #{userAgent}
+        , #{sessionId}
+        , CURRENT_DATE
+        , NULL
+        )
+    </insert>
+</mapper>
