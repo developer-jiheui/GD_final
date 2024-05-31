@@ -18,7 +18,7 @@ const nextButtons = Object.values(document.getElementsByClassName('btn-next'));
 
 nextButtons.forEach(nextButton => {
     nextButton.addEventListener('click', (e) => {
-        e.preventDefault();
+       // e.preventDefault();
         currTabNo = parseInt(e.target.parentElement.parentElement.id.slice(-1));
         nextTabNo = currTabNo + 1;
 
@@ -47,7 +47,6 @@ function fnNext() {
     beforeTabNo = currTabNo;
     currTabNo = nextTabNo;
     nextTabNo++;
-    console.log("currtabno "+ currTabNo)
 
 }
 function fnBefore(e) {
@@ -70,16 +69,9 @@ function fnBefore(e) {
 document.getElementById('btn-register-user').addEventListener('click',(e)=>{
     fnCheckPassword();
     fnConfirmPassword();
+    console.log("72: ",passwordCheck,passwordConfirm);
     if(passwordCheck&&passwordConfirm){
-        console.log('--------------------------------');
-        console.log('--------------------------------');
-        console.log(uName);
-        console.log(inpEmail.value);
-        console.log(mobile);
-        console.log(userName.value);
-        console.log(pw);
-        console.log('--------------------------------');
-        console.log('--------------------------------');
+
 
         fetch( '/user/signup.do', {
             method: 'POST',
@@ -104,12 +96,23 @@ document.getElementById('btn-register-user').addEventListener('click',(e)=>{
 })
 
 const fnSignup =(e) =>{
-    fnCheckName();
-    fnCheckMobile();
-    fnCheckEmail();
+    let inpName;
+    let inpMobile;
+    let inpEmail;
+    do {
+        inpName = document.getElementById('name');
+        inpMobile = document.getElementById('phone');
+        inpEmail = document.getElementById('email');
+        fnCheckName(inpName);
+        fnCheckMobile(inpMobile);
+        fnCheckEmail(inpEmail);
 
-    if(nameCheck&&mobileCheck&&emailCheck){
-        e.preventDefault();
+    console.log("102: ",nameCheck,mobileCheck,emailCheck);
+
+    }while(fnCheckName(inpName)&&fnCheckMobile(inpMobile)&&fnCheckEmail(inpEmail)!== true)
+
+    if(fnCheckName(inpName)&&fnCheckMobile(inpMobile)&&fnCheckEmail(inpEmail)){
+        //  e.preventDefault();
         fetch( '/user/sendCode.do', {
             method: 'POST',
             headers: {
@@ -136,17 +139,19 @@ const fnSignup =(e) =>{
                         alert('인증되지 않았습니다.');
                     }
                 })
+                fnNext();
+
             })
 
-        fnNext();
     }
+
 
 
 }
 
-const fnCheckName = () => {
-    let name = document.getElementById('name');
-    let userNameByte = fnGetByte(name.value);
+const fnCheckName = (inpName) => {
+
+    let userNameByte = fnGetByte(inpName.value);
     let msgName = document.getElementById('msg-name');
 
     if (userNameByte >= 100) {
@@ -155,13 +160,13 @@ const fnCheckName = () => {
         msgName.innerHTML = '이름을 비울 수 없습니다';
     } else {
         nameCheck= true;
-        uName = name.value;
+        uName = inpName.value;
         msgName.innerHTML = '';
     }
+    return nameCheck;
 }
 
-const fnCheckMobile = () => {
-    let inpMobile = document.getElementById('phone');
+const fnCheckMobile = (inpMobile) => {
     mobile = inpMobile.value;
     mobile = mobile.replaceAll(/[^0-9]/g, '');
     mobileCheck = /^010[0-9]{8}$/.test(mobile);
@@ -171,6 +176,43 @@ const fnCheckMobile = () => {
     } else {
         msgMobile.innerHTML = '휴대전화 번호를 확인하세요.';
     }
+    return mobileCheck;
+}
+
+const fnCheckEmail = (inpEmail)=>{
+
+
+    let regEmail = /^[A-Za-z0-9-_]{2,}@[A-Za-z0-9]+(\.[A-Za-z]{2,6}){1,2}$/;
+    let msgEmail = document.getElementById('msg-email');
+    if(!regEmail.test(inpEmail.value)){
+        msgEmail.innerHTML='이메일 형식이 올바르지 않습니다.';
+        emailCheck = false;
+        return;
+    }
+
+    fetch( '/user/checkEmail.do', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            'email': inpEmail.value
+        })
+    })
+        .then(response => response.json())  // .then( (response) => { return response.json(); } )
+        .then(resData => {
+            if(resData.enableEmail){
+                document.getElementById('msg-email').innerHTML = '';
+                emailCheck=true;
+                return emailCheck;
+            } else {
+                document.getElementById('msg-email').innerHTML = '이미 사용 중인 이메일입니다.';
+                emailCheck = false;
+                return emailCheck;
+            }
+        })
+
+    return emailCheck;
 }
 
 const fnCheckUserName=()=>{
@@ -200,37 +242,7 @@ const fnCheckUserName=()=>{
 
 document.getElementById('btn-username').addEventListener('click',fnCheckUserName);
 
-const fnCheckEmail = ()=>{
 
-    inpEmail = document.getElementById('email');
-    let regEmail = /^[A-Za-z0-9-_]{2,}@[A-Za-z0-9]+(\.[A-Za-z]{2,6}){1,2}$/;
-    let msgEmail = document.getElementById('msg-email');
-    if(!regEmail.test(inpEmail.value)){
-        msgEmail.innerHTML='이메일 형식이 올바르지 않습니다.';
-        emailCheck = false;
-        return;
-    }
-
-    fetch( '/user/checkEmail.do', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            'email': inpEmail.value
-        })
-    })
-        .then(response => response.json())  // .then( (response) => { return response.json(); } )
-        .then(resData => {
-            if(resData.enableEmail){
-                document.getElementById('msg-email').innerHTML = '';
-                emailCheck=true;
-            } else {
-                document.getElementById('msg-email').innerHTML = '이미 사용 중인 이메일입니다.';
-                emailCheck = false;
-            }
-        })
-}
 
 const fnCheckCode = () => {
 
