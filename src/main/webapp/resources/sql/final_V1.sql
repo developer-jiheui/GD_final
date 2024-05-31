@@ -20,12 +20,10 @@ CREATE TABLE USER_T
 /* 가입일 */
     SIGNUP_DT    DATE,
     AVATAR       VARCHAR2(200 BYTE),
-    CENTER_ID    NUMBER             NOT NULL,
+    CENTER_ID    NUMBER,
     CONSTRAINT PK_USER PRIMARY KEY (USER_ID),
         CONSTRAINT FK_CENTER FOREIGN KEY (CENTER_ID) REFERENCES DAYCARE(CENTER_ID)
 );
-
-
 
 DROP SEQUENCE CENTER_SEQ;
 DROP TABLE DAYCARE;
@@ -35,16 +33,11 @@ CREATE TABLE DAYCARE(
                         CENTER_ADDRESS VARCHAR2(100 BYTE) NOT NULL,
                         CENTER_NAME     VARCHAR2(60 BYTE),
                         CENTER_PHONE_NUM    VARCHAR2(20 BYTE),
+                        CENTER_LOGO VARCHAR2(200 BYTE),
+                        --DATE MAYBE?--
                         CONSTRAINT PK_DAYCARE PRIMARY KEY (CENTER_ID)
 );
 
--- CREATE TABLE DAYCARE_ADMINS(
---                                CENTER_ID NUMBER NOT NULL,
---                                USER_ID   NUMBER NOT NULL,
---                                CONSTRAINT PK_CENTER_ADMIN PRIMARY KEY (CENTER_ID, USER_ID),
---                                CONSTRAINT FK_CENTER FOREIGN KEY (CENTER_ID) REFERENCES DAYCARE(CENTER_ID),
---                                CONSTRAINT FK_ADMIN FOREIGN KEY (USER_ID) REFERENCES  USER_T(USER_ID)
--- );
 
 
 
@@ -59,6 +52,13 @@ CREATE TABLE CLASSES(
     CONSTRAINT FK_TEACHER FOREIGN KEY (TEACHER_ID) REFERENCES USER_T(USER_ID)
 );
 
+-- CREATE TABLE DAYCARE_ADMINS(
+--                                CENTER_ID NUMBER NOT NULL,
+--                                USER_ID   NUMBER NOT NULL,
+--                                CONSTRAINT PK_CENTER_ADMIN PRIMARY KEY (CENTER_ID, USER_ID),
+--                                CONSTRAINT FK_CENTER FOREIGN KEY (CENTER_ID) REFERENCES DAYCARE(CENTER_ID),
+--                                CONSTRAINT FK_ADMIN FOREIGN KEY (USER_ID) REFERENCES  USER_T(USER_ID)
+-- );
 
 -- CREATE TABLE PARENT_DETAIL(
 --                             USER_ID             NUMBER NOT NULL,

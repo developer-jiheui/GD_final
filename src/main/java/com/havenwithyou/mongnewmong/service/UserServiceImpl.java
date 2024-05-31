@@ -65,18 +65,6 @@ public class UserServiceImpl implements UserService{
         String password = MySecurityUtils.getSha256((String) params.get("pw"));
         //int userType = Integer.parseInt(request.getParameter("userType"));
 
-        System.out.println("-------------------------------------");
-        System.out.println("-------------------------------------");
-        System.out.println("-------------------------------------");
-        System.out.println(name);
-        System.out.println(email);
-        System.out.println(phone);
-        System.out.println(username);
-        System.out.println(password);
-        System.out.println("-------------------------------------");
-        System.out.println("-------------------------------------");
-        System.out.println("-------------------------------------");
-
 
         UserDto userDto = UserDto.builder()
                 .name(name).email(email).phoneNo(phone)

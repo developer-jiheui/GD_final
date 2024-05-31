@@ -6,32 +6,31 @@
 <mapper namespace="com.havenwithyou.mongnewmong.mapper.CenterMapper">
 
     <resultMap id="centerMap" type="CenterDto">
-<!--        <id  property="centerid"	 column="USER_ID" />-->
-<!--        <id  property="name"	 column="NAME" />-->
-<!--        <id  property="email"	 column="EMAIL" />-->
-<!--        <id  property="phoneNo"   column="PHONE_NUM"/>-->
-<!--        <id  property="username"	 column="USER_NAME" />-->
-<!--        <id  property="pw"	 column="PW" />-->
-<!--        <id  property="userType"	 column="USER_TYPE" />-->
-<!--        <id  property="pwModifyDt"	 column="PW_MODIFY_DT" />-->
-<!--        <id  property="signupDt"	 column="SIGNUP_DT" />-->
-<!--        <id property="avatar" column="AVATAR"/>-->
+        <id  property="id"	 column="CENTER_ID" />
+        <id  property="address"	 column="CENTER_ADDRESS" />
+        <id  property="name"	 column="CENTER_NAME" />
+        <id  property="phoneNo"   column="CENTER_PHONE_NUM"/>
+        <id property="logo" column="CENTER_LOGO"/>
     </resultMap>
 
 
-    <insert id="insertCenter">
+    <insert id="insertCenter"
+            parameterType="CenterDto">
+        <selectKey order="AFTER" keyProperty="id" resultType="int">
+            SELECT CENTER_SEQ.CURRVAL
+            FROM DUAL
+        </selectKey>
         INSERT INTO DAYCARE (
           CENTER_ID
         , CENTER_ADDRESS
         , CENTER_NAME
         , CENTER_PHONE_NUM
+        , CENTER_LOGO
         ) VALUES (
         CENTER_SEQ.NEXTVAL
-        , #{email}
-        , #{ip}
-        , #{userAgent}
-        , #{sessionId}
-        , CURRENT_DATE
+        , #{address}
+        , #{name}
+        , #{phoneNo}
         , NULL
         )
     </insert>

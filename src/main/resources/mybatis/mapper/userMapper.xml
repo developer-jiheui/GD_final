@@ -15,6 +15,7 @@
     <id  property="userType"	 column="USER_TYPE" />
     <id  property="pwModifyDt"	 column="PW_MODIFY_DT" />
     <id  property="signupDt"	 column="SIGNUP_DT" />
+    <id  property="centerid"     column="CENTER_ID"/>
     <id property="avatar" column="AVATAR"/>
   </resultMap>
 

@@ -19,25 +19,25 @@
                     <div class="card-body" style="padding: 8% 10%;">
                         <!-- Logo -->
                         <div class="app-brand justify-content-center big-brand">
-                            <a href="${contextPath}/pages/home" class="app-brand-link gap-2">
+                            <span class="app-brand-link gap-2">
                   <span class="app-brand-logo demo">
                                   <img src="${contextPath}/frontend/assets/img/favicon/favicon.ico" style="height: 30px; width: 30px;">
 
                   </span>
                                 <span class="app-brand-text demo text-body fw-bolder big-brand-text">MUMMOO</span>
-                            </a>
+                            </span>
                         </div>
                         <!-- /Logo -->
                         <h4 class="mb-2">환영합니다 ${sessionScope.user.name} 원장님❣️</h4>
                         <p class="mb-4">유치원의 기본 정보를 입력해주세요!</p>
 
-                        <form id="formDaycare" class="mb-3" action="${contextPath}/admin/register" method="POST">
+                        <form id="formDaycare" class="mb-3" action="${contextPath}/admin/register.do" method="POST">
                             <label for="zonecode" class="form-label">유치원 주소</label>
                             <div class="input-container">
                                 <div class="address-input-group">
                                     <div class="mb-3 address-container">
 
-                                        <input type="text"  class="form-control" id="zonecode" onclick="execDaumPostcode()" placeholder="우편번호" readonly>
+                                        <input type="text"  class="form-control" id="zonecode" name="zipcode" onclick="execDaumPostcode()" placeholder="우편번호" readonly>
 
                                     </div>
                                     <div class="mb-3 address-container">
@@ -51,9 +51,9 @@
                                 </div>
                             </div>
                             <div class="mb-3 address-input-group" style="margin-bottom: 5% !important;">
-                                <input type="text"  class="form-control address-input" id="address" placeholder="주소" readonly>
-                                <input type="text" class="form-control address-input" id="detailAddress" placeholder="상세주소">
-                                <input type="text" class="form-control address-input" id="extraAddress" placeholder="참고항목">
+                                <input type="text"  class="form-control address-input" id="address" name="address" placeholder="주소" readonly>
+                                <input type="text" class="form-control address-input" id="detailAddress" name="detailAddress" placeholder="상세주소">
+                                <input type="text" class="form-control address-input" id="extraAddress" name="extraAddress" placeholder="참고항목">
 
                             </div>
 
@@ -122,8 +122,8 @@
                                 <input type="text" class="form-control" id="dean_name" name="dean_name" placeholder="${sessionScope.user.name}" readonly />
                             </div>
                             <div class="mb-3">
-                                <label for="phone_no" class="form-label">유치원 전화번호</label>
-                                <input type="text" class="form-control" id="phone_no" name="phone_no" placeholder="010-0000-0000" />
+                                <label for="phoneNo" class="form-label">유치원 전화번호</label>
+                                <input type="text" class="form-control" id="phoneNo" name="phoneNo" placeholder="010-0000-0000" />
                             </div>
 
                             <button id="admin-submit" type="button" class="btn btn-primary d-grid w-100 btn-signup">다음 단계로 </button>
