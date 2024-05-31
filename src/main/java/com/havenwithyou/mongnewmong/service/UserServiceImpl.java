@@ -74,32 +74,16 @@ public class UserServiceImpl implements UserService{
 
         int insertCount = userMapper.insertUser(userDto);
 
+        PrintWriter out = null;
+
         try {
+            out = response.getWriter();
+            response.setContentType("text/html; charset=UTF-8");
 
-            response.setContentType("text/html;charset=utf-8");
-            PrintWriter out = response.getWriter();
-            out.println("<script>");
-
-            // 가입 성공
-            if(insertCount == 1) {
-
-                // Sign In 및 접속 기록을 위한 Map
-                Map<String, Object> historyMap = Map.of("email", email
-                        , "pw", password
-                        , "ip", request.getRemoteAddr()
-                        , "userAgent", request.getHeader("User-Agent")
-                        , "sessionId", request.getSession().getId());
-
-                // Sign In (세션에 user 저장하기)
-                request.getSession().setAttribute("user", userMapper.getUserByMap(historyMap));
-
-                // 접속 기록 남기기
-                userMapper.insertAccessHistory(historyMap);
-
+            if (insertCount == 1){
+                System.out.println("화원가입 성공");
                 out.println("alert('회원 가입되었습니다.');");
                 out.println("location.href='" + request.getContextPath() + "/main.page';");
-
-                // 가입 실패
             } else {
                 out.println("alert('회원 가입이 실패했습니다.');");
                 out.println("history.back();");
@@ -109,7 +93,47 @@ public class UserServiceImpl implements UserService{
             out.close();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            out.flush();
+            out.close();
         }
+
+//        try {
+//
+//            response.setContentType("text/html;charset=utf-8");
+//            PrintWriter out = response.getWriter();
+//            out.println("<script>");
+
+//            // 가입 성공
+//            if(insertCount == 1) {
+//
+//                // Sign In 및 접속 기록을 위한 Map
+//                Map<String, Object> historyMap = Map.of("email", email
+//                        , "pw", password
+//                        , "ip", request.getRemoteAddr()
+//                        , "userAgent", request.getHeader("User-Agent")
+//                        , "sessionId", request.getSession().getId());
+//
+//                // Sign In (세션에 user 저장하기)
+//                request.getSession().setAttribute("user", userMapper.getUserByMap(params));
+//
+//                // 접속 기록 남기기
+//                userMapper.insertAccessHistory(historyMap);
+//
+//                out.println("alert('회원 가입되었습니다.');");
+//                out.println("location.href='" + request.getContextPath() + "/main.page';");
+//
+//                // 가입 실패
+//            } else {
+//                out.println("alert('회원 가입이 실패했습니다.');");
+//                out.println("history.back();");
+//            }
+//            out.println("</script>");
+//            out.flush();
+//            out.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
     }
 

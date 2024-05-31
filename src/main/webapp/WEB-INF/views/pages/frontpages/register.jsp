@@ -117,7 +117,7 @@
                                             >이전
                                             </a>
                                             <div style="width: 15%"></div>
-                                            <button class="btn btn-primary d-grid btn-next" style="width: 50%"
+                                            <button id="btn1" class="btn btn-primary d-grid btn-next" style="width: 50%"
                                                     type="button"
                                             >다음
                                             </button>
@@ -164,7 +164,7 @@
                                             >이전
                                             </button>
                                             <div style="width: 15%"></div>
-                                            <button class="btn btn-primary d-grid btn-next" style="width: 50%"
+                                            <button id="btn2" class="btn btn-primary d-grid btn-next " style="width: 50%"
                                                     type="button"
                                             >다음
                                             </button>
@@ -210,7 +210,7 @@
                                             >이전
                                             </button>
                                             <div style="width: 15%"></div>
-                                            <button class="btn btn-primary d-grid btn-next" style="width: 50%"
+                                            <button id="btn3" class="btn btn-primary d-grid btn-next " style="width: 50%"
                                                     type="button"
                                             >다음
                                             </button>
