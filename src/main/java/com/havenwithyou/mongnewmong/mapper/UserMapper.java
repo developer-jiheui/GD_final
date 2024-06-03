@@ -17,4 +17,6 @@ public interface UserMapper {
   int checkEmail(String email);
 
   UserDto getDupUserName(Map<String, Object> params);
+
+  void updateProfilePhoto(Map<String, String> uploadPath);
 }

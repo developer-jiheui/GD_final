@@ -32,10 +32,11 @@
   <select id="getUserByMap"
           parameterType="Map"
           resultType="UserDto">
-    SELECT USER_ID, NAME, EMAIL, PHONE_NUM, USER_NAME, USER_TYPE, PW_MODIFY_DT, SIGNUP_DT
+    SELECT USER_ID, NAME, EMAIL, PHONE_NUM, USER_NAME, USER_TYPE, PW_MODIFY_DT, SIGNUP_DT, AVATAR
       FROM USER_T
     <where>
       <if test="email!=null">EMAIL = #{email}</if>
+      <if test="username!=null">USER_NAME = #{username}</if>
       <if test="pw!=null">AND PW = #{pw}</if>
     </where>
   </select>
@@ -93,7 +94,7 @@
           parameterType="Map">
     INSERT INTO ACCESS_HISTORY_T (
         ACCESS_HISTORY_ID
-      , EMAIL
+      , USER_ID
       , IP
       , USER_AGENT
       , SESSION_ID
@@ -101,7 +102,7 @@
       , SIGNOUT_DT
     ) VALUES (
         ACCESS_HISTORY_SEQ.NEXTVAL
-      , #{email}
+      , #{userid}
       , #{ip}
       , #{userAgent}
       , #{sessionId}
@@ -116,4 +117,10 @@
      WHERE SESSION_ID = #{sessionId} 
   </update>
 
+  <update id="updateProfilePhoto"
+          parameterType="Map">
+    UPDATE USER_T
+    SET AVATAR = #{uploadPath}
+    WHERE USER_ID = #{userid}
+  </update>
 </mapper>

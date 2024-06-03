@@ -4,13 +4,14 @@ import com.havenwithyou.mongnewmong.dto.UserDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.Map;
 
 public interface UserService {
     ResponseEntity<Map<String, Object>> checkEmail(Map<String, Object> params);
     ResponseEntity<Map<String, Object>> sendCode(Map<String, Object> params);
-    void signup(Map<String, Object> params,HttpServletRequest request,HttpServletResponse response);
+    ResponseEntity<Map<String, Object>> signup(Map<String, Object> params,HttpServletRequest request,HttpServletResponse response);
     void leave(HttpServletRequest request, HttpServletResponse response);
 
     // 로그인 및 로그아웃
@@ -26,4 +27,6 @@ public interface UserService {
     void naverSignin(HttpServletRequest request, UserDto naverUser);
 
     ResponseEntity<Map<String, Object>> checkUserName(Map<String, Object> params);
+
+    boolean registerProfilePhoto(MultipartHttpServletRequest multipartHttpServletRequest);
 }

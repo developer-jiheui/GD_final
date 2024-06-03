@@ -5,12 +5,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.Map;
 
@@ -38,10 +40,14 @@ public class UserController {
 
 
     @PostMapping("/signup.do")
-    public void signup(@RequestBody Map<String, Object> params,HttpServletResponse response,HttpServletRequest request ) {
-        userService.signup(params ,request, response);
+    public ResponseEntity<Map<String, Object>> signup(@RequestBody Map<String, Object> params,HttpServletResponse response,HttpServletRequest request ) {
+       return userService.signup(params ,request, response);
     }
     //@TODO LOGIN
+    @PostMapping("/signin.do")
+    public void signin(HttpServletRequest request, HttpServletResponse response) {
+        userService.signin(request, response);
+    }
 //    ADMIN
 
 //    FAMILY
@@ -51,5 +57,17 @@ public class UserController {
 
 
     //@TODO PROFILE SETTING
+    @GetMapping("profile")
+    public String profile() {return "pages/user/profile";}
 
+    @GetMapping("settings")
+    public String settings() {return "pages/user/settings";}
+
+    @GetMapping("billing")
+    public String billing() {return "pages/user/billing";}
+
+    @PostMapping("/editProfilePhoto")
+    public ResponseEntity<Map<String, Object>> editProfilePhoto(MultipartHttpServletRequest multipartRequest) {
+        return new ResponseEntity<Map<String,Object>>( Map.of("isRegisterPhoto", userService.registerProfilePhoto(multipartRequest)), HttpStatus.OK );
+    }
 }

@@ -87,15 +87,15 @@ CREATE TABLE CLASSES(
 -- 접속 기록
 CREATE TABLE ACCESS_HISTORY_T (
                                   ACCESS_HISTORY_ID NUMBER             NOT NULL,
-                                  EMAIL             VARCHAR2(100 BYTE),
+                                  USER_ID           NUMBER             NOT NULL,
                                   IP                VARCHAR2(50 BYTE),
                                   USER_AGENT        VARCHAR2(150 BYTE),
                                   SESSION_ID        VARCHAR2(32 BYTE),
                                   SIGNIN_DT         DATE,
                                   SIGNOUT_DT        DATE,
                                   CONSTRAINT PK_ACCESS_HISTORY PRIMARY KEY(ACCESS_HISTORY_ID),
-                                  CONSTRAINT FK_ACCESS_HISTORY_USER FOREIGN KEY(EMAIL)
-                                      REFERENCES USER_T(EMAIL) ON DELETE CASCADE
+                                  CONSTRAINT FK_ACCESS_HISTORY_USER FOREIGN KEY(USER_ID)
+                                      REFERENCES USER_T(USER_ID) ON DELETE CASCADE
 );
 
 -- 탈퇴 회원

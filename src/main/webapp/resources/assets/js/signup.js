@@ -117,9 +117,15 @@ btn4.addEventListener('click', (e) => {
         }, body: JSON.stringify({
             'name': uName, 'email': inpEmail.value, 'phone': mobile, 'username': userName.value, 'pw': pw
         })
-    }).then(response=> response.text())
-        .then(data=>{
-            console.log(data);
+    }).then(response=> response.json())
+        .then(resData=>{
+            if(resData.insertCount === 1) {
+                alert('화원가입이 되었습니다');
+                location.href ="/pages/userType";
+            } else {
+                alert('회원가입이 실패했습니다.');
+                location.href ="/pages/register";
+            }
         })
 
 

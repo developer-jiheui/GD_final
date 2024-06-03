@@ -33,7 +33,10 @@ public class AdminController {
     }
 
 
-   @PostMapping("/classInfo")
+    @GetMapping("/home")
     public String adminHome(){return "userType/admin/pages/home";}
+
+   @PostMapping("/classInfo")
+    public String adminRegistered(){return "userType/admin/pages/home";}
 
 }
