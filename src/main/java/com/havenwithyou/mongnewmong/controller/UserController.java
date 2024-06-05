@@ -70,4 +70,18 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> editProfilePhoto(MultipartHttpServletRequest multipartRequest) {
         return new ResponseEntity<Map<String,Object>>( Map.of("isRegisterPhoto", userService.registerProfilePhoto(multipartRequest)), HttpStatus.OK );
     }
+
+    @PostMapping("/userType")
+    public String userType(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println(userService.setType(request, response));
+
+        return "pages/register/"+userService.setType(request, response);
+    }
+
+    @GetMapping("/furtherRegister")
+    public String furtherRegister(HttpServletRequest request, HttpServletResponse response) {
+        request.setAttribute("page","/WEB-INF/views/pages/register/user/registerDog.jsp");
+        return "pages/register/furtherRegister";
+    }
+
 }

@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="contextPath" value="<%=request.getContextPath()%>"/>
 <c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
+
 <html
         lang="en"
         class="light-style layout-menu-fixed"
@@ -21,6 +22,7 @@
 
   <title>멈무멈멈
   </title>
+  <script src="${contextPath}/frontend/assets/vendor/libs/jquery/jquery.js"></script>
 
   <meta name="description" content="" />
 

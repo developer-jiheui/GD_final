@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class MvcController {
-    @GetMapping(value={"/", "/main.page"})
+    @GetMapping(value={"/", "/main.page","home"})
     public String welcome() {
         return "pages/home";
     }

@@ -29239,3 +29239,8 @@ a.bg-vimeo:hover, a.bg-vimeo:focus {
     display : flex;
     justify-content: center;
 }
+
+.custom-option-check .checked{
+    border-width: 3px !important;
+}
+

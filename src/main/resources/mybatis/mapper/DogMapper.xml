@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.havenwithyou.mongnewmong.mapper.DogMapper">
+    <resultMap id="dogMap" type="DogDto">
+        <id  property="id"	 column="DOG_ID" />
+        <id  property="name"	 column="NAME" />
+        <id  property="parent1Name"	 column="PARENT1_NAME" />
+        <id  property="parent2Name"	 column="PARENT2_NAME" />
+        <id  property="parent1Phone"	 column="PARENT1_PHONE" />
+        <id  property="parent2Phone"	 column="PARENT2_PHONE" />
+        <id  property="address"	 column="ADDRESS" />
+        <id  property="breed"	 column="BREED" />
+        <id  property="bday"	 column="BIRTHDAY" />
+        <id  property="avatar"	 column="AVATAR" />
+        <id  property="classes"	 column="CLASSES" />
+    </resultMap>
+</mapper>

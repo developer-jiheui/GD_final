@@ -228,6 +228,13 @@ button.list-group-item-primary.active {
     color: #fff;
     background-color: #595cd9;
     border-color: #595cd9;
+    background-size:97% !important;
+
+}
+.radio-check:checked + .btn-check {
+
+    background-size:97% !important;
+    width: 29%;
 }
 .btn-check:checked + .btn-primary:focus, .btn-check:active + .btn-primary:focus, .btn-primary:active:focus, .btn-primary.active:focus, .show > .btn-primary.dropdown-toggle:focus {
     box-shadow: none;

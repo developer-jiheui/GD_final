@@ -5,6 +5,7 @@
 <c:set var="contextPath" value="<%=request.getContextPath()%>"/>
 <c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
 
+
 <html lang="en"
       class="light-style layout-menu-fixed layout-compact "
       dir="ltr"
@@ -35,6 +36,7 @@
     <!-- Layout wrapper -->
     <%--<div class="layout-wrapper layout-content-navbar  ">--%>
     <%--    <div class="layout-container">--%>
+    <script src="${contextPath}/frontend/assets/vendor/libs/jquery/jquery.js"></script>
 
     <style data-fullcalendar=""></style>
     <script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-5DDHKGP"></script>
@@ -53,12 +55,12 @@
     })(window, document, 'script', 'dataLayer', 'GTM-5DDHKGP');</script>
     <!-- End Google Tag Manager -->
 
-  <!-- Favicon -->
-  <link
-          rel="icon"
-          type="image/x-icon"
-          href="${contextPath}/frontend/assets/img/favicon/favicon.ico"
-  />
+    <!-- Favicon -->
+    <link
+            rel="icon"
+            type="image/x-icon"
+            href="${contextPath}/frontend/assets/img/favicon/favicon.ico"
+    />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -71,21 +73,21 @@
     <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/fonts/fontawesome.css">
     <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/fonts/flag-icons.css">
 
-  <!-- Core CSS -->
-  <link
-          rel="stylesheet"
-          href="${contextPath}/frontend/assets/vendor/css/core.css"
-          class="template-customizer-core-css"
-  />
-  <link
-          rel="stylesheet"
-          href="${contextPath}/frontend/assets/vendor/css/theme-default.css"
-          class="template-customizer-theme-css"
-  />
-  <link
-          rel="stylesheet"
-          href="${contextPath}/frontend/assets/css/demo.css"
-  />
+    <!-- Core CSS -->
+    <link
+            rel="stylesheet"
+            href="${contextPath}/frontend/assets/vendor/css/core.css"
+            class="template-customizer-core-css"
+    />
+    <link
+            rel="stylesheet"
+            href="${contextPath}/frontend/assets/vendor/css/theme-default.css"
+            class="template-customizer-theme-css"
+    />
+    <link
+            rel="stylesheet"
+            href="${contextPath}/frontend/assets/css/demo.css"
+    />
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css">
@@ -95,6 +97,10 @@
     <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/libs/select2/select2.css">
     <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/libs/quill/editor.css">
     <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/libs/@form-validation/form-validation.css">
+    <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
+    <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">
+    <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css">
+
 
     <!-- Page CSS -->
 
@@ -437,9 +443,6 @@
     <link rel="stylesheet" type="text/css" href="${contextPath}/frontend/assets/vendor/css/rtl/theme-default.css"
           class="template-customizer-theme-css">
 
-    <script type="text/javascript" src="https://a.omappapi.com/app/js/api.min.js" async="" data-user="252882"
-            data-account="269977"></script>
-    <link rel="stylesheet" href="https://a.omappapi.com/app/js/api.min.css" id="omapi-css" media="all">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Poppins%3Aital%2Cwght%400%2C400%3B0%2C500%3B0%2C700&amp;display=swap">
 </head>

@@ -16944,3 +16944,25 @@ html:not(.layout-footer-fixed) .content-wrapper {
   border-color: rgba(105, 122, 141, 0.0783835294);
 }
 
+.admin-menu-inner{
+  display: grid !important;
+  justify-content: flex-start;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  min-width: 150px !important;
+}
+
+@media (min-width: 1200px) {
+
+  .admin-menu-inner{
+    gap : 8%
+
+  }
+  }
+
+.align-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -49,14 +49,15 @@
 <script src="${contextPath}/frontend/assets/vendor/libs/select2/select2.js"></script>
 <script src="${contextPath}/frontend/assets/vendor/libs/moment/moment.js"></script>
 <script src="${contextPath}/frontend/assets/vendor/libs/flatpickr/flatpickr.js"></script>
-
+<script src="${contextPath}/frontend/assets/vendor/libs/cleavejs/cleave.js"></script>
+<script src="${contextPath}/frontend/assets/vendor/libs/cleavejs/cleave-phone.js"></script>
+<script src="${contextPath}/frontend/assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
 <!-- Main JS -->
 <script src="${contextPath}/frontend/assets/js/main.js"></script>
 
 
 <!-- Page JS -->
-<script src="${contextPath}/frontend/assets/js/app-calendar-events.js"></script>
-<script src="${contextPath}/frontend/assets/js/app-calendar.js"></script>
+
 </body>
 
 </html>

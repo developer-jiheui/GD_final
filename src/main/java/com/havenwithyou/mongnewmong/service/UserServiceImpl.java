@@ -5,6 +5,7 @@ import com.havenwithyou.mongnewmong.mapper.UserMapper;
 import com.havenwithyou.mongnewmong.utils.MyFileUtils;
 import com.havenwithyou.mongnewmong.utils.MyJavaMailUtils;
 import com.havenwithyou.mongnewmong.utils.MySecurityUtils;
+import jakarta.mail.Session;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -235,6 +236,23 @@ public class UserServiceImpl implements UserService {
         session.setAttribute("user", user);
 
         return true;
+    }
+
+    @Override
+    public String setType(HttpServletRequest request, HttpServletResponse response) {
+        int userType = Integer.parseInt(request.getParameter("userType"));
+        String role;
+        HttpSession session = request.getSession();
+
+        UserDto user = (UserDto) session.getAttribute("user");
+        user.setUserType(userType);
+        int userTypeCount = userMapper.setUserType(user);
+        if(userTypeCount == 0) {role = "admin";}
+        else if (userTypeCount==1) {role = "user/registerDog";}
+        else {role = "teacher";}
+
+        session.setAttribute("user", user);
+        return role;
     }
 
 }

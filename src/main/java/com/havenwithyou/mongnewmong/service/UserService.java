@@ -29,4 +29,7 @@ public interface UserService {
     ResponseEntity<Map<String, Object>> checkUserName(Map<String, Object> params);
 
     boolean registerProfilePhoto(MultipartHttpServletRequest multipartHttpServletRequest);
+
+    String setType(HttpServletRequest request, HttpServletResponse response);
+
 }

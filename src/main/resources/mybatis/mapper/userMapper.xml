@@ -16,7 +16,29 @@
     <id  property="pwModifyDt"	 column="PW_MODIFY_DT" />
     <id  property="signupDt"	 column="SIGNUP_DT" />
     <id  property="centerid"     column="CENTER_ID"/>
+    <id  property="inviteid"     column="INVITE_ID"/>
+    <id  property="dogid"     column="DOG_ID"/>
+    <id  property="accepted"     column="ACCEPTED"/>
     <id property="avatar" column="AVATAR"/>
+
+    <association property="dog" javaType="dogDto">
+      <id  property="id"	 column="DOG_ID" />
+      <id  property="name"	 column="NAME" />
+      <id  property="parent1Name"	 column="PARENT1_NAME" />
+      <id  property="parent2Name"	 column="PARENT2_NAME" />
+      <id  property="parent1Phone"	 column="PARENT1_PHONE" />
+      <id  property="parent2Phone"	 column="PARENT2_PHONE" />
+      <id  property="address"	 column="ADDRESS" />
+      <id  property="breed"	 column="BREED" />
+      <id  property="bday"	 column="BIRTHDAY" />
+      <id  property="classes"	 column="CLASSES" />
+    </association>
+    <association property="invite" javaType="inviteDto">
+      <id property="id" column="INVITE_ID"/>
+      <id property="senderid" column="SENDER_ID"/>
+      <id property="recieverid" column="RECEIVER_ID"/>
+      <id property="accepted" column="ACCEPTED"/>
+    </association>
   </resultMap>
 
 
@@ -32,7 +54,8 @@
   <select id="getUserByMap"
           parameterType="Map"
           resultType="UserDto">
-    SELECT USER_ID, NAME, EMAIL, PHONE_NUM, USER_NAME, USER_TYPE, PW_MODIFY_DT, SIGNUP_DT, AVATAR
+    SELECT USER_ID, NAME, EMAIL, PHONE_NUM, USER_NAME, USER_TYPE, PW_MODIFY_DT, SIGNUP_DT, AVATAR,
+    CENTER_ID, INVITE_ID, DOG_ID, ACCEPTED
       FROM USER_T
     <where>
       <if test="email!=null">EMAIL = #{email}</if>
@@ -51,15 +74,17 @@
     </where>
   </select>
 
-  <select id="getLeaveUserByMap"
+  <select id="getLeftUserByMap"
           parameterType="Map"
-          resultType="LeaveUserDto">
-    SELECT LEAVE_USER_ID
-    FROM LEAVE_USER_T
+          resultType="LeftUserDto">
+    SELECT LEFT_USER_ID
+    FROM LEFT_USER_T
     <where>
       <if test="email!=null">EMAIL = #{email}</if>
     </where>
   </select>
+
+
 
   <insert id="insertUser"
           parameterType="UserDto">
@@ -84,11 +109,6 @@
     )
   </insert>
 
-  <delete id="deleteUser">
-    DELETE
-      FROM USER_T
-     WHERE USER_ID = #{userid}
-  </delete>
 
   <insert id="insertAccessHistory"
           parameterType="Map">
@@ -123,4 +143,23 @@
     SET AVATAR = #{uploadPath}
     WHERE USER_ID = #{userid}
   </update>
+
+  <update id="setUserType"
+          parameterType="userDto">
+    <selectKey order="AFTER" keyProperty="userType" resultType="int">
+      SELECT USER_TYPE
+      FROM USER_T
+      WHERE USER_ID = #{userid}
+    </selectKey>
+    UPDATE USER_T
+    SET USER_TYPE = #{userType}
+    WHERE USER_ID = #{userid}
+  </update>
+
+
+  <delete id="deleteUser">
+    DELETE
+    FROM USER_T
+    WHERE USER_ID = #{userid}
+  </delete>
 </mapper>

@@ -26,7 +26,14 @@
 
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
-
+<script src="${contextPath}/frontend/assets/js/pages-pricing.js"></script>
+<script src="${contextPath}/frontend/assets/js/modal-create-app.js"></script>
+<script src="${contextPath}/frontend/assets/js/modal-add-new-cc.js"></script>
+<script src="${contextPath}/frontend/assets/js/modal-add-new-address.js"></script>
+<script src="${contextPath}/frontend/assets/js/modal-edit-user.js"></script>
+<script src="${contextPath}/frontend/assets/js/modal-enable-otp.js"></script>
+<script src="${contextPath}/frontend/assets/js/modal-share-project.js"></script>
+<script src="${contextPath}/frontend/assets/js/modal-two-factor-auth.js"></script>
 <!--
 - ionicon link
 -->
