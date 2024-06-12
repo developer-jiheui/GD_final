@@ -277,7 +277,28 @@
                             </div>
                         </div>
                         <div id="ed-classInput" class="col-md-6 mb-4" data-select2-id="46" style="display: none">
+                        <script>
+                            const isRegistered = document.getElementById("ed-class");
+                            const registerClasses = document.getElementById("ed-classInput");
+                            const selectedClasses = document.getElementById("ed-select2Primary");
+                            let dbClasses = ${classes};
 
+                            if(dbClasses!=null&&dbClasses!==""){
+                                isRegistered.checked = true;
+                                registerClasses.style.display="";
+                                let arr = Array.from(dbClasses, Number);
+                                for (let i = 0; i < arr.length; i++) {
+                                 if(arr[i]===1){selectedClasses.options[0].selected=true;}
+                                 if(arr[i]===2){selectedClasses.options[1].selected=true;}
+                                 if(arr[i]===3){selectedClasses.options[2].selected=true;}
+                                 if(arr[i]===4){selectedClasses.options[3].selected=true;}
+                                 if(arr[i]===5){selectedClasses.options[4].selected=true;}
+                                 if(arr[i]===6){selectedClasses.options[5].selected=true;}
+                                 if(arr[i]===7){selectedClasses.options[6].selected=true;}
+                                }
+
+                            }
+                        </script>
                             <label for="ed-select2Primary" class="form-label">현재등록한 반을 선택해주세요</label>
                             <div class="select2-primary" data-select2-id="45">
                                 <div class="position-relative" data-select2-id="44">

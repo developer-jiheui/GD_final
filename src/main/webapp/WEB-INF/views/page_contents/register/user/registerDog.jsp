@@ -2,6 +2,7 @@
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="contextPath" value="<%=request.getContextPath()%>"/>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
@@ -35,6 +36,12 @@
                         <h4 class="mb-2">환영합니다 ${sessionScope.user.name} 보호자님❣️</h4>
                         <p class="mb-4">곧 회원가입 동의 메일이 도착할거에요!</p>
 
+                        <script>
+                            let dbClasses;
+                            const classParent = document.getElementById("class-parent");
+
+                        </script>
+
                         <div style="margin-bottom: 2rem"></div>
                         <ul id="dogs" class="class-list">
                             <c:forEach items="${sessionScope.user.doglist}" var="dog" varStatus="vs">
@@ -48,19 +55,60 @@
 
                                             </a>
                                             <div style="height: inherit;width: 80%; display: flex; justify-content: center; align-items: center">
-                                                <a   href="${contextPath}/user/dogDetail?dogId=${dog.dogId}"style="height: inherit;width: 40%; display: flex; justify-content: center; align-items: center">
+                                                <a   href="${contextPath}/user/dogDetail?dogId=${dog.dogId}" style="height: inherit;width: 40%; display: flex; justify-content: center; align-items: center">
                                                         ${dog.name}
                                                 </a>
-                                                <div style="height: inherit;width: 60%; display: flex; justify-content: center; align-items: center">
+                                                <div id="class-parent" style="height: inherit;width: 60%; display: flex; justify-content: center; align-items: center">
+                                                    <c:set var="class">${dog.classes}</c:set>
 
-                                                        <%--                                                    <span class="badge bg-label-primary me-1">월</span>--%>
-                                                        <%--                                                    <span class="badge bg-label-secondary me-1">화</span>--%>
-                                                        <%--                                                    <span class="badge bg-label-success me-1">수</span>--%>
-                                                        <%--                                                    <span class="badge bg-label-warning me-1">목</span>--%>
-                                                        <%--                                                    <span class="badge bg-label-info me-1">금</span>--%>
-                                                    <span class="badge bg-label-danger me-1">토</span>
-                                                    <span class="badge badge-center-rounded-pill bg-danger me-1">일</span>
+                                                    <c:if test = "${fn:contains(class, '0')}">
+                                                        <span class="badge bg-label-danger me-1">등록한 수업이 없습니다</span>
+                                                    </c:if>
+                                                    <c:if test = "${fn:contains(class, '1')}">
+                                                        <span class="badge bg-label-primary me-1">월</span>
+                                                    </c:if>
+                                                    <c:if test = "${fn:contains(class, '2')}">
+                                                        <span class="badge bg-label-secondary me-1">화</span>
+                                                    </c:if>
+                                                    <c:if test = "${fn:contains(class, '3')}">
+                                                        <span class="badge bg-label-success me-1">수</span>
+                                                    </c:if>
+                                                    <c:if test = "${fn:contains(class, '4')}">
+                                                        <span class="badge bg-label-warning me-1" >목</span>
+                                                    </c:if>
+                                                    <c:if test = "${fn:contains(class, '5')}">
+                                                        <span class="badge bg-label-info me-1">금</span>
+                                                    </c:if>
+                                                    <c:if test = "${fn:contains(class, '6')}">
+                                                        <span class="badge bg-label-danger me-1">토</span>
+                                                    </c:if>
+                                                    <c:if test = "${fn:contains(class, '7')}">
+                                                        <span class="badge badge-center-rounded-pill bg-danger me-1">일</span>
+                                                    </c:if>
+
+
                                                 </div>
+                                                    <script>
+                                                        dbClasses = ${dog.classes};
+
+                                                        if(dbClasses!==0){
+                                                            isRegistered.checked = true;
+                                                            registerClasses.style.display="";
+                                                            let arr = Array.from(dbClasses, Number);
+                                                            for (let i = 0; i < arr.length; i++) {
+                                                                if(arr[i]===1){classParent.children[0].style.display='';}
+                                                                if(arr[i]===2){classParent.children[1].style.display='';}
+                                                                if(arr[i]===3){classParent.children[2].style.display='';}
+                                                                if(arr[i]===4){classParent.children[3].style.display='';}
+                                                                if(arr[i]===5){classParent.children[4].style.display='';}
+                                                                if(arr[i]===6){classParent.children[5].style.display='';}
+                                                                if(arr[i]===7){classParent.children[6].style.display='';}
+                                                            }
+                                                        }
+                                                        else{
+                                                                classParent.children[7].style.display='';
+                                                        }
+                                                    </script>
 
                                             </div>
                                             <div style="height: inherit; display: flex; justify-content: center ; align-items: center">

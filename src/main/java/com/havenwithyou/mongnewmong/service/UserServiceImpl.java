@@ -418,6 +418,17 @@ public class UserServiceImpl implements UserService {
         String address ="";
         String detailAddress="";
         String extraAddress="";
+        String classes = dogDetail.getClasses().replace(",", "");
+
+
+
+//        System.out.println("------------------");
+//        System.out.println("------------------");
+//        System.out.println("-------CLASS-----------");
+//        System.out.println(classes);
+//        System.out.println(classes.replace(",", ""));
+//        System.out.println("------------------");
+//        System.out.println("------------------");
 
         for (int i = 0; i <restAddList.length; i++) {
             if(i==0){
@@ -434,6 +445,7 @@ public class UserServiceImpl implements UserService {
         model.addAttribute("address", address);
         model.addAttribute("detailAddress", detailAddress);
         model.addAttribute("extraAddress", extraAddress);
+        model.addAttribute("classes", classes);
 
     }
 
