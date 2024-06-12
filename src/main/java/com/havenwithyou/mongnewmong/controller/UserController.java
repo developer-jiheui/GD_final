@@ -97,7 +97,7 @@ public class UserController {
     @PostMapping("/editDog")
     public String editDog(MultipartHttpServletRequest multipartRequest
             , RedirectAttributes redirectAttributes) {
-       // redirectAttributes.addFlashAttribute("inserted", userService.editDog(multipartRequest));
+        redirectAttributes.addFlashAttribute("inserted", userService.editDog(multipartRequest));
         return "redirect:/user/dogList";
     }
 

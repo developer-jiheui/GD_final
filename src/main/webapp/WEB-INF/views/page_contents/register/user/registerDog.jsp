@@ -2,7 +2,7 @@
          pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="contextPath" value="<%=request.getContextPath()%>"/>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
@@ -59,30 +59,30 @@
                                                         ${dog.name}
                                                 </a>
                                                 <div id="class-parent" style="height: inherit;width: 60%; display: flex; justify-content: center; align-items: center">
-                                                    <c:set var="class">${dog.classes}</c:set>
+                                                    <c:set var="cls" value="${dog.classes}"/>
 
-                                                    <c:if test = "${fn:contains(class, '0')}">
+                                                    <c:if test = "${fn:contains(cls, '0')}">
                                                         <span class="badge bg-label-danger me-1">등록한 수업이 없습니다</span>
                                                     </c:if>
-                                                    <c:if test = "${fn:contains(class, '1')}">
+                                                    <c:if test = "${fn:contains(cls, '1')}">
                                                         <span class="badge bg-label-primary me-1">월</span>
                                                     </c:if>
-                                                    <c:if test = "${fn:contains(class, '2')}">
+                                                    <c:if test = "${fn:contains(cls, '2')}">
                                                         <span class="badge bg-label-secondary me-1">화</span>
                                                     </c:if>
-                                                    <c:if test = "${fn:contains(class, '3')}">
+                                                    <c:if test = "${fn:contains(cls, '3')}">
                                                         <span class="badge bg-label-success me-1">수</span>
                                                     </c:if>
-                                                    <c:if test = "${fn:contains(class, '4')}">
+                                                    <c:if test = "${fn:contains(cls, '4')}">
                                                         <span class="badge bg-label-warning me-1" >목</span>
                                                     </c:if>
-                                                    <c:if test = "${fn:contains(class, '5')}">
+                                                    <c:if test = "${fn:contains(cls, '5')}">
                                                         <span class="badge bg-label-info me-1">금</span>
                                                     </c:if>
-                                                    <c:if test = "${fn:contains(class, '6')}">
+                                                    <c:if test = "${fn:contains(cls, '6')}">
                                                         <span class="badge bg-label-danger me-1">토</span>
                                                     </c:if>
-                                                    <c:if test = "${fn:contains(class, '7')}">
+                                                    <c:if test = "${fn:contains(cls, '7')}">
                                                         <span class="badge badge-center-rounded-pill bg-danger me-1">일</span>
                                                     </c:if>
 

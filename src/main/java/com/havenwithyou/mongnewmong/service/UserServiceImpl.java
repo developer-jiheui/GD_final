@@ -449,5 +449,10 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public int editDog(MultipartHttpServletRequest multipartRequest) {
+        return 0;
+    }
+
 
 }

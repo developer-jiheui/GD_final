@@ -51,4 +51,6 @@ public interface UserService {
 
 
     void loadDogDetail(int dogId, Model model);
+
+    int editDog(MultipartHttpServletRequest multipartRequest);
 }
