@@ -5,7 +5,8 @@
 
 <mapper namespace="com.havenwithyou.mongnewmong.mapper.DogMapper">
     <resultMap id="dogMap" type="DogDto">
-        <id  property="id"	 column="DOG_ID" />
+        <id  property="dogId"	 column="DOG_ID" />
+        <id  property="userid"	 column="USER_ID" />
         <id  property="name"	 column="NAME" />
         <id  property="parent1Name"	 column="PARENT1_NAME" />
         <id  property="parent2Name"	 column="PARENT2_NAME" />
@@ -13,8 +14,85 @@
         <id  property="parent2Phone"	 column="PARENT2_PHONE" />
         <id  property="address"	 column="ADDRESS" />
         <id  property="breed"	 column="BREED" />
-        <id  property="bday"	 column="BIRTHDAY" />
+        <id  property="weight"	 column="WEIGHT" />
+        <id  property="birthday"	 column="BIRTHDAY" />
         <id  property="avatar"	 column="AVATAR" />
         <id  property="classes"	 column="CLASSES" />
     </resultMap>
+    <insert id="addDog">
+        INSERT INTO DOG_T(
+         DOG_ID
+        ,USER_ID
+        ,NAME
+        ,PARENT1_NAME
+        ,PARENT2_NAME
+        ,PARENT1_PHONE
+        ,PARENT2_PHONE
+        ,ADDRESS
+        ,BREED
+        ,WEIGHT
+        ,BIRTHDAY
+        ,AVATAR
+        ,CLASSES
+        )VALUES(
+        DOG_SEQ.NEXTVAL
+        ,#{userid}
+        ,#{name}
+        ,#{parent1Name}
+        ,#{parent2Name}
+        ,#{parent1Phone}
+        ,#{parent2Phone}
+        ,#{address}
+        ,#{breed}
+        ,#{weight}
+        ,#{birthday}
+        ,#{avatar}
+        ,#{classes}
+        )
+    </insert>
+    <select id="getDogById" resultType="com.havenwithyou.mongnewmong.dto.DogDto">
+        SELECT  DOG_ID
+        ,USER_ID
+        ,NAME
+        ,PARENT1_NAME
+        ,PARENT2_NAME
+        ,PARENT1_PHONE
+        ,PARENT2_PHONE
+        ,ADDRESS
+        ,BREED
+        ,WEIGHT
+        ,BIRTHDAY
+        ,AVATAR
+        ,CLASSES
+        FROM DOG_T
+        <where>
+            DOG_ID = #{dogId}
+        </where>
+    </select>
+    <select id="getDogList" resultType="dogDto">
+        SELECT  DOG_ID
+        ,USER_ID
+        ,NAME
+        ,PARENT1_NAME
+        ,PARENT2_NAME
+        ,PARENT1_PHONE
+        ,PARENT2_PHONE
+        ,ADDRESS
+        ,BREED
+        ,WEIGHT
+        ,BIRTHDAY
+        ,AVATAR
+        ,CLASSES
+        FROM DOG_T
+        <where>
+            USER_ID = #{userid}
+        </where>
+    </select>
+
+    <delete id="deleteDog">
+        DELETE FROM DOG_T
+        WHERE DOG_ID = #{dogId}
+    </delete>
+
+
 </mapper>

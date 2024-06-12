@@ -34,18 +34,17 @@
   />
 
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-          href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-          rel="stylesheet"
-  />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap"
+        rel="stylesheet">
 
-  <!-- Icons. Uncomment required icon fonts -->
-  <link
-          rel="stylesheet"
-          href="${contextPath}/frontend/assets/vendor/fonts/boxicons.css"
-  />
+  <!-- Icons -->
+
+  <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/fonts/boxicons.css">
+  <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/fonts/fontawesome.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/fonts/flag-icons.css">
 
   <!-- Core CSS -->
   <link
@@ -62,6 +61,7 @@
           rel="stylesheet"
           href="${contextPath}/frontend/assets/css/demo.css"
   />
+
 
   <!-- Vendors CSS -->
   <link
@@ -85,4 +85,12 @@
   <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
   <script src="${contextPath}/frontend/assets/js/config.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="${contextPath}/frontend/assets/vendor/css/rtl/core.css"
+        class="template-customizer-core-css">
+  <link rel="stylesheet" type="text/css" href="${contextPath}/frontend/assets/vendor/css/rtl/theme-default.css"
+        class="template-customizer-theme-css">
+
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins%3Aital%2Cwght%400%2C400%3B0%2C500%3B0%2C700&amp;display=swap">
 </head>

@@ -17,12 +17,13 @@
     <id  property="signupDt"	 column="SIGNUP_DT" />
     <id  property="centerid"     column="CENTER_ID"/>
     <id  property="inviteid"     column="INVITE_ID"/>
-    <id  property="dogid"     column="DOG_ID"/>
+    <id  property="dogNo"     column="DOG_NO"/>
     <id  property="accepted"     column="ACCEPTED"/>
     <id property="avatar" column="AVATAR"/>
 
-    <association property="dog" javaType="dogDto">
-      <id  property="id"	 column="DOG_ID" />
+    <association property="userid" javaType="dogDto">
+      <id  property="dogId"	 column="DOG_ID" />
+      <id  property="userid"	 column="USER_ID" />
       <id  property="name"	 column="NAME" />
       <id  property="parent1Name"	 column="PARENT1_NAME" />
       <id  property="parent2Name"	 column="PARENT2_NAME" />
@@ -30,7 +31,8 @@
       <id  property="parent2Phone"	 column="PARENT2_PHONE" />
       <id  property="address"	 column="ADDRESS" />
       <id  property="breed"	 column="BREED" />
-      <id  property="bday"	 column="BIRTHDAY" />
+      <id  property="birthday"	 column="BIRTHDAY" />
+      <id  property="avatar"	 column="AVATAR" />
       <id  property="classes"	 column="CLASSES" />
     </association>
     <association property="invite" javaType="inviteDto">
@@ -41,6 +43,62 @@
     </association>
   </resultMap>
 
+  <insert id="insertUser"
+          parameterType="UserDto">
+    INSERT INTO USER_T (
+    USER_ID
+    , NAME
+    , EMAIL
+    , PHONE_NUM
+    , USER_NAME
+    , PW
+    , USER_TYPE
+    , SIGNUP_DT
+    , PW_MODIFY_DT
+    , CENTER_ID
+    , INVITE_ID
+    , DOG_NO
+    , ACCEPTED
+    , AVATAR
+    ) VALUES (
+    USER_SEQ.NEXTVAL
+    , #{name}
+    , #{email}
+    , #{phoneNo}
+    , #{username}
+    , #{pw}
+    , #{userType}
+    , CURRENT_DATE
+    , NULL
+    , NULL
+    , NULL
+    , 0
+    , 0
+    , #{avatar}
+    )
+  </insert>
+
+
+  <insert id="insertAccessHistory"
+          parameterType="Map">
+    INSERT INTO ACCESS_HISTORY_T (
+    ACCESS_HISTORY_ID
+    , USER_ID
+    , IP
+    , USER_AGENT
+    , SESSION_ID
+    , SIGNIN_DT
+    , SIGNOUT_DT
+    ) VALUES (
+    ACCESS_HISTORY_SEQ.NEXTVAL
+    , #{userid}
+    , #{ip}
+    , #{userAgent}
+    , #{sessionId}
+    , CURRENT_DATE
+    , NULL
+    )
+  </insert>
 
   <select id="checkEmail"
           parameterType="String"
@@ -55,7 +113,7 @@
           parameterType="Map"
           resultType="UserDto">
     SELECT USER_ID, NAME, EMAIL, PHONE_NUM, USER_NAME, USER_TYPE, PW_MODIFY_DT, SIGNUP_DT, AVATAR,
-    CENTER_ID, INVITE_ID, DOG_ID, ACCEPTED
+    CENTER_ID, INVITE_ID, DOG_NO, ACCEPTED
       FROM USER_T
     <where>
       <if test="email!=null">EMAIL = #{email}</if>
@@ -86,51 +144,8 @@
 
 
 
-  <insert id="insertUser"
-          parameterType="UserDto">
-    INSERT INTO USER_T (
-        USER_ID
-      , NAME
-      , EMAIL
-      , PHONE_NUM
-      , USER_NAME
-      , PW
-      , USER_TYPE
-      , SIGNUP_DT
-    ) VALUES (
-        USER_SEQ.NEXTVAL
-      , #{name}
-      , #{email}
-      , #{phoneNo}
-      , #{username}
-      , #{pw}
-      , #{userType}
-      , CURRENT_DATE
-    )
-  </insert>
 
 
-  <insert id="insertAccessHistory"
-          parameterType="Map">
-    INSERT INTO ACCESS_HISTORY_T (
-        ACCESS_HISTORY_ID
-      , USER_ID
-      , IP
-      , USER_AGENT
-      , SESSION_ID
-      , SIGNIN_DT
-      , SIGNOUT_DT
-    ) VALUES (
-        ACCESS_HISTORY_SEQ.NEXTVAL
-      , #{userid}
-      , #{ip}
-      , #{userAgent}
-      , #{sessionId}
-      , CURRENT_DATE
-      , NULL
-    )
-  </insert>
-  
   <update id="updateAccessHistory">
     UPDATE ACCESS_HISTORY_T
        SET SIGNOUT_DT = CURRENT_DATE
@@ -153,6 +168,13 @@
     </selectKey>
     UPDATE USER_T
     SET USER_TYPE = #{userType}
+    WHERE USER_ID = #{userid}
+  </update>
+
+  <update id="updateDogNo"
+          parameterType="userDto">
+    UPDATE USER_T
+    SET DOG_NO = #{dogNo}
     WHERE USER_ID = #{userid}
   </update>
 

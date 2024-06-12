@@ -52,6 +52,10 @@
 <script src="${contextPath}/frontend/assets/vendor/libs/cleavejs/cleave.js"></script>
 <script src="${contextPath}/frontend/assets/vendor/libs/cleavejs/cleave-phone.js"></script>
 <script src="${contextPath}/frontend/assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
+<script src="${contextPath}/frontend/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+<script src="${contextPath}/frontend/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
+<script src="${contextPath}/frontend/assets/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
+<script src="${contextPath}/frontend/assets/vendor/libs/pickr/pickr.js"></script>
 <!-- Main JS -->
 <script src="${contextPath}/frontend/assets/js/main.js"></script>
 

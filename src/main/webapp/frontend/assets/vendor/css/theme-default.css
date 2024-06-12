@@ -107,6 +107,10 @@
     background-color: #696cff !important;
 }
 
+a.bg-delete:hover, a.bg-delete:focus {
+    background: rgb(255, 255, 255);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.5376354489164087) 0%, rgba(255, 125, 122, 0.587171052631579) 25%, rgba(255, 0, 0, 0) 53%);
+}
 a.bg-primary:hover, a.bg-primary:focus {
     background-color: #6467f2 !important;
 }

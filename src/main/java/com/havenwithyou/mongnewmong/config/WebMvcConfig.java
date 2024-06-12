@@ -59,6 +59,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
                                 , "/user/settings"
                                 , "/user/billing"
                                 , "/user/userType"
+                                , "/user/furtherRegister"
+                                , "/user/dogList"
+                                , "/user/registerDog"
                         );
 
         registry.addInterceptor(requiredFurtherSignupInterceptor)

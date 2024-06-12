@@ -20,8 +20,7 @@ public class MyFileUtils {
   
   // 업로드 경로 반환
   public String getUploadPath() {
-    System.out.println("UPLOAD PATH ------------:"+UPLOAD_URL);
-	return UPLOAD_URL + DateTimeFormatter.ofPattern("/yyyy/MM/dd").format(TODAY);
+	return UPLOAD_URL + DateTimeFormatter.ofPattern("yyyy/MM/dd").format(TODAY);
     // return contextPath + "/upload" + DateTimeFormatter.ofPattern("/yyyy/MM/dd").format(TODAY);
   }
   

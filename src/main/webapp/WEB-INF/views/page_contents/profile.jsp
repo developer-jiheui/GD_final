@@ -35,6 +35,7 @@
                     <!-- Account -->
                     <div class="card-body">
                         <div class="d-flex align-items-start align-items-sm-center gap-4">
+<%--                            @TODO CHANGE THE SETTING FOR THE IMAGE--%>
                             <img
                                     src="${contextPath}/frontend/assets/img/avatars/1.png"
                                     alt="user-avatar"

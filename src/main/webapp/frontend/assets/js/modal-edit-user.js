@@ -23,43 +23,62 @@ $(function() {
             phone: !0,
             phoneRegionCode: "US"
         }),
-            FormValidation.formValidation(document.getElementById("editUserForm"), {
+            FormValidation.formValidation(document.getElementById("addDogForm"), {
                 fields: {
                     modalDogName: {
                         validators: {
                             notEmpty: {
-                                message: "Please enter your first name"
-                            },
-                            regexp: {
-                                regexp: /^[a-zA-Zs]+$/,
-                                message: "The first name can only consist of alphabetical"
+                                message: "강아지 이름을 입력해주세요"
                             }
                         }
                     },
-                    modalEditUserLastName: {
+                    parent1Name: {
                         validators: {
                             notEmpty: {
-                                message: "Please enter your last name"
-                            },
-                            regexp: {
-                                regexp: /^[a-zA-Zs]+$/,
-                                message: "The last name can only consist of alphabetical"
+                                message: "보호자님의 이름을 입력해주세요"
                             }
                         }
                     },
-                    modalEditUserName: {
+                    parent2Name: {
+                        validators: {
+                            notEmpty: {
+                                message: "보호자님의 이름을 입력해주세요"
+                            }
+                            // regexp: {
+                            //     regexp: /^[a-zA-Z0-9 ]+$/,
+                            //     message: "The name can only consist of alphabetical, number and space"
+                            // }
+                        }
+                    },
+                    parent1phone: {
                         validators: {
                             notEmpty: {
                                 message: "Please enter your username"
                             },
                             stringLength: {
-                                min: 6,
-                                max: 30,
-                                message: "The name must be more than 6 and less than 30 characters long"
+                                min: 11,
+                                max: 13,
+                                message: "핸드폰 번호를 정확히 입력해주세요"
                             },
                             regexp: {
-                                regexp: /^[a-zA-Z0-9 ]+$/,
-                                message: "The name can only consist of alphabetical, number and space"
+                                regexp: /^[0-9 ]+$/,
+                                message: "연락처 정보를 확인해주세요"
+                            }
+                        }
+                    },
+                    parent2phone: {
+                        validators: {
+                            notEmpty: {
+                                message: "Please enter your username"
+                            },
+                            stringLength: {
+                                min: 11,
+                                max: 13,
+                                message: "핸드폰 번호를 정확히 입력해주세요"
+                            },
+                            regexp: {
+                                regexp: /^[0-9 ]+$/,
+                                message: "핸드폰 번호를 정확히 입력해주세요"
                             }
                         }
                     }
@@ -70,7 +89,6 @@ $(function() {
                         eleValidClass: "",
                         rowSelector: ".col-12"
                     }),
-                    submitButton: new FormValidation.plugins.SubmitButton,
                     autoFocus: new FormValidation.plugins.AutoFocus
                 }
             })

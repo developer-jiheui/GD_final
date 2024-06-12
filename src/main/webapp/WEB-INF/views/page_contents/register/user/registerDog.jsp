@@ -4,8 +4,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="contextPath" value="<%=request.getContextPath()%>"/>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-
 <c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
+
+
+<link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css"/>
+<link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/libs/typeahead-js/typeahead.css"/>
+<link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/libs/flatpickr/flatpickr.css"/>
+
 
 <body>
 <!-- Content -->
@@ -19,741 +24,517 @@
                         <!-- Logo -->
                         <div class="app-brand justify-content-center big-brand">
                             <a href="${contextPath}/pages/home" class="app-brand-link gap-2">
-                  <span class="app-brand-logo demo">
+                              <span class="app-brand-logo demo">
                                   <img src="${contextPath}/frontend/assets/img/favicon/favicon.ico"
                                        style="height: 30px; width: 30px;">
-
-                  </span>
+                              </span>
                                 <span class="app-brand-text demo text-body fw-bolder big-brand-text">MUMMOO</span>
                             </a>
                         </div>
                         <!-- /Logo -->
-                        <h4 class="mb-2">환영합니다 보호자님❣️</h4>
+                        <h4 class="mb-2">환영합니다 ${sessionScope.user.name} 보호자님❣️</h4>
                         <p class="mb-4">곧 회원가입 동의 메일이 도착할거에요!</p>
 
-                        <form id="formAuthentication" class="mb-3" action="user/register" method="POST">
-                            <div class="mb-3">
+                        <div style="margin-bottom: 2rem"></div>
+                        <ul id="dogs" class="class-list">
+                            <c:forEach items="${sessionScope.user.doglist}" var="dog" varStatus="vs">
+                                <div class="mb-3">
+                                    <div class="class-text-container">
+                                        <li class="dog class-name-list" style="height: 50px">
+                                            <a href="${contextPath}/user/dogDetail?dogId=${dog.dogId}" type="button" class="btn-edit btn-icon"
+                                                style="width: 50px; height: 50px; border-radius: 3rem; overflow: hidden"
+                                            >
+                                                <img src="${dog.avatar}" style="height: 50px; aspect-ratio: auto">
 
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                        data-bs-target="#addDog"> 강아지 등록하기
-                                </button>
+                                            </a>
+                                            <div style="height: inherit;width: 80%; display: flex; justify-content: center; align-items: center">
+                                                <a   href="${contextPath}/user/dogDetail?dogId=${dog.dogId}"style="height: inherit;width: 40%; display: flex; justify-content: center; align-items: center">
+                                                        ${dog.name}
+                                                </a>
+                                                <div style="height: inherit;width: 60%; display: flex; justify-content: center; align-items: center">
 
-                                <div class="modal fade" id="addDog" tabindex="-1" style="display: none;"
-                                     aria-hidden="true">
-                                    <div class="modal-dialog modal-lg modal-simple modal-edit-user">
-                                        <div class="modal-content p-3 p-md-5">
-                                            <div class="modal-body">
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
+                                                        <%--                                                    <span class="badge bg-label-primary me-1">월</span>--%>
+                                                        <%--                                                    <span class="badge bg-label-secondary me-1">화</span>--%>
+                                                        <%--                                                    <span class="badge bg-label-success me-1">수</span>--%>
+                                                        <%--                                                    <span class="badge bg-label-warning me-1">목</span>--%>
+                                                        <%--                                                    <span class="badge bg-label-info me-1">금</span>--%>
+                                                    <span class="badge bg-label-danger me-1">토</span>
+                                                    <span class="badge badge-center-rounded-pill bg-danger me-1">일</span>
+                                                </div>
 
-                                                <form id="dogInfoForm"
-                                                      class="row g-3 fv-plugins-bootstrap5 fv-plugins-framework"
-                                                      onsubmit="return false" novalidate="novalidate">
-                                                    <!----------------------------------->
-                                                    <!----------------------------------->
-                                                    <!----------------------------------->
-                                                    <!-- Account -->
-                                                    <input type="hidden" name="userid" id="hiddenUserId" value="${sessionScope.user.userid}">
+                                            </div>
+                                            <div style="height: inherit; display: flex; justify-content: center ; align-items: center">
 
-                                                    <div class="card-body">
-                                                        <!-------------AVATAR-------------->
-                                                        <div class="row">
-                                                            <div class="text-center mb-4">
-                                                                <div class="d-flex align-items-start align-items-sm-center">
-                                                                    <div class="col-md-6">
-                                                                        <div class="img-container" style="margin-left:-35px">
-                                                                            <div class="align-center" >
-                                                                                <img
-                                                                                        src="${contextPath}/resources/images/roundStickers/kisses.png"
-                                                                                        alt="user-avatar"
-                                                                                        class="d-block rounded"
-                                                                                        style="height:150px"
-                                                                                        id="uploadedAvatar"
-                                                                                />
-                                                                            </div>
-                                                                            <div class="align-center">
-                                                                                <div class="col-12 col-md-9 fv-plugins-icon-container">
-                                                                                    <label class="form-label"
-                                                                                           for="modalDogName">강아지 이름</label>
-                                                                                    <input type="text" id="modalDogName"
-                                                                                           name="modalDogName"
-                                                                                           class="form-control"
-                                                                                           placeholder="">
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="button-wrapper col-md-6">
-                                                                        <label for="files" class="btn btn-primary me-2 mb-4"
-                                                                               tabindex="0">
-                                                                            <span class="d-none d-sm-block">Upload new photo</span>
-                                                                            <i class="bx bx-upload d-block d-sm-none"></i>
-                                                                            <input
-                                                                                    type="file"
-                                                                                    name="files"
-                                                                                    id="files"
-                                                                                    class="account-file-input"
-                                                                                    hidden
-                                                                                    accept="image/png, image/jpeg"
-                                                                                    onchange="onFileUpload();"
-                                                                            />
-                                                                        </label>
-                                                                        <script>
-                                                                            document.addEventListener('DOMContentLoaded', function (e) {
-                                                                                (function () {
-                                                                                    const deactivateAcc = document.querySelector('#formAccountDeactivation');
+                                                <a href="#" onclick="fnDeleteDog(`${dog.dogId}`,`${dog.name}`)"
+                                                   class="btn-icon bg-delete btn-delete-dog">
+                                                    <i class="fa-solid fa-delete-left" style="color: #ff3f3f"></i>
+                                                </a>
+                                                <a href="${contextPath}/user/dogDetail?dogId=${dog.dogId}" type="button" class="btn-edit btn-icon">
+<%--                                                <a href="${contextPath}/user/dogDetail?dogId=${dog.dogId}" type="button" class="btn-edit btn-icon" data-bs-toggle="modal"--%>
+<%--                                                   data-bs-target="#editDog">--%>
+                                                    <i class="fa-solid fa-pen"></i>
+                                                </a>
 
-                                                                                    // Update/reset user image of account page
-                                                                                    let accountUserImage = document.getElementById('uploadedAvatar');
-                                                                                    const fileInput = document.querySelector('.account-file-input'),
-                                                                                        resetFileInput = document.querySelector('.account-image-reset');
+                                            </div>
+<%--                                            <div style="height: inherit; display: flex; justify-content: center ; align-items: center">--%>
+<%--                                                <a href="#" onclick="fnDeleteDog(`${dog.dogId}`,`${dog.name}`)"--%>
+<%--                                                   class="btn-icon ">--%>
+<%--                                                    <i class="fa-solid fa-pen"></i>                                                </a>--%>
 
-                                                                                    if (accountUserImage) {
-                                                                                        const resetImage = accountUserImage.src;
-                                                                                        fileInput.onchange = () => {
-                                                                                            if (fileInput.files[0]) {
-                                                                                                accountUserImage.src = window.URL.createObjectURL(fileInput.files[0]);
-                                                                                            }
-                                                                                        };
-                                                                                        resetFileInput.onclick = () => {
-                                                                                            fileInput.value = '';
-                                                                                            accountUserImage.src = resetImage;
-                                                                                        };
-                                                                                    }
-                                                                                })();
-                                                                            });
-                                                                            const onFileUpload = () => {
-                                                                               let uploadedImg = document.getElementById("files");
-                                                                               let image = document.getElementById("uploadedAvatar");
-                                                                               console.log("------------------------");
-                                                                               console.log("------------------------: "+  $('#files')[0].files[0].innerHTML);
-                                                                               console.log("------------------------: "+  $('#files')[0].files[1].innerHTML);
-                                                                              // image.src = uploadedImg;
-                                                                            }
-                                                                        </script>
-                                                                        <button type="button"
-                                                                                class="btn btn-outline-secondary account-image-reset mb-4">
-                                                                            <i class="bx bx-reset d-block d-sm-none"></i>
-                                                                            <span class="d-none d-sm-block">Reset</span>
-                                                                        </button>
-
-                                                                        <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size
-                                                                            of 800K</p>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-
-
-                                                        </div>
-                                                        <!-------------AVATAR-------------->
-
-                                                        <hr class="my-0"/>
-
-                                                        <div class="row">
-
-
-                                                                <div class="col-12 col-md-4 fv-plugins-icon-container">
-                                                                    <label class="form-label" for="parent1Name">보호자1 이름</label>
-                                                                    <input type="text" id="parent1Name"
-                                                                           name="parent1Name" class="form-control"
-                                                                           placeholder="${sessionScope.user.name}">
-                                                                </div><div class="col-12 col-md-4 fv-plugins-icon-container">
-                                                                <label class="form-label" for="parent2Name">보호자2 이름</label>
-                                                                <input type="text" id="parent2Name"
-                                                                       name="parent2Name" class="form-control"
-                                                                       placeholder="">
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-3 col-md-4">
-                                                            <label for="name" class="form-label">이름</label>
-                                                            <input
-                                                                    class="form-control"
-                                                                    type="text"
-                                                                    id="name"
-                                                                    name="name"
-                                                                    value="${sessionScope.user.name}"
-                                                                    autofocus
-                                                            />
-                                                        </div>
-<%--                                                        <div class="mb-3 col-md-4">--%>
-<%--                                                            <label for="name" class="form-label">이름</label>--%>
-<%--                                                            <input--%>
-<%--                                                                    class="form-control"--%>
-<%--                                                                    type="text"--%>
-<%--                                                                    id="name"--%>
-<%--                                                                    name="name"--%>
-<%--                                                                    value="${sessionScope.user.name}"--%>
-<%--                                                                    autofocus--%>
-<%--                                                            />--%>
-<%--                                                        </div>--%>
-<%--                                                        <div class="mb-3 col-md-4">--%>
-<%--                                                            <label for="name" class="form-label">이름</label>--%>
-<%--                                                            <input--%>
-<%--                                                                    class="form-control"--%>
-<%--                                                                    type="text"--%>
-<%--                                                                    id="name"--%>
-<%--                                                                    name="name"--%>
-<%--                                                                    value="${sessionScope.user.name}"--%>
-<%--                                                                    autofocus--%>
-<%--                                                            />--%>
-<%--                                                        </div>--%>
-
-<%--                                                        <div class="mb-3 col-md-6">--%>
-<%--                                                            <label for="username" class="form-label">닉네임</label>--%>
-<%--                                                            <input class="form-control" type="text" name="username"--%>
-<%--                                                                   id="username" value="${sessionScope.user.username}"/>--%>
-<%--                                                        </div>--%>
-<%--                                                        <div class="mb-3 col-md-6">--%>
-<%--                                                            <label for="email" class="form-label">E-mail</label>--%>
-<%--                                                            <input--%>
-<%--                                                                    class="form-control"--%>
-<%--                                                                    type="text"--%>
-<%--                                                                    id="email"--%>
-<%--                                                                    name="email"--%>
-<%--                                                                    value="${sessionScope.user.email}"--%>
-<%--                                                                    placeholder="${sessionScope.user.email}"--%>
-<%--                                                            />--%>
-<%--                                                        </div>--%>
-<%--                                                        <div class="mb-3 col-md-6">--%>
-<%--                                                            <label for="center" class="form-label">유치원</label>--%>
-<%--                                                            <input--%>
-<%--                                                                    type="text"--%>
-<%--                                                                    class="form-control"--%>
-<%--                                                                    id="center"--%>
-<%--                                                                    name="center"--%>
-<%--                                                                    value="${sessionScope.user.centerid}"--%>
-<%--                                                            />--%>
-<%--                                                        </div>--%>
-<%--                                                        <div class="mb-3 col-md-6">--%>
-<%--                                                            <label class="form-label" for="phoneNo">전화번호</label>--%>
-<%--                                                            <div class="input-group input-group-merge">--%>
-<%--                                                                <span class="input-group-text">US (+1)</span>--%>
-<%--                                                                <input--%>
-<%--                                                                        type="text"--%>
-<%--                                                                        id="phoneNo"--%>
-<%--                                                                        name="phoneNo"--%>
-<%--                                                                        class="form-control"--%>
-<%--                                                                        placeholder="${sessionScope.user.phoneNo}"--%>
-<%--                                                                />--%>
-<%--                                                            </div>--%>
-<%--                                                            &lt;%&ndash;                                <div class="mb-3 col-md-6">&ndash;%&gt;--%>
-<%--                                                            &lt;%&ndash;                                    <label for="address" class="form-label">Address</label>&ndash;%&gt;--%>
-<%--                                                            &lt;%&ndash;&lt;%&ndash;                                    <input type="text" class="form-control" id="address" name="address" placeholder="${sessionScope.user.address}" />&ndash;%&gt;&ndash;%&gt;--%>
-<%--                                                            &lt;%&ndash;                                </div>&ndash;%&gt;--%>
-<%--                                                            <div class="mb-3 col-md-6">--%>
-<%--                                                                <label for="state" class="form-label">State</label>--%>
-<%--                                                                <input class="form-control" type="text" id="state"--%>
-<%--                                                                       name="state" placeholder="California"/>--%>
-<%--                                                            </div>--%>
-<%--                                                            <div class="mb-3 col-md-6">--%>
-<%--                                                                <label for="zipCode" class="form-label">Zip Code</label>--%>
-<%--                                                                <input--%>
-<%--                                                                        type="text"--%>
-<%--                                                                        class="form-control"--%>
-<%--                                                                        id="zipCode"--%>
-<%--                                                                        name="zipCode"--%>
-<%--                                                                        placeholder="231465"--%>
-<%--                                                                        maxlength="6"--%>
-<%--                                                                />--%>
-<%--                                                            </div>--%>
-<%--                                                            <div class="mb-3 col-md-6">--%>
-<%--                                                                <label class="form-label" for="country">Country</label>--%>
-<%--                                                                <select id="country" class="select2 form-select">--%>
-<%--                                                                    <option value="">Select</option>--%>
-<%--                                                                    <option value="Australia">Australia</option>--%>
-<%--                                                                    <option value="Bangladesh">Bangladesh</option>--%>
-<%--                                                                    <option value="Belarus">Belarus</option>--%>
-<%--                                                                    <option value="Brazil">Brazil</option>--%>
-<%--                                                                    <option value="Canada">Canada</option>--%>
-<%--                                                                    <option value="China">China</option>--%>
-<%--                                                                    <option value="France">France</option>--%>
-<%--                                                                    <option value="Germany">Germany</option>--%>
-<%--                                                                    <option value="India">India</option>--%>
-<%--                                                                    <option value="Indonesia">Indonesia</option>--%>
-<%--                                                                    <option value="Israel">Israel</option>--%>
-<%--                                                                    <option value="Italy">Italy</option>--%>
-<%--                                                                    <option value="Japan">Japan</option>--%>
-<%--                                                                    <option value="Korea">Korea, Republic of</option>--%>
-<%--                                                                    <option value="Mexico">Mexico</option>--%>
-<%--                                                                    <option value="Philippines">Philippines</option>--%>
-<%--                                                                    <option value="Russia">Russian Federation</option>--%>
-<%--                                                                    <option value="South Africa">South Africa</option>--%>
-<%--                                                                    <option value="Thailand">Thailand</option>--%>
-<%--                                                                    <option value="Turkey">Turkey</option>--%>
-<%--                                                                    <option value="Ukraine">Ukraine</option>--%>
-<%--                                                                    <option value="United Arab Emirates">United Arab--%>
-<%--                                                                        Emirates--%>
-<%--                                                                    </option>--%>
-<%--                                                                    <option value="United Kingdom">United Kingdom--%>
-<%--                                                                    </option>--%>
-<%--                                                                    <option value="United States">United States</option>--%>
-<%--                                                                </select>--%>
-<%--                                                            </div>--%>
-<%--                                                            <div class="mb-3 col-md-6">--%>
-<%--                                                                <label for="language"--%>
-<%--                                                                       class="form-label">Language</label>--%>
-<%--                                                                <select id="language" class="select2 form-select">--%>
-<%--                                                                    <option value="">Select Language</option>--%>
-<%--                                                                    <option value="en">English</option>--%>
-<%--                                                                    <option value="fr">French</option>--%>
-<%--                                                                    <option value="de">German</option>--%>
-<%--                                                                    <option value="pt">Portuguese</option>--%>
-<%--                                                                </select>--%>
-<%--                                                            </div>--%>
-<%--                                                            <div class="mb-3 col-md-6">--%>
-<%--                                                                <label for="timeZones"--%>
-<%--                                                                       class="form-label">Timezone</label>--%>
-<%--                                                                <select id="timeZones" class="select2 form-select">--%>
-<%--                                                                    <option value="">Select Timezone</option>--%>
-<%--                                                                    <option value="-12">(GMT-12:00) International Date--%>
-<%--                                                                        Line West--%>
-<%--                                                                    </option>--%>
-<%--                                                                    <option value="-11">(GMT-11:00) Midway Island,--%>
-<%--                                                                        Samoa--%>
-<%--                                                                    </option>--%>
-<%--                                                                    <option value="-10">(GMT-10:00) Hawaii</option>--%>
-<%--                                                                    <option value="-9">(GMT-09:00) Alaska</option>--%>
-<%--                                                                    <option value="-8">(GMT-08:00) Pacific Time (US &--%>
-<%--                                                                        Canada)--%>
-<%--                                                                    </option>--%>
-<%--                                                                    <option value="-8">(GMT-08:00) Tijuana, Baja--%>
-<%--                                                                        California--%>
-<%--                                                                    </option>--%>
-<%--                                                                    <option value="-7">(GMT-07:00) Arizona</option>--%>
-<%--                                                                    <option value="-7">(GMT-07:00) Chihuahua, La Paz,--%>
-<%--                                                                        Mazatlan--%>
-<%--                                                                    </option>--%>
-<%--                                                                    <option value="-7">(GMT-07:00) Mountain Time (US &--%>
-<%--                                                                        Canada)--%>
-<%--                                                                    </option>--%>
-<%--                                                                    <option value="-6">(GMT-06:00) Central America--%>
-<%--                                                                    </option>--%>
-<%--                                                                    <option value="-6">(GMT-06:00) Central Time (US &--%>
-<%--                                                                        Canada)--%>
-<%--                                                                    </option>--%>
-<%--                                                                    <option value="-6">(GMT-06:00) Guadalajara, Mexico--%>
-<%--                                                                        City, Monterrey--%>
-<%--                                                                    </option>--%>
-<%--                                                                    <option value="-6">(GMT-06:00) Saskatchewan</option>--%>
-<%--                                                                    <option value="-5">(GMT-05:00) Bogota, Lima, Quito,--%>
-<%--                                                                        Rio Branco--%>
-<%--                                                                    </option>--%>
-<%--                                                                    <option value="-5">(GMT-05:00) Eastern Time (US &--%>
-<%--                                                                        Canada)--%>
-<%--                                                                    </option>--%>
-<%--                                                                    <option value="-5">(GMT-05:00) Indiana (East)--%>
-<%--                                                                    </option>--%>
-<%--                                                                    <option value="-4">(GMT-04:00) Atlantic Time--%>
-<%--                                                                        (Canada)--%>
-<%--                                                                    </option>--%>
-<%--                                                                    <option value="-4">(GMT-04:00) Caracas, La Paz--%>
-<%--                                                                    </option>--%>
-<%--                                                                </select>--%>
-<%--                                                            </div>--%>
-<%--                                                            <div class="mb-3 col-md-6">--%>
-<%--                                                                <label for="currency"--%>
-<%--                                                                       class="form-label">Currency</label>--%>
-<%--                                                                <select id="currency" class="select2 form-select">--%>
-<%--                                                                    <option value="">Select Currency</option>--%>
-<%--                                                                    <option value="usd">USD</option>--%>
-<%--                                                                    <option value="euro">Euro</option>--%>
-<%--                                                                    <option value="pound">Pound</option>--%>
-<%--                                                                    <option value="bitcoin">Bitcoin</option>--%>
-<%--                                                                </select>--%>
-<%--                                                            </div>--%>
-<%--                                                        </div>--%>
-<%--                                                        <div class="mt-2">--%>
-<%--                                                            <button type="submit" class="btn btn-primary me-2">Save--%>
-<%--                                                                changes--%>
-<%--                                                            </button>--%>
-<%--                                                            <button type="reset" class="btn btn-outline-secondary">--%>
-<%--                                                                Cancel--%>
-<%--                                                            </button>--%>
-<%--                                                        </div>--%>
-<%--                                                </form>--%>
 <%--                                            </div>--%>
-<%--                                            <!-- /Account -->--%>
-<%--                                        </div>--%>
+                                        </li>
+                                    </div>
+                                </div>
+                            </c:forEach>
 
-<%--                                        <!----------------------------------->--%>
-<%--                                        <!----------------------------------->--%>
-
-<%--                                        <div class="col-12 col-md-6 fv-plugins-icon-container">--%>
-<%--                                            <label class="form-label" for="modalEditUserFirstName">First--%>
-<%--                                                Name</label>--%>
-<%--                                            <input type="text" id="modalEditUserFirstName"--%>
-<%--                                                   name="modalEditUserFirstName" class="form-control"--%>
-<%--                                                   placeholder="John">--%>
-<%--                                            <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="col-12 col-md-6 fv-plugins-icon-container">--%>
-<%--                                            <label class="form-label" for="modalEditUserLastName">Last--%>
-<%--                                                Name</label>--%>
-<%--                                            <input type="text" id="modalEditUserLastName"--%>
-<%--                                                   name="modalEditUserLastName" class="form-control"--%>
-<%--                                                   placeholder="Doe">--%>
-<%--                                            <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="col-12 fv-plugins-icon-container">--%>
-<%--                                            <label class="form-label"--%>
-<%--                                                   for="modalEditUserName">Username</label>--%>
-<%--                                            <input type="text" id="modalEditUserName"--%>
-<%--                                                   name="modalEditUserName" class="form-control"--%>
-<%--                                                   placeholder="john.doe.007">--%>
-<%--                                            <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="col-12 col-md-6">--%>
-<%--                                            <label class="form-label" for="modalEditUserEmail">Email</label>--%>
-<%--                                            <input type="text" id="modalEditUserEmail"--%>
-<%--                                                   name="modalEditUserEmail" class="form-control"--%>
-<%--                                                   placeholder="example@domain.com">--%>
-<%--                                        </div>--%>
-<%--                                        <div class="col-12 col-md-6">--%>
-<%--                                            <label class="form-label"--%>
-<%--                                                   for="modalEditUserStatus">Status</label>--%>
-<%--                                            <select id="modalEditUserStatus" name="modalEditUserStatus"--%>
-<%--                                                    class="form-select" aria-label="Default select example">--%>
-<%--                                                <option selected="">Status</option>--%>
-<%--                                                <option value="1">Active</option>--%>
-<%--                                                <option value="2">Inactive</option>--%>
-<%--                                                <option value="3">Suspended</option>--%>
-<%--                                            </select>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="col-12 col-md-6">--%>
-<%--                                            <label class="form-label" for="modalEditTaxID">Tax ID</label>--%>
-<%--                                            <input type="text" id="modalEditTaxID" name="modalEditTaxID"--%>
-<%--                                                   class="form-control modal-edit-tax-id"--%>
-<%--                                                   placeholder="123 456 7890">--%>
-<%--                                        </div>--%>
-<%--                                        <div class="col-12 col-md-6">--%>
-<%--                                            <label class="form-label" for="modalEditUserPhone">Phone--%>
-<%--                                                Number</label>--%>
-<%--                                            <div class="input-group input-group-merge">--%>
-<%--                                                <span class="input-group-text">+1</span>--%>
-<%--                                                <input type="text" id="modalEditUserPhone"--%>
-<%--                                                       name="modalEditUserPhone"--%>
-<%--                                                       class="form-control phone-number-mask"--%>
-<%--                                                       placeholder="202 555 0111">--%>
-<%--                                            </div>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="col-12 col-md-6">--%>
-<%--                                            <label class="form-label"--%>
-<%--                                                   for="modalEditUserLanguage">Language</label>--%>
-<%--                                            <div class="position-relative">--%>
-<%--                                                <div class="position-relative"><select--%>
-<%--                                                        id="modalEditUserLanguage"--%>
-<%--                                                        name="modalEditUserLanguage"--%>
-<%--                                                        class="select2 form-select select2-hidden-accessible"--%>
-<%--                                                        multiple="" tabindex="-1" aria-hidden="true"--%>
-<%--                                                        data-select2-id="modalEditUserLanguage">--%>
-<%--                                                    <option value="">Select</option>--%>
-<%--                                                    <option value="english" selected=""--%>
-<%--                                                            data-select2-id="44">English--%>
-<%--                                                    </option>--%>
-<%--                                                    <option value="spanish">Spanish</option>--%>
-<%--                                                    <option value="french">French</option>--%>
-<%--                                                    <option value="german">German</option>--%>
-<%--                                                    <option value="dutch">Dutch</option>--%>
-<%--                                                    <option value="hebrew">Hebrew</option>--%>
-<%--                                                    <option value="sanskrit">Sanskrit</option>--%>
-<%--                                                    <option value="hindi">Hindi</option>--%>
-<%--                                                </select><span--%>
-<%--                                                        class="select2 select2-container select2-container--default"--%>
-<%--                                                        dir="ltr" data-select2-id="43" style="width: auto;"><span--%>
-<%--                                                        class="selection"><span--%>
-<%--                                                        class="select2-selection select2-selection--multiple"--%>
-<%--                                                        role="combobox" aria-haspopup="true"--%>
-<%--                                                        aria-expanded="false" tabindex="-1"--%>
-<%--                                                        aria-disabled="false"><ul--%>
-<%--                                                        class="select2-selection__rendered"><li--%>
-<%--                                                        class="select2-selection__choice" title="English"--%>
-<%--                                                        data-select2-id="45"><span--%>
-<%--                                                        class="select2-selection__choice__remove"--%>
-<%--                                                        role="presentation">×</span>English</li><li--%>
-<%--                                                        class="select2-search select2-search--inline"><input--%>
-<%--                                                        class="select2-search__field" type="search"--%>
-<%--                                                        tabindex="0" autocomplete="off" autocorrect="off"--%>
-<%--                                                        autocapitalize="none" spellcheck="false"--%>
-<%--                                                        role="searchbox" aria-autocomplete="list"--%>
-<%--                                                        placeholder=""--%>
-<%--                                                        style="width: 0.75em;"></li></ul></span></span><span--%>
-<%--                                                        class="dropdown-wrapper" aria-hidden="true"></span></span>--%>
-<%--                                                </div>--%>
-<%--                                            </div>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="col-12 col-md-6">--%>
-<%--                                            <label class="form-label"--%>
-<%--                                                   for="modalEditUserCountry">Country</label>--%>
-<%--                                            <div class="position-relative">--%>
-<%--                                                <div class="position-relative"><select--%>
-<%--                                                        id="modalEditUserCountry"--%>
-<%--                                                        name="modalEditUserCountry"--%>
-<%--                                                        class="select2 form-select select2-hidden-accessible"--%>
-<%--                                                        data-allow-clear="true" tabindex="-1"--%>
-<%--                                                        aria-hidden="true"--%>
-<%--                                                        data-select2-id="modalEditUserCountry">--%>
-<%--                                                    <option value="" data-select2-id="72">Select</option>--%>
-<%--                                                    <option value="Australia">Australia</option>--%>
-<%--                                                    <option value="Bangladesh">Bangladesh</option>--%>
-<%--                                                    <option value="Belarus">Belarus</option>--%>
-<%--                                                    <option value="Brazil">Brazil</option>--%>
-<%--                                                    <option value="Canada">Canada</option>--%>
-<%--                                                    <option value="China">China</option>--%>
-<%--                                                    <option value="France">France</option>--%>
-<%--                                                    <option value="Germany">Germany</option>--%>
-<%--                                                    <option value="India">India</option>--%>
-<%--                                                    <option value="Indonesia">Indonesia</option>--%>
-<%--                                                    <option value="Israel">Israel</option>--%>
-<%--                                                    <option value="Italy">Italy</option>--%>
-<%--                                                    <option value="Japan">Japan</option>--%>
-<%--                                                    <option value="Korea">Korea, Republic of</option>--%>
-<%--                                                    <option value="Mexico">Mexico</option>--%>
-<%--                                                    <option value="Philippines">Philippines</option>--%>
-<%--                                                    <option value="Russia">Russian Federation</option>--%>
-<%--                                                    <option value="South Africa">South Africa</option>--%>
-<%--                                                    <option value="Thailand">Thailand</option>--%>
-<%--                                                    <option value="Turkey">Turkey</option>--%>
-<%--                                                    <option value="Ukraine">Ukraine</option>--%>
-<%--                                                    <option value="United Arab Emirates">United Arab--%>
-<%--                                                        Emirates--%>
-<%--                                                    </option>--%>
-<%--                                                    <option value="United Kingdom">United Kingdom</option>--%>
-<%--                                                    <option value="United States">United States</option>--%>
-<%--                                                </select><span--%>
-<%--                                                        class="select2 select2-container select2-container--default"--%>
-<%--                                                        dir="ltr" data-select2-id="71" style="width: auto;"><span--%>
-<%--                                                        class="selection"><span--%>
-<%--                                                        class="select2-selection select2-selection--single"--%>
-<%--                                                        role="combobox" aria-haspopup="true"--%>
-<%--                                                        aria-expanded="false" tabindex="0"--%>
-<%--                                                        aria-disabled="false"--%>
-<%--                                                        aria-labelledby="select2-modalEditUserCountry-container"><span--%>
-<%--                                                        class="select2-selection__rendered"--%>
-<%--                                                        id="select2-modalEditUserCountry-container"--%>
-<%--                                                        role="textbox" aria-readonly="true"><span--%>
-<%--                                                        class="select2-selection__placeholder">Select value</span></span><span--%>
-<%--                                                        class="select2-selection__arrow"--%>
-<%--                                                        role="presentation"><b--%>
-<%--                                                        role="presentation"></b></span></span></span><span--%>
-<%--                                                        class="dropdown-wrapper" aria-hidden="true"></span></span>--%>
-<%--                                                </div>--%>
-<%--                                            </div>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="col-12">--%>
-<%--                                            <label class="switch">--%>
-<%--                                                <input type="checkbox" class="switch-input">--%>
-<%--                                                <span class="switch-toggle-slider">--%>
-<%--                                                                <span class="switch-on"></span>--%>
-<%--                                                                <span class="switch-off"></span>--%>
-<%--                                                              </span>--%>
-<%--                                                <span class="switch-label">Use as a billing address?</span>--%>
-<%--                                            </label>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="col-12 text-center">--%>
-<%--                                            <button type="submit" class="btn btn-primary me-sm-3 me-1">--%>
-<%--                                                Submit--%>
-<%--                                            </button>--%>
-<%--                                            <button type="reset" class="btn btn-label-secondary"--%>
-<%--                                                    data-bs-dismiss="modal" aria-label="Close">Cancel--%>
-<%--                                            </button>--%>
-<%--                                        </div>--%>
-<%--                                        <input type="hidden">--%>
-<%--                        </form>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--    <br>--%>
-<%--    <br>--%>
-<%--    <form id="formDaycare" class="mb-3" action="${contextPath}/admin/classInfo" method="POST">--%>
-<%--        <div class="input-container">--%>
-<%--            <div class="address-input-group" style="display: inline-flex;">--%>
-<%--                <div class="mb-3" style="width: 85%">--%>
-<%--                    <input type="text" id="item" class="form-control" placeholder="반 이름을 입력해주세요" class="add">--%>
-<%--                </div>--%>
-<%--                <div class="mb-3" style="width: 5%"></div>--%>
-<%--                <button id="btnAdd" type="button" class="btn btn-icon btn-primary btn-square">--%>
-<%--                                        <span class="tf-icons">--%>
-<%--                                            <ion-icon name="add"></ion-icon>--%>
-<%--                                        </span>--%>
-<%--                </button>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--        <ul id="items" class="class-list"></ul>--%>
-
-<%--        <script>--%>
-<%--            let itemList = document.getElementById('items');--%>
-<%--            let addBtn = document.getElementById("btnAdd")--%>
-<%--            let deleteBtn = document.getElementById('items');--%>
-<%--            deleteBtn.addEventListener('click', removeItem);--%>
-<%--            document.addEventListener('keypress', enterKey)--%>
-
-<%--            // register classes--%>
-<%--            addBtn.addEventListener('click', addItem);--%>
-
-<%--            function enterKey(e) {--%>
-<%--                if (e.key === "Enter") {--%>
-<%--                    e.preventDefault();--%>
-<%--                    addItem(e);--%>
-<%--                }--%>
-<%--            }--%>
-
-<%--            //function add item--%>
-<%--            function addItem(e) {--%>
-<%--                e.preventDefault();--%>
+                            <script>
+                                var dogId2Delete = 0;
+                                const dogList = document.getElementById("dogs");
+                                const dog = document.getElementsByClassName("dog")
+                                // const modalBtn = document.querySelectorAll('.btn-edit')
+                                //
+                                // modalBtn.forEach(btn =>{
+                                //     btn.addEventListener('click',(e)=>{
+                                //         alert(e.target.value);
+                                //     })
+                                // })
 
 
-<%--                // Get input value--%>
-<%--                let inputValue = document.getElementById('item').value;--%>
-<%--                let mbDiv = document.createElement('div');--%>
-<%--                let containerDiv = document.createElement('div');--%>
-<%--                mbDiv.className = "mb-3";--%>
 
-<%--                // Create item--%>
-<%--                let li = document.createElement('li');--%>
+                                function fnDeleteDog(dogId, dogname) {
+                                    if (confirm(dogname + '을 지우겠습니까?')) {
+                                        dogId2Delete = dogId;
+                                        deleteTarget = event.currentTarget.parentNode.parentNode.parentNode.parentNode;
+                                        fnDeleteDiv(deleteTarget);
+                                        fnRemoveDog(dogId2Delete);
 
-<%--                // add class to li--%>
-<%--                li.className = 'form-control class-name-list';--%>
+                                    } else {
+                                        return;
+                                    }
+                                }
 
-<%--                containerDiv.className = "class-text-container";--%>
-<%--                containerDiv.appendChild(document.createTextNode(inputValue));--%>
-<%--                // add text to li--%>
-<%--                li.appendChild(containerDiv);--%>
+                                function fnDeleteDiv(deleteTarget) {
+                                    dogList.removeChild(deleteTarget);
 
-<%--                mbDiv.appendChild(li)--%>
-<%--                //push item--%>
-<%--                itemList.appendChild(mbDiv);--%>
+                                }
 
-<%--                //create button--%>
-<%--                let btnDelete = document.createElement('button');--%>
-<%--                btnDelete.className = "btn rounded-pill  btn-primary btn-round btn-delete";--%>
-<%--                btnDelete.setAttribute("type", "button");--%>
-
-
-<%--                // let logo = <ion-icon name='close-circle-outline'></ion-icon>;--%>
-<%--                //add Text to botton--%>
-<%--                btnDelete.appendChild(document.createTextNode('X'));--%>
-
-<%--                // push button to li--%>
-<%--                li.appendChild(btnDelete);--%>
-<%--            }--%>
-
-<%--            // function remove item--%>
-<%--            function removeItem(e) {--%>
-<%--                if (e.target.classList.contains('btn-delete')) {--%>
-<%--                    // if (confirm('Are You Sure? ')) {--%>
-<%--                    let li = e.target.parentElement;--%>
-<%--                    let mbDiv = li.parentElement;--%>
-<%--                    itemList.removeChild(mbDiv);--%>
-<%--                    e.preventDefault();--%>
-<%--                    // }--%>
-<%--                }--%>
-<%--                // console.log(e.target.parentElement);--%>
-<%--            }--%>
+                                function fnRemoveDog(dogId) {
+                                    $.ajax({
+                                        // 요청
+                                        type: 'POST',
+                                        url: '${contextPath}/user/removeDog',
+                                        data: 'dogId=' + dogId,  // <form> 내부의 모든 입력을 파라미터 형식으로 보낼 때 사용, 입력 요소들은 name 속성을 가지고 있어야 함
+                                        // 응답
+                                        dataType: 'json',
+                                        success: (resData) => {
+                                            alert(resData.removeResult);
+                                        },
+                                        error: (jqXHR) => {
+                                            alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+                                        }
+                                    })
+                                }
 
 
-<%--        </script>--%>
 
 
-<%--        <button id="admin-submit" class="btn btn-primary d-grid w-100 btn-signup">유치원 등록하기--%>
-<%--        </button>--%>
-<%--    </form>--%>
-
-<%--    <script>--%>
-<%--        document.getElementById("admin-submit").addEventListener('click', () => {--%>
-<%--            document.getElementById("formDaycare").requestSubmit();--%>
-<%--        })--%>
-<%--    </script>--%>
-<%--    <br>--%>
 
 
-<%--    <div class="d-flex mb-3">--%>
-<%--        <div class="flex-grow-1 row">--%>
-<%--            <div class="col-9">--%>
-<%--                <h6 class="mb-0">등록을 하신 보호자님이신가요?</h6>--%>
-<%--                <small class="text-muted">이미 유치원 등록을 하셨다면 선택해주세요</small>--%>
-<%--            </div>--%>
-<%--            <div class="col-3 text-end">--%>
-<%--                <div class="form-check form-switch">--%>
-<%--                    <input id="alreadyRegistered" class="form-check-input float-end"--%>
-<%--                           type="checkbox" role="switch">--%>
-<%--                </div>--%>
-<%--            </div>--%>
-<%--        </div>--%>
-<%--    </div>--%>
+
+                            </script>
+
+                        </ul>
+
+                        <div style="display: flex; justify-content: center; align-items: center;
+                                    margin-top: 2rem; margin-bottom: 0.5rem">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#addDog"> 강아지 등록하기
+                            </button>
+                        </div>
+
+
+                        <p class="text-center">
+                            <span>Already have an account?</span>
+                            <a href="${contextPath}/pages/login">
+                                <span>Sign in instead</span>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+                <!-- Register Card -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ADD DOG Modal -->
+    <div class="modal fade" id="addDog" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+            <div class="modal-content p-3 p-md-5">
+                <div class="modal-body">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                    <form id="addDogForm" class="row g-3"
+                          enctype="multipart/form-data"
+                          action="${pageContext.request.contextPath}/user/registerDog"
+                          method="POST"
+                    >
+                        <div class="text-center mb-4">
+                            <h3>Edit User Information</h3>
+                            <p>Updating user details will receive a privacy audit.</p>
+                            <!-------------AVATAR-------------->
+                            <div class="row">
+                                <div class="text-center">
+                                    <div class="d-flex align-items-start align-items-sm-center">
+                                        <div class="col-md-6">
+                                            <div class="img-container" style="margin-left:-35px">
+                                                <div class="align-center">
+                                                    <%--                            @TODO CHANGE THE SETTING FOR THE IMAGE--%>
+                                                    <img
+                                                            src="${contextPath}/resources/images/roundStickers/kisses.png"
+                                                            alt="user-avatar"
+                                                            class="d-block rounded"
+                                                            style="height:150px; margin-bottom: 1rem"
+                                                            id="avatar"
+                                                    />
+                                                </div>
+                                                <div class="align-center">
+                                                    <div class="col-12 col-md-9 fv-plugins-icon-container">
+                                                        <label class="form-label"
+                                                               for="modalDogName">강아지 이름</label>
+                                                        <input type="text" id="modalDogName"
+                                                               name="modalDogName"
+                                                               class="form-control"
+                                                               placeholder="">
+                                                        <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="button-wrapper col-md-6">
+                                            <label for="files" class="btn btn-primary me-2 mb-4"
+                                                   tabindex="0">
+                                                <span class="d-none d-sm-block">Upload new photo</span>
+                                                <i class="bx bx-upload d-block d-sm-none"></i>
+                                                <input
+                                                        type="file"
+                                                        name="files"
+                                                        id="files"
+                                                        class="account-file-input"
+                                                        hidden
+                                                        accept="image/png, image/jpeg"
+                                                        onchange="onFileUpload();"
+                                                />
+                                            </label>
+                                            <script>
+
+                                                document.addEventListener('DOMContentLoaded', function (e) {
+                                                    e.preventDefault();
+                                                    (function () {
+                                                        const deactivateAcc = document.querySelector('#formAccountDeactivation');
+
+                                                        // Update/reset user image of account page
+                                                        let accountUserImage = document.getElementById('avatar');
+                                                        const fileInput = document.querySelector('.account-file-input'),
+                                                            resetFileInput = document.querySelector('.account-image-reset');
+
+                                                        if (accountUserImage) {
+                                                            const resetImage = accountUserImage.src;
+                                                            fileInput.onchange = () => {
+                                                                if (fileInput.files[0]) {
+                                                                    accountUserImage.src = window.URL.createObjectURL(fileInput.files[0]);
+                                                                }
+                                                            };
+                                                            resetFileInput.onclick = () => {
+                                                                fileInput.value = '';
+                                                                accountUserImage.src = resetImage;
+                                                            };
+                                                        }
+                                                    })();
+                                                });
+                                            </script>
+                                            <button type="button"
+                                                    class="btn btn-outline-secondary account-image-reset mb-4">
+                                                <i class="bx bx-reset d-block d-sm-none"></i>
+                                                <span class="d-none d-sm-block">Reset</span>
+                                            </button>
+
+                                            <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size
+                                                of 800K</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                            <!-------------/AVATAR/-------------->
+
+                        </div>
+
+
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" for="parent1Name">보호자1 이름</label>
+                            <input type="text" id="parent1Name" name="parent1Name" class="form-control"
+                                   value="${sessionScope.user.name}"/>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" for="parent2Name">보호자2 이름</label>
+                            <input type="text" id="parent2Name" name="parent2Name" class="form-control" placeholder=""/>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" for="parent1phone">보호자1 연락처</label>
+                            <input type="text" id="parent1phone" name="parent1phone" class="form-control"
+                                   value="${sessionScope.user.phoneNo}"/>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" for="parent2phone">보호자2 연락처</label>
+                            <input type="text" id="parent2phone" name="parent2phone" class="form-control"
+                                   placeholder=""/>
+                        </div>
+                        <div class="col-md-4 col-12 mb-md-0 mb-4">
+                            <label for="bs-datepicker-autoclose" class="form-label">댕댕이 생일</label>
+                            <input type="date" id="bs-datepicker-autoclose" name="birthday" placeholder="2020/00/00"
+                                   class="form-control">
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label class="form-label" for="breed">견종</label>
+                            <input type="text" id="breed" name="breed" class="form-control"
+                                   placeholder="시고르자브종"/>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <label class="form-label" for="weight">몸무게</label>
+                            <input type="number" id="weight" name="weight" class="form-control"
+                                   placeholder="3.5"/>
+                        </div>
+
+                        <!------------------ADDRESS--------------->
+                        <label for="zonecode" class="form-label">집 주소</label>
+                        <div class="input-container">
+                            <div class="address-input-group">
+                                <div class="mb-3 address-container">
+
+                                    <input type="text" class="form-control" id="zonecode" name="zipcode"
+                                           onclick="execDaumPostcode()" placeholder="우편번호" readonly>
+
+                                </div>
+                                <div class="mb-3 address-container">
+
+                                    <input type="button" class="form-control " onclick="execDaumPostcode()"
+                                           value="우편번호 찾기"><br>
+
+                                </div>
+                            </div>
+                            <div class="input-container">
+
+                            </div>
+                        </div>
+                        <div class="mb-3 address-input-group" style="margin-bottom: 5% !important;">
+                            <input type="text" class="form-control address-input" id="address" name="address"
+                                   placeholder="주소" readonly>
+                            <input type="text" class="form-control address-input" id="detailAddress"
+                                   name="detailAddress" placeholder="상세주소">
+                            <input type="text" class="form-control address-input" id="extraAddress" name="extraAddress"
+                                   placeholder="참고항목">
+
+                        </div>
+                        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+                        <script>
+                            function execDaumPostcode() {
+                                new daum.Postcode({
+                                    oncomplete: function (data) {
+                                        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                                        // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                                        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                                        var addr = ''; // 주소 변수
+                                        var extraAddr = ''; // 참고항목 변수
+                                        // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                                        if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                                            addr = data.roadAddress;
+                                        } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                                            addr = data.jibunAddress;
+                                        }
+                                        // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                                        if (data.userSelectedType === 'R') {
+                                            // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                                            // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                                            if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                                                extraAddr += data.bname;
+                                            }
+                                            // 건물명이 있고, 공동주택일 경우 추가한다.
+                                            if (data.buildingName !== '' && data.apartment === 'Y') {
+                                                extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                                            }
+                                            // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                                            if (extraAddr !== '') {
+                                                extraAddr = ' (' + extraAddr + ')';
+                                            }
+                                            // 조합된 참고항목을 해당 필드에 넣는다.
+                                            document.getElementById('extraAddress').value = extraAddr;
+                                        } else {
+                                            document.getElementById('extraAddress').value = '';
+                                        }
+                                        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                                        document.getElementById('zonecode').value = data.zonecode;
+                                        document.getElementById('address').value = addr;
+                                        // 커서를 상세주소 필드로 이동한다.
+                                        document.getElementById('detailAddress').focus();
+                                    }
+                                }).open();
+                            }
+                        </script>
+                        <!------------------/ADDRESS/--------------->
+
+                        <div class="d-flex mb-3">
+                            <div class="flex-grow-1 row">
+                                <div class="col-9">
+                                    <h6 class="mb-0">유치원을 다니는 중인가요?</h6>
+                                    <small class="text-muted">현재 유치원을 등록했다면 선택해주세요</small>
+                                </div>
+                                <div class="col-3 text-end">
+                                    <div class="form-check form-switch">
+                                        <input id="re-class" name="class" class="form-check-input float-end"
+                                               type="checkbox" role="switch">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="re-classInput" class="" data-select2-id="46" style="display: none">
+                            <script>
+                                function fnSelectArray(selectBox) {
+
+                                    const inputContainer = document.getElementById("re-classInput");
+                                    // let allValues;
+                                     let arr = new Array();
+                                     let count =0;
+                                     let valInput = document.createElement("input");
+                                     valInput.setAttribute("type","hidden");
+                                     valInput.setAttribute("name", "classes");
+
+                                    // clear selection
+                                    console.log("select option:",selectBox.value)
+                                    for(var i=0;i<=selectBox.options.length;i++) {
+                                        var selectedNode  = selectBox.options[i];
+                                        if(selectedNode.selected) {
+                                            arr[count] =selectedNode.value;
+                                            count++;
+
+                                        }
+
+                                        console.log("ARRAY-----------")
+                                        console.log(arr)
+
+                                        valInput.setAttribute("value",arr.toString());
+                                        console.log("Value-----------")
+                                        console.log(valInput.getAttribute("value"));
+
+                                        console.log("----------------CHILD")
+                                        console.log(inputContainer.lastChild.nodeName)
+                                        console.log("----------------CHILD")
+
+                                        if(inputContainer.lastChild.nodeName==="INPUT"){
+                                            inputContainer.lastChild.remove();
+                                            inputContainer.appendChild(valInput);
+                                        }else{
+                                            inputContainer.appendChild(valInput);
+                                        }
+
+                                    }
+
+
+                                }
+
+
+
+                            </script>
+                            <label for="re-select2Primary" class="form-label">현재등록한 반을 선택해주세요</label>
+                            <div class="select2-primary" data-select2-id="45">
+                                <div class="position-relative" data-select2-id="44">
+                                    <select id="re-select2Primary"
+                                            class="select2 form-select select2-hidden-accessible"
+                                            multiple=""
+                                            data-select2-id="re-select2Primary"
+                                            tabindex="-1"
+                                            name="registeredClasses"
+                                            aria-hidden="true"
+                                            onchange="fnSelectArray(this)"
+                                            data-classes = '[{0:""}]'
+                                    >
+                                        <option value="1" data-select2-id="1">월</option>
+                                        <option value="2" data-select2-id="2">화</option>
+                                        <option value="3" data-select2-id="3">수</option>
+                                        <option value="4" data-select2-id="4">목</option>
+                                        <option value="5" data-select2-id="5">금</option>
+                                        <option value="6" data-select2-id="6">토</option>
+                                        <option value="7" data-select2-id="7">일</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                            const goes2class = document.getElementById("re-class");
+                            const classInput = document.getElementById("re-classInput");
+                            const classes = document.getElementById("re-select2Primary");
+
+                            goes2class.addEventListener('change', () => {
+                                if (event.currentTarget.checked) {
+                                    classInput.style.display='';
+                                } else {
+                                    classInput.style.display='none';
+                                }
+
+                            })
+
+
+                        </script>
+
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                            <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                                    aria-label="Close">Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ ADD DOG Modal -->
+
+    <!--/EDIT DOG Modal -->
 
 
 <%--    <script>--%>
-<%--        document.getElementById("alreadyRegistered").addEventListener('click', () => {--%>
+<%--        function fnDogDetail(dogId){--%>
+<%--            // editModal.ar;--%>
+<%--            // alert(editModal.style.display);--%>
 
-<%--        })--%>
+<%--            location.href= "${contextPath}/dogDetail?dogId="+dogId;--%>
+<%--            &lt;%&ndash;$.ajax({&ndash;%&gt;--%>
+<%--            &lt;%&ndash;    // 요청&ndash;%&gt;--%>
+<%--            &lt;%&ndash;    type: 'GET',&ndash;%&gt;--%>
+<%--            &lt;%&ndash;    url: '${contextPath}/user/dogDetail',&ndash;%&gt;--%>
+<%--            &lt;%&ndash;    data: 'dogId=' + dogId,&ndash;%&gt;--%>
 
-
+<%--            &lt;%&ndash;    success: (resData) => {&ndash;%&gt;--%>
+<%--            &lt;%&ndash;        console.log("====resData====")&ndash;%&gt;--%>
+<%--            &lt;%&ndash;        console.log(resData)&ndash;%&gt;--%>
+<%--            &lt;%&ndash;        &ndash;%&gt;--%>
+<%--            &lt;%&ndash;        &lt;%&ndash;alert("dogDetail : " + "${dogDetail}")&ndash;%&gt;&ndash;%&gt;--%>
+<%--            &lt;%&ndash;    },&ndash;%&gt;--%>
+<%--            &lt;%&ndash;    error: (jqXHR) => {&ndash;%&gt;--%>
+<%--            &lt;%&ndash;        alert(jqXHR.statusText + '(' + jqXHR.status + ')');&ndash;%&gt;--%>
+<%--            &lt;%&ndash;    }&ndash;%&gt;--%>
+<%--            &lt;%&ndash;})&ndash;%&gt;--%>
+<%--        }--%>
 <%--    </script>--%>
 
-
-<%--    <br>--%>
-<%--    <div class="mb-3">--%>
-<%--        <label for="dogname" class="form-label">강아지 이름</label>--%>
-<%--        <input--%>
-<%--                type="text"--%>
-<%--                class="form-control"--%>
-<%--                id="dogname"--%>
-<%--                name="username"--%>
-<%--                placeholder="Enter your username"--%>
-<%--                autofocus1--%>
-<%--        />--%>
-<%--    </div>--%>
-<%--    <div class="mb-3">--%>
-<%--        <label for="email" class="form-label">Email</label>--%>
-<%--        <input type="text" class="form-control" id="email" name="email"--%>
-<%--               placeholder="Enter your email"/>--%>
-<%--    </div>--%>
-<%--    <div class="mb-3 form-password-toggle">--%>
-<%--        <label class="form-label" for="password">Password</label>--%>
-<%--        <div class="input-group input-group-merge">--%>
-<%--            <input--%>
-<%--                    type="password"--%>
-<%--                    id="password"--%>
-<%--                    class="form-control"--%>
-<%--                    name="password"--%>
-<%--                    placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"--%>
-<%--                    aria-describedby="password"--%>
-<%--            />--%>
-<%--            <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-
-<%--    <div class="mb-3">--%>
-<%--        <div class="form-check">--%>
-<%--            <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms"/>--%>
-<%--            <label class="form-check-label" for="terms-conditions">--%>
-<%--                I agree to--%>
-<%--                <a href="javascript:void(0);">privacy policy & terms</a>--%>
-<%--            </label>--%>
-<%--        </div>--%>
-<%--    </div>--%>
-<%--    <button class="btn btn-primary d-grid w-100">Sign up</button>--%>
-<%--    </form>--%>
-
-<%--    <p class="text-center">--%>
-<%--        <span>Already have an account?</span>--%>
-<%--        <a href="${contextPath}/pages/login">--%>
-<%--            <span>Sign in instead</span>--%>
-<%--        </a>--%>
-<%--    </p>--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--<!-- Register Card -->--%>
-<%--</div>--%>
-<%--</div>--%>
-<%--</div>--%>
-
-<!-- / Content -->
-
-<!-- / Content -->
-
-<script src="${contextPath}/frontend/assets/js/modal-edit-user.js"></script>
-
+    <!-- PAGE JS -->
+    <script src="${contextPath}/frontend/assets/js/modal-edit-user.js"></script>
+    <script src="${contextPath}/frontend/assets/js/forms-pickers.js"></script>
+    <script src="${contextPath}/frontend/assets/js/forms-extras.js"></script>
+    <script src="${contextPath}/frontend/assets/js/forms-selects.js"></script>
+    <%--    <script src="${contextPath}/frontend/assets/js/forms-tagify.js"></script>--%>
+    <%--    <script src="${contextPath}/frontend/assets/js/forms-typeahead.js"></script>--%>"

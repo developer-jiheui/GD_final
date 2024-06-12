@@ -69,6 +69,7 @@
           rel="stylesheet">
 
     <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/fonts/boxicons.css">
     <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/fonts/fontawesome.css">
     <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/fonts/flag-icons.css">
@@ -100,7 +101,10 @@
     <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
     <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">
     <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css">
-
+    <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css" />
+    <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.css" />
+    <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/libs/jquery-timepicker/jquery-timepicker.css" />
+    <link rel="stylesheet" href="${contextPath}/frontend/assets/vendor/libs/pickr/pickr-themes.css" />
 
     <!-- Page CSS -->
 

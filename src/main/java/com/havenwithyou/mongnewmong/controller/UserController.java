@@ -1,5 +1,6 @@
 package com.havenwithyou.mongnewmong.controller;
 
+import com.havenwithyou.mongnewmong.dto.DogDto;
 import com.havenwithyou.mongnewmong.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -8,11 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Map;
 
@@ -23,26 +23,27 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping(value="/checkEmail.do", produces="application/json")
+    @PostMapping(value = "/checkEmail.do", produces = "application/json")
     public ResponseEntity<Map<String, Object>> checkEmail(@RequestBody Map<String, Object> params) {
         return userService.checkEmail(params);
     }
 
-    @PostMapping(value="/sendCode.do", produces="application/json")
+    @PostMapping(value = "/sendCode.do", produces = "application/json")
     public ResponseEntity<Map<String, Object>> sendCode(@RequestBody Map<String, Object> params) {
         return userService.sendCode(params);
     }
 
-    @PostMapping(value="/checkUserName.do", produces="application/json")
+    @PostMapping(value = "/checkUserName.do", produces = "application/json")
     public ResponseEntity<Map<String, Object>> checkUserName(@RequestBody Map<String, Object> params) {
         return userService.checkUserName(params);
     }
 
 
     @PostMapping("/signup.do")
-    public ResponseEntity<Map<String, Object>> signup(@RequestBody Map<String, Object> params,HttpServletResponse response,HttpServletRequest request ) {
-       return userService.signup(params ,request, response);
+    public ResponseEntity<Map<String, Object>> signup(@RequestBody Map<String, Object> params, HttpServletResponse response, HttpServletRequest request) {
+        return userService.signup(params, request, response);
     }
+
     //@TODO LOGIN
     @PostMapping("/signin.do")
     public void signin(HttpServletRequest request, HttpServletResponse response) {
@@ -58,30 +59,70 @@ public class UserController {
 
     //@TODO PROFILE SETTING
     @GetMapping("profile")
-    public String profile() {return "pages/user/profile";}
+    public String profile() {
+        return "pages/user/profile";
+    }
 
     @GetMapping("settings")
-    public String settings() {return "pages/user/settings";}
+    public String settings() {
+        return "pages/user/settings";
+    }
 
     @GetMapping("billing")
-    public String billing() {return "pages/user/billing";}
+    public String billing() {
+        return "pages/user/billing";
+    }
 
     @PostMapping("/editProfilePhoto")
     public ResponseEntity<Map<String, Object>> editProfilePhoto(MultipartHttpServletRequest multipartRequest) {
-        return new ResponseEntity<Map<String,Object>>( Map.of("isRegisterPhoto", userService.registerProfilePhoto(multipartRequest)), HttpStatus.OK );
+        return new ResponseEntity<Map<String, Object>>(Map.of("isRegisterPhoto", userService.registerProfilePhoto(multipartRequest)), HttpStatus.OK);
     }
 
     @PostMapping("/userType")
     public String userType(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println(userService.setType(request, response));
-
-        return "pages/register/"+userService.setType(request, response);
+        return "pages/register/" + userService.setType(request, response);
     }
 
     @GetMapping("/furtherRegister")
     public String furtherRegister(HttpServletRequest request, HttpServletResponse response) {
-        request.setAttribute("page","/WEB-INF/views/pages/register/user/registerDog.jsp");
-        return "pages/register/furtherRegister";
+        return "pages/register/user/registerDog";
+    }
+
+    @PostMapping("/registerDog")
+    public String registerDog(MultipartHttpServletRequest multipartRequest
+            , RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("inserted", userService.addDog(multipartRequest));
+        return "redirect:/user/dogList";
+    }
+    @PostMapping("/editDog")
+    public String editDog(MultipartHttpServletRequest multipartRequest
+            , RedirectAttributes redirectAttributes) {
+       // redirectAttributes.addFlashAttribute("inserted", userService.editDog(multipartRequest));
+        return "redirect:/user/dogList";
+    }
+
+    @GetMapping("/dogList")
+    public String list(HttpServletRequest request) {
+        userService.loadDogList(request);
+        return "pages/register/user/registerDog";
+    }
+
+    @GetMapping(value = "/removeDog")
+    public String removeDog(HttpServletRequest request, @RequestParam(value = "dogId", required = false, defaultValue = "0") int dogId) {
+        return userService.removeDog(request, dogId) == 1 ? "삭제되었습니다." : "삭제되지 않았습니다.";
+    }
+
+    @GetMapping("/dogDetail")
+    public String loadDogDetail(@RequestParam(value = "dogId", required = false, defaultValue = "0") int dogId, Model model
+    ) {
+        userService.loadDogDetail(dogId, model);
+        return "pages/editDog";
+    }
+
+
+    @PostMapping(value = "/removeDog", produces = "application/json")
+    public ResponseEntity<Map<String, Object>> removeDog(@RequestParam(value = "dogId", required = false, defaultValue = "0") int dogId, HttpServletRequest request) {
+        return ResponseEntity.ok(Map.of("removeResult", userService.removeDog(request, dogId) == 1 ? "삭제되었습니다." : "삭제되지 않았습니다."));
     }
 
 }

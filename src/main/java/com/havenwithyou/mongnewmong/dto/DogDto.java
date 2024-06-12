@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class DogDto {
-    int id, weight;
-    String name, parent1Name, parent2Name, parent1Phone, parent2Phone, address, breed, bday, classes,avatar;
+    int dogId, weight, userid;
+    String name, parent1Name, parent2Name, parent1Phone, parent2Phone, address, breed, birthday, classes,avatar;
 }
