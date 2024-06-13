@@ -1,11 +1,9 @@
 package com.havenwithyou.mongnewmong.mapper;
 
-import com.havenwithyou.mongnewmong.dto.DogDto;
 import com.havenwithyou.mongnewmong.dto.LeftUserDto;
 import com.havenwithyou.mongnewmong.dto.UserDto;
 import org.apache.ibatis.annotations.Mapper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,9 +18,9 @@ public interface UserMapper {
   int checkEmail(String email);
   int setUserType(UserDto user);
   UserDto getDupUserName(Map<String, Object> params);
-
   void updateProfilePhoto(Map<String, String> uploadPath);
-
-
   void updateDogNo(UserDto user);
+  void updateCenterId(UserDto admin);
+
+  List<UserDto> getAllUsers(int userid);
 }

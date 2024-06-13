@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import java.io.File;
 import java.io.PrintWriter;
 import java.nio.file.Files;
+import java.sql.Date;
 import java.util.*;
 
 
@@ -77,11 +78,13 @@ public class UserServiceImpl implements UserService {
         String password = MySecurityUtils.getSha256((String) params.get("pw"));
         //int userType = Integer.parseInt(request.getParameter("userType"));
 
+        System.out.println(name);
 
         UserDto userDto = UserDto.builder()
                 .name(name).email(email).phoneNo(phone)
                 .username(username).pw(password)
-                .username(username)
+                .username(username).userType(-1)
+                .dogNo(0).accepted(0).avatar("/resources/images/roundStickers/defaultAvatar.png")
                 .build();
 
         int insertCount = userMapper.insertUser(userDto);
@@ -122,15 +125,13 @@ public class UserServiceImpl implements UserService {
             if (email.contains("@")) {
                 params = Map.of("email", email
                         , "pw", pw);
-
                 user = userMapper.getUserByMap(params);
-
             } else {
                 params = Map.of("username", email
                         , "pw", pw);
                 user = userMapper.getUserByMap(params);
-
             }
+
             response.setContentType("text/html; charset=UTF-8");
             PrintWriter out = response.getWriter();
             out.println("<script>");
@@ -153,9 +154,8 @@ public class UserServiceImpl implements UserService {
 
                 // 회원 정보를 세션(브라우저 닫기 전까지 정보가 유지되는 공간, 기본 30분 정보 유지)에 보관하기
                 HttpSession session = request.getSession();
-
                 session.setAttribute("user", user);
-                session.setMaxInactiveInterval(600 * 10);  // 세션 유지 시간 1800초(30분) 설정
+                session.setMaxInactiveInterval(60 * 30);  // 세션 유지 시간 1800초(30분) 설정
 
 
                 // Sign In 후 페이지 이동
@@ -270,13 +270,13 @@ public class UserServiceImpl implements UserService {
 
         UserDto user = (UserDto) session.getAttribute("user");
         user.setUserType(userType);
-        int userTypeCount = userMapper.setUserType(user);
-        if (userTypeCount == 0) {
-            role = "admin";
-        } else if (userTypeCount == 1) {
-            role = "user/registerDog";
+        userMapper.setUserType(user);
+        if (userType == 0) {
+            role = "pages/register/admin/register";
+        } else if (userType == 1) {
+            role = "pages/register/user/registerDog";
         } else {
-            role = "teacher";
+            role = "pages/register/teacher/register";
         }
 
         session.setAttribute("user", user);
@@ -373,7 +373,7 @@ public class UserServiceImpl implements UserService {
         return user.getUserid();
     }
 
-    @Transactional(readOnly = true)
+//    @Transactional(readOnly = true)
     @Override
     public void loadDogList(HttpServletRequest request) {
 
@@ -383,6 +383,8 @@ public class UserServiceImpl implements UserService {
         session.setAttribute("dogList", dogMapper.getDogList(user.getUserid()));
 
     }
+
+
 
     @Override
     public int removeDog(HttpServletRequest request, int id) {
@@ -451,7 +453,67 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int editDog(MultipartHttpServletRequest multipartRequest) {
-        return 0;
+        int dogId = Integer.parseInt(multipartRequest.getParameter("dogId"));
+
+        DogDto dog2edit = dogMapper.getDogById(dogId);
+
+        dog2edit.setName(Objects.equals(multipartRequest.getParameter("edModalDogName"), dog2edit.getName()) ?dog2edit.getName():multipartRequest.getParameter("modalDogName"));
+        dog2edit.setParent1Name(Objects.equals(multipartRequest.getParameter("edParent1Name"), dog2edit.getParent1Name()) ?dog2edit.getParent1Name():multipartRequest.getParameter("parent1Name"));
+        dog2edit.setParent2Name(Objects.equals(multipartRequest.getParameter("edParent2Name"), dog2edit.getParent2Name()) ?dog2edit.getParent2Name():multipartRequest.getParameter("parent2Name"));
+        dog2edit.setParent1Phone(Objects.equals(multipartRequest.getParameter("edParent1phone"), dog2edit.getParent1Phone()) ?dog2edit.getParent1Phone():multipartRequest.getParameter("parent1phone"));
+        dog2edit.setParent2Phone(Objects.equals(multipartRequest.getParameter("edParent2phone"), dog2edit.getParent2Phone()) ?dog2edit.getParent2Phone():multipartRequest.getParameter("parent2phone"));
+        dog2edit.setBirthday(Objects.equals((String) multipartRequest.getParameter("edBirthday"), dog2edit.getBirthday()) ?dog2edit.getBirthday():multipartRequest.getParameter("birthday"));
+        dog2edit.setBreed(Objects.equals(multipartRequest.getParameter("edBreed"), dog2edit.getBreed()) ?dog2edit.getBreed():multipartRequest.getParameter("breed"));
+        dog2edit.setWeight(Integer.parseInt(multipartRequest.getParameter("edWeight"))==dog2edit.getWeight()?dog2edit.getWeight():Integer.parseInt(multipartRequest.getParameter("weight")));
+
+        String zipcode = multipartRequest.getParameter("edZonecode");
+        String address = multipartRequest.getParameter("edAddress");
+        String detailAddress = multipartRequest.getParameter("edDetailAddress");
+        String extraAddress = multipartRequest.getParameter("edExtraAddress");
+        String fullAddress = "(" + zipcode + ")" + address + ", " + detailAddress + ", " + extraAddress;
+
+        dog2edit.setAddress(fullAddress);
+        dog2edit.setClasses(multipartRequest.getParameter("classes"));
+
+        String avatar;
+
+        // avatar for dogs
+        List<MultipartFile> files = multipartRequest.getFiles("edFiles");
+
+        String uploadPath = myFileUtils.getUploadPath();
+
+        File dir = new File(uploadPath);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        if (files.get(0).getSize() > 0) {
+            String originalFilename = files.get(0).getOriginalFilename();
+            String fileSystemName = myFileUtils.getFilesystemName(originalFilename);
+            File file = new File(dir, fileSystemName);
+            try {
+                MultipartFile multipartFile = files.get(0);
+                multipartFile.transferTo(file);
+
+                // 이미지의 썸네일 만들기
+                File cutFile = new File(dir, "s_" + fileSystemName);
+                Thumbnails.of(file)             // 원본 이미지 파일
+                        .size(200, 200)         // 가로 96px, 세로 64px
+                        .toFile(cutFile);   // 썸네일 이미지 파일
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                avatar = "/resources/images/roundStickers/kisses.png";
+            }
+            avatar = uploadPath + "/s_" + fileSystemName;
+
+        } else {
+            avatar = "/resources/images/roundStickers/kisses.png";
+        }
+        dog2edit.setAvatar(avatar);
+
+        return dogMapper.updateDog(dog2edit);
+
     }
 
 

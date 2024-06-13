@@ -59,6 +59,7 @@
 <!-- Main JS -->
 <script src="${contextPath}/frontend/assets/js/main.js"></script>
 
+<script src="${contextPath}/frontend/assets/js/tables-datatables-basic.js"></script>
 
 <!-- Page JS -->
 

@@ -50,6 +50,21 @@
         ,#{classes}
         )
     </insert>
+    <update id="updateDog">
+        UPDATE DOG_T
+        SET NAME = #{name}
+        ,PARENT1_NAME = #{parent1Name}
+        ,PARENT2_NAME =#{parent2Name}
+        ,PARENT1_PHONE =#{parent1Phone}
+        ,PARENT2_PHONE =#{parent2Phone}
+        ,ADDRESS  =#{address}
+        ,BREED =#{breed}
+        ,WEIGHT =#{weight}
+        ,BIRTHDAY =#{birthday}
+        ,AVATAR =#{avatar}
+        ,CLASSES =#{classes}
+        WHERE DOG_ID = #{dogId}
+    </update>
     <select id="getDogById" resultType="com.havenwithyou.mongnewmong.dto.DogDto">
         SELECT  DOG_ID
         ,USER_ID

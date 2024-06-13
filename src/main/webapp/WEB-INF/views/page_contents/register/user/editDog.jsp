@@ -69,14 +69,14 @@
                                                             alt="user-avatar"
                                                             class="d-block rounded"
                                                             style="height:150px; margin-bottom: 1rem"
-                                                            id="avatar"
+                                                            id="ed-avatar"
                                                     />
                                                 </div>
                                                 <div class="align-center">
                                                     <div class="col-12 col-md-9 fv-plugins-icon-container">
                                                         <label class="form-label"
-                                                               for="modalDogName2">강아지 이름</label>
-                                                        <input type="text" id="modalDogName2"
+                                                               for="ed-modalDogName">강아지 이름</label>
+                                                        <input type="text" id="ed-modalDogName"
                                                                name="modalDogName"
                                                                class="form-control"
                                                                value="${dogDetail.name}">
@@ -87,14 +87,14 @@
                                             </div>
                                         </div>
                                         <div class="button-wrapper col-md-6">
-                                            <label for="files2" class="btn btn-primary me-2 mb-4"
+                                            <label for="ed-files" class="btn btn-primary me-2 mb-4"
                                                    tabindex="0">
                                                 <span class="d-none d-sm-block">Upload new photo</span>
                                                 <i class="bx bx-upload d-block d-sm-none"></i>
                                                 <input
                                                         type="file"
                                                         name="files"
-                                                        id="files2"
+                                                        id="ed-files"
                                                         class="account-file-input"
                                                         hidden
                                                         accept="image/png, image/jpeg"
@@ -109,7 +109,7 @@
                                                         const deactivateAcc = document.querySelector('#formAccountDeactivation');
 
                                                         // Update/reset user image of account page
-                                                        let accountUserImage = document.getElementById('avatar');
+                                                        let accountUserImage = document.getElementById('ed-avatar');
                                                         const fileInput = document.querySelector('.account-file-input'),
                                                             resetFileInput = document.querySelector('.account-image-reset');
 
@@ -288,13 +288,13 @@
                                 registerClasses.style.display="";
                                 let arr = Array.from(dbClasses, Number);
                                 for (let i = 0; i < arr.length; i++) {
-                                 if(arr[i]===1){selectedClasses.options[0].selected=true;}
-                                 if(arr[i]===2){selectedClasses.options[1].selected=true;}
-                                 if(arr[i]===3){selectedClasses.options[2].selected=true;}
-                                 if(arr[i]===4){selectedClasses.options[3].selected=true;}
-                                 if(arr[i]===5){selectedClasses.options[4].selected=true;}
-                                 if(arr[i]===6){selectedClasses.options[5].selected=true;}
-                                 if(arr[i]===7){selectedClasses.options[6].selected=true;}
+                                 if(arr[i]===1){selectedClasses.options[0].checked=true;}
+                                 if(arr[i]===2){selectedClasses.options[1].checked=true;}
+                                 if(arr[i]===3){selectedClasses.options[2].checked=true;}
+                                 if(arr[i]===4){selectedClasses.options[3].checked=true;}
+                                 if(arr[i]===5){selectedClasses.options[4].checked=true;}
+                                 if(arr[i]===6){selectedClasses.options[5].checked=true;}
+                                 if(arr[i]===7){selectedClasses.options[6].checked=true;}
                                 }
 
                             }

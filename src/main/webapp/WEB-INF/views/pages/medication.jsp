@@ -11,6 +11,6 @@
 <jsp:include page="/WEB-INF/views/layout/navbar.jsp"/>
 <jsp:include page="/WEB-INF/views/layout/user.jsp"/>
 
-<jsp:include page="/WEB-INF/views/page_contents/medication.jsp"/>
+<jsp:include page="/WEB-INF/views/page_contents/home/user/medication.jsp"/>
 
 <jsp:include page="/WEB-INF/views/layout/footer.jsp"/>

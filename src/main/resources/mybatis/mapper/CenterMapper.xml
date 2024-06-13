@@ -6,17 +6,17 @@
 <mapper namespace="com.havenwithyou.mongnewmong.mapper.CenterMapper">
 
     <resultMap id="centerMap" type="CenterDto">
-        <id  property="id"	 column="CENTER_ID" />
+        <id  property="centerid"	 column="CENTER_ID" />
         <id  property="address"	 column="CENTER_ADDRESS" />
         <id  property="name"	 column="CENTER_NAME" />
-        <id  property="phoneNo"   column="CENTER_PHONE_NUM"/>
+        <id  property="centerPhone"   column="CENTER_PHONE_NUM"/>
         <id property="logo" column="CENTER_LOGO"/>
     </resultMap>
 
 
     <insert id="insertCenter"
             parameterType="CenterDto">
-        <selectKey order="AFTER" keyProperty="id" resultType="int">
+        <selectKey order="AFTER" keyProperty="centerid" resultType="int">
             SELECT CENTER_SEQ.CURRVAL
             FROM DUAL
         </selectKey>
@@ -30,7 +30,7 @@
         CENTER_SEQ.NEXTVAL
         , #{address}
         , #{name}
-        , #{phoneNo}
+        , #{centerPhone}
         , NULL
         )
     </insert>

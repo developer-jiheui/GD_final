@@ -80,7 +80,7 @@ public class UserController {
 
     @PostMapping("/userType")
     public String userType(HttpServletRequest request, HttpServletResponse response) {
-        return "pages/register/" + userService.setType(request, response);
+        return userService.setType(request, response);
     }
 
     @GetMapping("/furtherRegister")

@@ -41,6 +41,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addPathPatterns
                         ("/pages/home"
                                 , "/"
+                                , "/home"
                                 , "/pages/notes"
                                 , "/pages/news"
                                 , "/pages/album"
@@ -62,6 +63,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                                 , "/user/furtherRegister"
                                 , "/user/dogList"
                                 , "/user/registerDog"
+                                , "/admin/**"
                         );
 
         registry.addInterceptor(requiredFurtherSignupInterceptor)

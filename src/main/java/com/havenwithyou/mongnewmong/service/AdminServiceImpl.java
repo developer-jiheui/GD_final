@@ -1,13 +1,18 @@
 package com.havenwithyou.mongnewmong.service;
 
+import org.springframework.ui.Model;
 import com.havenwithyou.mongnewmong.dto.CenterDto;
 import com.havenwithyou.mongnewmong.dto.UserDto;
 import com.havenwithyou.mongnewmong.mapper.CenterMapper;
 import com.havenwithyou.mongnewmong.mapper.UserMapper;
+import jakarta.mail.Session;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+
 @RequiredArgsConstructor
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -29,18 +34,41 @@ public class AdminServiceImpl implements AdminService{
         CenterDto center = CenterDto.builder()
                 .address(fullAddress)
                 .name(name)
-                .phoneNo(phoneNo)
+                .centerPhone(phoneNo)
                 .build();
 
         int centerId = centerMapper.insertCenter(center);
 
+        System.out.println("----------------------------------");
+        System.out.println("--------------CENTER ID--------------------");
+        System.out.println(centerId);
+        System.out.println("----------------------------------");
+        System.out.println("----------------------------------");
         if(centerId >0) {
             UserDto admin = (UserDto) request.getSession().getAttribute("user");
             admin.setCenterid(centerId);
+            admin.setAccepted(1);
+            userMapper.updateCenterId(admin);
         }
-        else{
 
-        }
 
+    }
+
+    @Override
+    public void loadAllUsers(HttpServletRequest request, Model model) {
+        UserDto admin = (UserDto) request.getSession().getAttribute("user");
+
+        ArrayList<UserDto> userList = (ArrayList<UserDto>)userMapper.getAllUsers(admin.getUserid());
+        System.out.println("---------------------------------");
+        System.out.println("---------------------------------");
+        System.out.println("---------------------------------");
+        System.out.println("---------------------------------");
+        System.out.println(userList);
+        System.out.println("---------------------------------");
+        System.out.println("---------------------------------");
+        System.out.println("---------------------------------");
+        System.out.println("---------------------------------");
+        model.addAttribute("userList", userList
+                );
     }
 }

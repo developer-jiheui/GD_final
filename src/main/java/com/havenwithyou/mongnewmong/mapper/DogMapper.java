@@ -13,4 +13,6 @@ public interface DogMapper {
     int deleteDog(int dogId);
 
     DogDto getDogById(int dogId);
+
+    int updateDog(DogDto dog2edit);
 }

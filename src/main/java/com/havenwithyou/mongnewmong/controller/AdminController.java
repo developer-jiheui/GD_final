@@ -1,11 +1,13 @@
 package com.havenwithyou.mongnewmong.controller;
 
 import com.havenwithyou.mongnewmong.service.AdminService;
+import com.havenwithyou.mongnewmong.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,20 +22,17 @@ public class AdminController {
 
     private final AdminService adminService;
 
+
     @GetMapping("/register")
     public String register() {
-        return "userType/admin/register_pages/register";
-    }
-
-    @PostMapping("/register")
-    public String classInfo() {
-        return "userType/admin/register_pages/classInfo";
+        return "pages/register/admin/register";
     }
 
     //register daycare
-    @PostMapping("/register.do")
-    public void signup(HttpServletResponse response, HttpServletRequest request) {
+    @PostMapping("/register")
+    public String signup(HttpServletResponse response, HttpServletRequest request) {
         adminService.registerCenter(request, response);
+        return "pages/register/admin/classInfo";
     }
 
     @GetMapping("/settings")
@@ -49,49 +48,49 @@ public class AdminController {
 
     @PostMapping("/classInfo")
     public String adminRegistered() {
-        return "userType/admin/pages/home";
+        //adminService.registerClass();
+        return "pages/home";
     }
 
 
     /*************SETTINGS***************/
     @GetMapping("/settings/admins")
     public String admins() {
-        return "userType/admin/pages/settings/admins";
+        return "pages/settings/admin/admins";
     }
 
     @GetMapping("/settings/users")
-    public String users() {
-        return "userType/admin/pages/settings/users";
-    }
+    public String users() {return "pages/settings/admin/users";}
 
     @GetMapping("/settings/teachers")
     public String teachers() {
-        return "userType/admin/pages/settings/teachers";
+        return "pages/settings/admin/teachers";
     }
 
     @GetMapping("/settings/inviteAdmin")
-    public String inviteAdmin() {
-        return "userType/admin/pages/settings/inviteAdmin";
+    public String inviteAdmin(HttpServletRequest request, Model model) {
+        adminService.loadAllUsers(request, model);
+        return "pages/settings/admin/inviteAdmin";
     }
 
     @GetMapping("/settings/inviteUser")
     public String inviteUser() {
-        return "userType/admin/pages/settings/inviteUser";
+        return "pages/settings/admin/inviteUser";
     }
 
     @GetMapping("/settings/inviteTeacher")
     public String inviteTeacher() {
-        return "userType/admin/pages/settings/inviteTeacher";
+        return "pages/settings/admin/inviteTeacher";
     }
 
     @GetMapping("/settings/classes")
     public String classes() {
-        return "userType/admin/pages/settings/classes";
+        return "pages/settings/admin/classes";
     }
 
     @GetMapping("/settings/center")
     public String center() {
-        return "userType/admin/pages/settings/center";
+        return "pages/settings/admin/center";
     }
 
 

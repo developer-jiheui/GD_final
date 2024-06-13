@@ -93,4 +93,4 @@
 </script>
 
 <!--------VALIDATION & TAB--------->
-<jsp:include page="/WEB-INF/views/layout/src_footer.jsp"/>
+<jsp:include page="/WEB-INF/views/layout/newFooter.jsp"/>

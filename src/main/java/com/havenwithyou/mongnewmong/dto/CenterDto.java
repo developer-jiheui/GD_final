@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class CenterDto {
-    private int id;
-    private String address, name, phoneNo, logo;
+    private int centerid;
+    private String address, name, centerPhone, logo;
 }

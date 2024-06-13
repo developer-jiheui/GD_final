@@ -31,7 +31,7 @@
                         <h4 class="mb-2">환영합니다 ${sessionScope.user.name} 원장님❣️</h4>
                         <p class="mb-4">유치원의 기본 정보를 입력해주세요!</p>
 
-                        <form id="formDaycare" class="mb-3" action="${contextPath}/admin/register.do" method="POST">
+                        <form id="formDaycare" class="mb-3" action="${contextPath}/admin/register" method="POST">
                             <label for="zonecode" class="form-label">유치원 주소</label>
                             <div class="input-container">
                                 <div class="address-input-group">

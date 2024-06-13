@@ -7,9 +7,19 @@
 <c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
 
 <jsp:include page="/WEB-INF/views/layout/newHeader.jsp"/>
-<jsp:include page="/WEB-INF/views/layout/sidebar.jsp"/>
+
 <c:if test="${sessionScope.user.userType==0}">
-    <jsp:include page="/WEB-INF/views/userType/admin/layout/navbar.jsp"/>
+    <jsp:include page="/WEB-INF/views/layout/admin/sidebar.jsp"/>
+</c:if>
+<c:if test="${sessionScope.user.userType==1}">
+    <jsp:include page="/WEB-INF/views/layout/sidebar.jsp"/>
+</c:if>
+<c:if test="${sessionScope.user.userType==2}">
+    <jsp:include page="/WEB-INF/views/layout/sidebar.jsp"/>
+</c:if>
+
+<c:if test="${sessionScope.user.userType==0}">
+    <jsp:include page="/WEB-INF/views/layout/admin/navbar.jsp"/>
 </c:if>
 <c:if test="${sessionScope.user.userType==1}">
     <jsp:include page="/WEB-INF/views/layout/navbar.jsp"/>
@@ -19,18 +29,14 @@
 </c:if>
 <jsp:include page="/WEB-INF/views/layout/user.jsp"/>
 
-<%--@TODO FIX THIS--%>
-<c:if test="${sessionScope.user.userType==-1}">
-    <jsp:include page="/WEB-INF/views/page_contents/home.jsp"/>
-</c:if>
 <c:if test="${sessionScope.user.userType==0}">
-    <jsp:include page="/WEB-INF/views/userType/admin/page_contents/home.jsp"/>
+    <jsp:include page="/WEB-INF/views/page_contents/home/admin/home.jsp"/>
 </c:if>
 <c:if test="${sessionScope.user.userType==1}">
-    <jsp:include page="/WEB-INF/views/page_contents/home.jsp"/>
+    <jsp:include page="/WEB-INF/views/page_contents/home/user/home.jsp"/>
 </c:if>
 <c:if test="${sessionScope.user.userType==2}">
-    <jsp:include page="/WEB-INF/views/page_contents/home.jsp"/>
+    <jsp:include page="/WEB-INF/views/page_contents/home/user/home.jsp"/>
 </c:if>
 
 <jsp:include page="/WEB-INF/views/layout/newFooter.jsp"/>

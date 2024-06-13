@@ -7,6 +7,7 @@
 
   <resultMap id="userMap" type="UserDto">
     <id  property="userid"	 column="USER_ID" />
+<!--    <result  property="name"	 column="NAME" />-->
     <id  property="name"	 column="NAME" />
     <id  property="email"	 column="EMAIL" />
     <id  property="phoneNo"   column="PHONE_NUM"/>
@@ -20,6 +21,12 @@
     <id  property="dogNo"     column="DOG_NO"/>
     <id  property="accepted"     column="ACCEPTED"/>
     <id property="avatar" column="AVATAR"/>
+    <association property="centerid" javaType="centerDto">
+      <id  property="centerid"	 column="CENTER_ID" />
+      <id  property="address"	 column="CENTER_ADDRESS" />
+      <id  property="name"	 column="CENTER_NAME" />
+      <id  property="centerPhone"   column="CENTER_PHONE_NUM"/>
+      <id property="logo" column="CENTER_LOGO"/>    </association>
 
     <association property="userid" javaType="dogDto">
       <id  property="dogId"	 column="DOG_ID" />
@@ -68,12 +75,12 @@
     , #{username}
     , #{pw}
     , #{userType}
-    , CURRENT_DATE
+    , SYSDATE
+    , SYSDATE
     , NULL
     , NULL
-    , NULL
-    , 0
-    , 0
+    , #{dogNo}
+    , #{accepted}
     , #{avatar}
     )
   </insert>
@@ -99,6 +106,11 @@
     , NULL
     )
   </insert>
+  <select id="getAllUsers" resultType="userDto">
+    SELECT USER_ID, NAME, EMAIL, PHONE_NUM PHONE_NO, USER_NAME, USER_TYPE, PW_MODIFY_DT, SIGNUP_DT, AVATAR,
+    CENTER_ID, INVITE_ID, DOG_NO, ACCEPTED
+    FROM USER_T
+  </select>
 
   <select id="checkEmail"
           parameterType="String"
@@ -144,8 +156,6 @@
 
 
 
-
-
   <update id="updateAccessHistory">
     UPDATE ACCESS_HISTORY_T
        SET SIGNOUT_DT = CURRENT_DATE
@@ -161,11 +171,6 @@
 
   <update id="setUserType"
           parameterType="userDto">
-    <selectKey order="AFTER" keyProperty="userType" resultType="int">
-      SELECT USER_TYPE
-      FROM USER_T
-      WHERE USER_ID = #{userid}
-    </selectKey>
     UPDATE USER_T
     SET USER_TYPE = #{userType}
     WHERE USER_ID = #{userid}
@@ -176,6 +181,13 @@
     UPDATE USER_T
     SET DOG_NO = #{dogNo}
     WHERE USER_ID = #{userid}
+  </update>
+  <update id="updateCenterId">
+    UPDATE USER_T
+    SET CENTER_ID = #{centerid},
+    ACCEPTED = #{accepted}
+    WHERE USER_ID = #{userid}
+
   </update>
 
 
