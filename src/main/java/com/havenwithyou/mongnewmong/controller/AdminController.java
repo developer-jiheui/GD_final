@@ -8,10 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -37,13 +34,13 @@ public class AdminController {
 
     @GetMapping("/settings")
     public String adminSettings() {
-        return "userType/admin/pages/settings";
+        return "pages/settings/admin/admins";
     }
 
 
     @GetMapping("/home")
     public String adminHome() {
-        return "userType/admin/pages/home";
+        return "pages/home";
     }
 
     @PostMapping("/classInfo")
@@ -54,6 +51,12 @@ public class AdminController {
 
 
     /*************SETTINGS***************/
+//    @GetMapping("/userList")
+//    public String userList(@RequestParam Integer, Model model) {
+//        return "pages/settings/admin/admins";
+//    }
+//
+
     @GetMapping("/settings/admins")
     public String admins() {
         return "pages/settings/admin/admins";

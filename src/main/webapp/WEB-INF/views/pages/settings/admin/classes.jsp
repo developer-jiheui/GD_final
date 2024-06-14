@@ -7,9 +7,9 @@
 
 <c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
 
-
 <jsp:include page="/WEB-INF/views/layout/newHeader.jsp"/>
-<jsp:include page="/WEB-INF/views/layout/sidebar.jsp"/>
+<jsp:include page="/WEB-INF/views/layout/header.jsp"/>
+<jsp:include page="/WEB-INF/views/layout/admin/sidebar.jsp"/>
 <jsp:include page="/WEB-INF/views/layout/admin/navbar.jsp"/>
 <jsp:include page="/WEB-INF/views/layout/user.jsp"/>
 

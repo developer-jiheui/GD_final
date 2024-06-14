@@ -12,7 +12,6 @@
     <div class="container-xxl d-flex align-items-stretch flex-grow-1 p-0">
 
 
-
         <div class="flex-shrink-1 flex-grow-1 container-p-x container-p-y">
 
 
@@ -102,8 +101,11 @@
                     </div>
                 </div>
             </div>
+
+
             <!-- Users List Table -->
             <div class="card">
+                <!--------SEARCH FILTER------>
                 <div class="card-header border-bottom">
                     <h5 class="card-title">Search Filter</h5>
                     <div class="d-flex justify-content-between align-items-center row py-3 gap-3 gap-md-0">
@@ -128,21 +130,27 @@
                         </select></div>
                     </div>
                 </div>
+
+                <!------------------SORT----------------->
                 <div class="card-datatable table-responsive">
                     <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
                         <div class="row mx-2">
                             <div class="col-md-2">
                                 <div class="me-3">
-                                    <div class="dataTables_length" id="DataTables_Table_0_length"><label><select
-                                            name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
-                                            class="form-select">
-                                        <option value="10">10</option>
-                                        <option value="25">25</option>
-                                        <option value="50">50</option>
-                                        <option value="100">100</option>
-                                    </select></label></div>
+                                    <div class="dataTables_length" id="DataTables_Table_0_length">
+                                        <label>
+                                            <select id="display" name="display" aria-controls="DataTables_Table_0"
+                                                    class="form-select">
+                                                <option value="5">5</option>
+                                                <option value="15">15</option>
+                                                <option value="30">30</option>
+                                                <option value="50">50</option>
+                                            </select>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
+
                             <div class="col-md-10">
                                 <div class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-end flex-md-row flex-column mb-3 mb-md-0">
                                     <div id="DataTables_Table_0_filter" class="dataTables_filter"><label><input
@@ -157,7 +165,8 @@
                                         </div>
                                         <button class="btn btn-secondary add-new btn-primary" tabindex="0"
                                                 aria-controls="DataTables_Table_0" type="button"
-                                                data-bs-toggle="offcanvas" data-bs-target="#offcanvasInviteUser"><span><i
+                                                data-bs-toggle="offcanvas"
+                                                data-bs-target="#offcanvasInviteUser"><span><i
                                                 class="bx bx-plus me-0 me-sm-1"></i><span
                                                 class="d-none d-sm-inline-block">사용자 초대하기</span></span></button>
                                     </div>
@@ -183,14 +192,23 @@
                                     aria-label="Role: activate to sort column ascending">역할
                                 </th>
                                 <th class="sorting_disabled" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 76px;"
+                                    colspan="1" style="width: 119px;"
+                                    aria-label="Role: activate to sort column ascending">닉네임
+                                </th>
+                                <th class="sorting_disabled" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                    colspan="1" style="width:150px;"
                                     aria-label="Plan: activate to sort column ascending">반
                                 </th>
                                 <th class="sorting_disabled" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 150px;"
+                                    colspan="1" style="width:  76px;"
                                     aria-label="Billing: activate to sort column ascending">원생
                                 </th>
-                                <th class="sorting sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                <th class="sorting_disabled" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
+                                    colspan="1" style="width:  76px;"
+                                    aria-label="Billing: activate to sort column ascending">원생
+                                </th>
+                                <th class="sorting sorting_desc" tabindex="0" aria-controls="DataTables_Table_0"
+                                    rowspan="1"
                                     colspan="1" style="width: 73px;"
                                     aria-label="Status: activate to sort column ascending">상태
                                 </th>
@@ -202,393 +220,106 @@
 
 
                             <tbody>
-                            <c:forEach items="${userList}" var ="user" varStatus="vs">
+                            <c:forEach items="${userList}" var="user" varStatus="vs">
                                 <tr class=>
                                     <td class="  control" tabindex="0" style="display: none;"></td>
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="avatar-wrapper">
-                                                <div class="avatar avatar-sm me-3"><img src="${contextPath}${user.avatar}"
-                                                                                        alt="Avatar" class="rounded-circle">
+                                                <div class="avatar avatar-sm me-3"><img
+                                                        src="${contextPath}${user.avatar}"
+                                                        alt="Avatar" class="rounded-circle">
                                                 </div>
                                             </div>
-<%--                                            @TODO USER DETAIL PAGE--%>
-                                            <div class="d-flex flex-column"><a href="#"
-                                                                               class="text-body text-truncate"><span
-                                                    class="fw-medium">${user.name}</span></a><small class="text-muted">${user.email}</small>
+                                            <%-- @TODO USER DETAIL PAGE--%>
+                                            <div class="d-flex flex-column">
+                                                <a href="#" class="text-body text-truncate"><span
+                                                        class="fw-medium">${user.name}</span></a><small
+                                                    class="text-muted">${user.email}</small>
                                             </div>
                                         </div>
                                     </td>
-                                    <td><span class="text-truncate d-flex align-items-center"><span
-                                            class="badge badge-center rounded-pill bg-label-primary w-px-30 h-px-30 me-2"><i
-                                            class="bx bx-pie-chart-alt bx-xs"></i></span>${user.userType}</span></td>
+                                    <td>
+                                        <c:set var="role" value="${user.userType}"/>
+                                        <span class="text-truncate d-flex align-items-center">
+                                            <c:if test="${role==-1}">
+                                                미정
+                                            </c:if>
+                                            <c:if test="${role==0}">
+                                                원장님
+                                            </c:if>
+                                            <c:if test="${role==1}">
+                                                선생님
+                                            </c:if>
+                                            <c:if test="${role==2}">
+                                                보호자님
+                                            </c:if>
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="text-truncate d-flex align-items-center">
+<%--                                           <span class="badge badge-center rounded-pill bg-label-primary w-px-30 h-px-30 me-2">--%>
+<%--                                               <i class="bx bx-user bx-xs"></i>--%>
+<%--                                           </span>--%>
+                                            ${user.username}
+                                        </span>
+                                    </td>
+
                                     <td><span class="fw-medium">강아지 또는 선생님 반정보</span></td>
                                     <td>${user.dogNo}</td>
+                                    <td>
+                                        <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                                            <li
+                                                    data-bs-toggle="tooltip"
+                                                    data-popup="tooltip-custom"
+                                                    data-bs-placement="top"
+                                                    class="avatar avatar-xs pull-up"
+                                                    title="Lilian Fuller"
+                                            >
+                                                <img src="../assets/img/avatars/5.png" alt="Avatar"
+                                                     class="rounded-circle"/>
+                                            </li>
+                                            <li
+                                                    data-bs-toggle="tooltip"
+                                                    data-popup="tooltip-custom"
+                                                    data-bs-placement="top"
+                                                    class="avatar avatar-xs pull-up"
+                                                    title="Sophia Wilkerson"
+                                            >
+                                                <img src="../assets/img/avatars/6.png" alt="Avatar"
+                                                     class="rounded-circle"/>
+                                            </li>
+                                            <li
+                                                    data-bs-toggle="tooltip"
+                                                    data-popup="tooltip-custom"
+                                                    data-bs-placement="top"
+                                                    class="avatar avatar-xs pull-up"
+                                                    title="Christina Parker"
+                                            >
+                                                <img src="../assets/img/avatars/7.png" alt="Avatar"
+                                                     class="rounded-circle"/>
+                                            </li>
+                                        </ul>
+                                    </td>
                                     <td><span class="badge bg-label-success">${user.inviteid}</span></td>
                                     <td>
                                         <div class="d-inline-block text-nowrap">
                                             <button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button>
-                                            <button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i>
+                                            <button class="btn btn-sm btn-icon delete-record"><i
+                                                    class="bx bx-trash"></i>
                                             </button>
                                             <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow"
                                                     data-bs-toggle="dropdown"><i
                                                     class="bx bx-dots-vertical-rounded me-2"></i></button>
                                             <div class="dropdown-menu dropdown-menu-end m-0"><a
                                                     href="app-user-view-account.html" class="dropdown-item">View</a><a
-                                                    href="javascript:;" class="dropdown-item">Suspend</a></div>
+                                                    href="javascript:" class="dropdown-item">Suspend</a></div>
                                         </div>
                                     </td>
                                 </tr>
 
                             </c:forEach>
-<%--                            <tr class="odd">--%>
-<%--                                <td class="  control" tabindex="0" style="display: none;"></td>--%>
-<%--                                <td class="sorting_1">--%>
-<%--                                    <div class="d-flex justify-content-start align-items-center user-name">--%>
-<%--                                        <div class="avatar-wrapper">--%>
-<%--                                            <div class="avatar avatar-sm me-3"><img src="../../assets/img/avatars/2.png"--%>
-<%--                                                                                    alt="Avatar" class="rounded-circle">--%>
-<%--                                            </div>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="d-flex flex-column"><a href="app-user-view-account.html"--%>
-<%--                                                                           class="text-body text-truncate"><span--%>
-<%--                                                class="fw-medium">Zsazsa McCleverty</span></a><small class="text-muted">zmcclevertye@soundcloud.com</small>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </td>--%>
-<%--                                <td><span class="text-truncate d-flex align-items-center"><span--%>
-<%--                                        class="badge badge-center rounded-pill bg-label-primary w-px-30 h-px-30 me-2"><i--%>
-<%--                                        class="bx bx-pie-chart-alt bx-xs"></i></span>Maintainer</span></td>--%>
-<%--                                <td><span class="fw-medium">Enterprise</span></td>--%>
-<%--                                <td>Auto Debit</td>--%>
-<%--                                <td><span class="badge bg-label-success">Active</span></td>--%>
-<%--                                <td>--%>
-<%--                                    <div class="d-inline-block text-nowrap">--%>
-<%--                                        <button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button>--%>
-<%--                                        <button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i>--%>
-<%--                                        </button>--%>
-<%--                                        <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow"--%>
-<%--                                                data-bs-toggle="dropdown"><i--%>
-<%--                                                class="bx bx-dots-vertical-rounded me-2"></i></button>--%>
-<%--                                        <div class="dropdown-menu dropdown-menu-end m-0"><a--%>
-<%--                                                href="app-user-view-account.html" class="dropdown-item">View</a><a--%>
-<%--                                                href="javascript:;" class="dropdown-item">Suspend</a></div>--%>
-<%--                                    </div>--%>
-<%--                                </td>--%>
-<%--                            </tr>--%>
-<%--                            <tr class="even">--%>
-<%--                                <td class="  control" tabindex="0" style="display: none;"></td>--%>
-<%--                                <td class="sorting_1">--%>
-<%--                                    <div class="d-flex justify-content-start align-items-center user-name">--%>
-<%--                                        <div class="avatar-wrapper">--%>
-<%--                                            <div class="avatar avatar-sm me-3"><img src="../../assets/img/avatars/7.png"--%>
-<%--                                                                                    alt="Avatar" class="rounded-circle">--%>
-<%--                                            </div>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="d-flex flex-column"><a href="app-user-view-account.html"--%>
-<%--                                                                           class="text-body text-truncate"><span--%>
-<%--                                                class="fw-medium">Yoko Pottie</span></a><small class="text-muted">ypottiec@privacy.gov.au</small>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </td>--%>
-<%--                                <td><span class="text-truncate d-flex align-items-center"><span--%>
-<%--                                        class="badge badge-center rounded-pill bg-label-warning w-px-30 h-px-30 me-2"><i--%>
-<%--                                        class="bx bx-user bx-xs"></i></span>Subscriber</span></td>--%>
-<%--                                <td><span class="fw-medium">Basic</span></td>--%>
-<%--                                <td>Auto Debit</td>--%>
-<%--                                <td><span class="badge bg-label-secondary">Inactive</span></td>--%>
-<%--                                <td>--%>
-<%--                                    <div class="d-inline-block text-nowrap">--%>
-<%--                                        <button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button>--%>
-<%--                                        <button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i>--%>
-<%--                                        </button>--%>
-<%--                                        <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow"--%>
-<%--                                                data-bs-toggle="dropdown"><i--%>
-<%--                                                class="bx bx-dots-vertical-rounded me-2"></i></button>--%>
-<%--                                        <div class="dropdown-menu dropdown-menu-end m-0"><a--%>
-<%--                                                href="app-user-view-account.html" class="dropdown-item">View</a><a--%>
-<%--                                                href="javascript:;" class="dropdown-item">Suspend</a></div>--%>
-<%--                                    </div>--%>
-<%--                                </td>--%>
-<%--                            </tr>--%>
-<%--                            <tr class="odd">--%>
-<%--                                <td class="  control" tabindex="0" style="display: none;"></td>--%>
-<%--                                <td class="sorting_1">--%>
-<%--                                    <div class="d-flex justify-content-start align-items-center user-name">--%>
-<%--                                        <div class="avatar-wrapper">--%>
-<%--                                            <div class="avatar avatar-sm me-3"><img src="../../assets/img/avatars/6.png"--%>
-<%--                                                                                    alt="Avatar" class="rounded-circle">--%>
-<%--                                            </div>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="d-flex flex-column"><a href="app-user-view-account.html"--%>
-<%--                                                                           class="text-body text-truncate"><span--%>
-<%--                                                class="fw-medium">Wesley Burland</span></a><small class="text-muted">wburlandj@uiuc.edu</small>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </td>--%>
-<%--                                <td><span class="text-truncate d-flex align-items-center"><span--%>
-<%--                                        class="badge badge-center rounded-pill bg-label-info w-px-30 h-px-30 me-2"><i--%>
-<%--                                        class="bx bx-edit bx-xs"></i></span>Editor</span></td>--%>
-<%--                                <td><span class="fw-medium">Team</span></td>--%>
-<%--                                <td>Auto Debit</td>--%>
-<%--                                <td><span class="badge bg-label-secondary">Inactive</span></td>--%>
-<%--                                <td>--%>
-<%--                                    <div class="d-inline-block text-nowrap">--%>
-<%--                                        <button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button>--%>
-<%--                                        <button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i>--%>
-<%--                                        </button>--%>
-<%--                                        <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow"--%>
-<%--                                                data-bs-toggle="dropdown"><i--%>
-<%--                                                class="bx bx-dots-vertical-rounded me-2"></i></button>--%>
-<%--                                        <div class="dropdown-menu dropdown-menu-end m-0"><a--%>
-<%--                                                href="app-user-view-account.html" class="dropdown-item">View</a><a--%>
-<%--                                                href="javascript:;" class="dropdown-item">Suspend</a></div>--%>
-<%--                                    </div>--%>
-<%--                                </td>--%>
-<%--                            </tr>--%>
-<%--                            <tr class="even">--%>
-<%--                                <td class="  control" tabindex="0" style="display: none;"></td>--%>
-<%--                                <td class="sorting_1">--%>
-<%--                                    <div class="d-flex justify-content-start align-items-center user-name">--%>
-<%--                                        <div class="avatar-wrapper">--%>
-<%--                                            <div class="avatar avatar-sm me-3"><span--%>
-<%--                                                    class="avatar-initial rounded-circle bg-label-primary">VK</span>--%>
-<%--                                            </div>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="d-flex flex-column"><a href="app-user-view-account.html"--%>
-<%--                                                                           class="text-body text-truncate"><span--%>
-<%--                                                class="fw-medium">Vladamir Koschek</span></a><small class="text-muted">vkoschek17@abc.net.au</small>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </td>--%>
-<%--                                <td><span class="text-truncate d-flex align-items-center"><span--%>
-<%--                                        class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30 me-2"><i--%>
-<%--                                        class="bx bx-cog bx-xs"></i></span>Author</span></td>--%>
-<%--                                <td><span class="fw-medium">Team</span></td>--%>
-<%--                                <td>Manual - Paypal</td>--%>
-<%--                                <td><span class="badge bg-label-success">Active</span></td>--%>
-<%--                                <td>--%>
-<%--                                    <div class="d-inline-block text-nowrap">--%>
-<%--                                        <button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button>--%>
-<%--                                        <button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i>--%>
-<%--                                        </button>--%>
-<%--                                        <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow"--%>
-<%--                                                data-bs-toggle="dropdown"><i--%>
-<%--                                                class="bx bx-dots-vertical-rounded me-2"></i></button>--%>
-<%--                                        <div class="dropdown-menu dropdown-menu-end m-0"><a--%>
-<%--                                                href="app-user-view-account.html" class="dropdown-item">View</a><a--%>
-<%--                                                href="javascript:;" class="dropdown-item">Suspend</a></div>--%>
-<%--                                    </div>--%>
-<%--                                </td>--%>
-<%--                            </tr>--%>
-<%--                            <tr class="odd">--%>
-<%--                                <td class="  control" tabindex="0" style="display: none;"></td>--%>
-<%--                                <td class="sorting_1">--%>
-<%--                                    <div class="d-flex justify-content-start align-items-center user-name">--%>
-<%--                                        <div class="avatar-wrapper">--%>
-<%--                                            <div class="avatar avatar-sm me-3"><span--%>
-<%--                                                    class="avatar-initial rounded-circle bg-label-info">TW</span></div>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="d-flex flex-column"><a href="app-user-view-account.html"--%>
-<%--                                                                           class="text-body text-truncate"><span--%>
-<%--                                                class="fw-medium">Tyne Widmore</span></a><small class="text-muted">twidmore12@bravesites.com</small>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </td>--%>
-<%--                                <td><span class="text-truncate d-flex align-items-center"><span--%>
-<%--                                        class="badge badge-center rounded-pill bg-label-warning w-px-30 h-px-30 me-2"><i--%>
-<%--                                        class="bx bx-user bx-xs"></i></span>Subscriber</span></td>--%>
-<%--                                <td><span class="fw-medium">Team</span></td>--%>
-<%--                                <td>Manual - Cash</td>--%>
-<%--                                <td><span class="badge bg-label-warning">Pending</span></td>--%>
-<%--                                <td>--%>
-<%--                                    <div class="d-inline-block text-nowrap">--%>
-<%--                                        <button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button>--%>
-<%--                                        <button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i>--%>
-<%--                                        </button>--%>
-<%--                                        <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow"--%>
-<%--                                                data-bs-toggle="dropdown"><i--%>
-<%--                                                class="bx bx-dots-vertical-rounded me-2"></i></button>--%>
-<%--                                        <div class="dropdown-menu dropdown-menu-end m-0"><a--%>
-<%--                                                href="app-user-view-account.html" class="dropdown-item">View</a><a--%>
-<%--                                                href="javascript:;" class="dropdown-item">Suspend</a></div>--%>
-<%--                                    </div>--%>
-<%--                                </td>--%>
-<%--                            </tr>--%>
-<%--                            <tr class="even">--%>
-<%--                                <td class="  control" tabindex="0" style="display: none;"></td>--%>
-<%--                                <td class="sorting_1">--%>
-<%--                                    <div class="d-flex justify-content-start align-items-center user-name">--%>
-<%--                                        <div class="avatar-wrapper">--%>
-<%--                                            <div class="avatar avatar-sm me-3"><span--%>
-<%--                                                    class="avatar-initial rounded-circle bg-label-success">TB</span>--%>
-<%--                                            </div>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="d-flex flex-column"><a href="app-user-view-account.html"--%>
-<%--                                                                           class="text-body text-truncate"><span--%>
-<%--                                                class="fw-medium">Travus Bruntjen</span></a><small class="text-muted">tbruntjeni@sitemeter.com</small>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </td>--%>
-<%--                                <td><span class="text-truncate d-flex align-items-center"><span--%>
-<%--                                        class="badge badge-center rounded-pill bg-label-secondary w-px-30 h-px-30 me-2"><i--%>
-<%--                                        class="bx bx-mobile-alt bx-xs"></i></span>Admin</span></td>--%>
-<%--                                <td><span class="fw-medium">Enterprise</span></td>--%>
-<%--                                <td>Manual - Cash</td>--%>
-<%--                                <td><span class="badge bg-label-success">Active</span></td>--%>
-<%--                                <td>--%>
-<%--                                    <div class="d-inline-block text-nowrap">--%>
-<%--                                        <button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button>--%>
-<%--                                        <button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i>--%>
-<%--                                        </button>--%>
-<%--                                        <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow"--%>
-<%--                                                data-bs-toggle="dropdown"><i--%>
-<%--                                                class="bx bx-dots-vertical-rounded me-2"></i></button>--%>
-<%--                                        <div class="dropdown-menu dropdown-menu-end m-0"><a--%>
-<%--                                                href="app-user-view-account.html" class="dropdown-item">View</a><a--%>
-<%--                                                href="javascript:;" class="dropdown-item">Suspend</a></div>--%>
-<%--                                    </div>--%>
-<%--                                </td>--%>
-<%--                            </tr>--%>
-<%--                            <tr class="odd">--%>
-<%--                                <td class="  control" tabindex="0" style="display: none;"></td>--%>
-<%--                                <td class="sorting_1">--%>
-<%--                                    <div class="d-flex justify-content-start align-items-center user-name">--%>
-<%--                                        <div class="avatar-wrapper">--%>
-<%--                                            <div class="avatar avatar-sm me-3"><img src="../../assets/img/avatars/1.png"--%>
-<%--                                                                                    alt="Avatar" class="rounded-circle">--%>
-<%--                                            </div>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="d-flex flex-column"><a href="app-user-view-account.html"--%>
-<%--                                                                           class="text-body text-truncate"><span--%>
-<%--                                                class="fw-medium">Stu Delamaine</span></a><small class="text-muted">sdelamainek@who.int</small>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </td>--%>
-<%--                                <td><span class="text-truncate d-flex align-items-center"><span--%>
-<%--                                        class="badge badge-center rounded-pill bg-label-success w-px-30 h-px-30 me-2"><i--%>
-<%--                                        class="bx bx-cog bx-xs"></i></span>Author</span></td>--%>
-<%--                                <td><span class="fw-medium">Basic</span></td>--%>
-<%--                                <td>Auto Debit</td>--%>
-<%--                                <td><span class="badge bg-label-warning">Pending</span></td>--%>
-<%--                                <td>--%>
-<%--                                    <div class="d-inline-block text-nowrap">--%>
-<%--                                        <button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button>--%>
-<%--                                        <button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i>--%>
-<%--                                        </button>--%>
-<%--                                        <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow"--%>
-<%--                                                data-bs-toggle="dropdown"><i--%>
-<%--                                                class="bx bx-dots-vertical-rounded me-2"></i></button>--%>
-<%--                                        <div class="dropdown-menu dropdown-menu-end m-0"><a--%>
-<%--                                                href="app-user-view-account.html" class="dropdown-item">View</a><a--%>
-<%--                                                href="javascript:;" class="dropdown-item">Suspend</a></div>--%>
-<%--                                    </div>--%>
-<%--                                </td>--%>
-<%--                            </tr>--%>
-<%--                            <tr class="even">--%>
-<%--                                <td class="  control" tabindex="0" style="display: none;"></td>--%>
-<%--                                <td class="sorting_1">--%>
-<%--                                    <div class="d-flex justify-content-start align-items-center user-name">--%>
-<%--                                        <div class="avatar-wrapper">--%>
-<%--                                            <div class="avatar avatar-sm me-3"><span--%>
-<%--                                                    class="avatar-initial rounded-circle bg-label-primary">SO</span>--%>
-<%--                                            </div>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="d-flex flex-column"><a href="app-user-view-account.html"--%>
-<%--                                                                           class="text-body text-truncate"><span--%>
-<%--                                                class="fw-medium">Saunder Offner</span></a><small class="text-muted">soffner19@mac.com</small>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </td>--%>
-<%--                                <td><span class="text-truncate d-flex align-items-center"><span--%>
-<%--                                        class="badge badge-center rounded-pill bg-label-primary w-px-30 h-px-30 me-2"><i--%>
-<%--                                        class="bx bx-pie-chart-alt bx-xs"></i></span>Maintainer</span></td>--%>
-<%--                                <td><span class="fw-medium">Enterprise</span></td>--%>
-<%--                                <td>Auto Debit</td>--%>
-<%--                                <td><span class="badge bg-label-warning">Pending</span></td>--%>
-<%--                                <td>--%>
-<%--                                    <div class="d-inline-block text-nowrap">--%>
-<%--                                        <button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button>--%>
-<%--                                        <button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i>--%>
-<%--                                        </button>--%>
-<%--                                        <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow"--%>
-<%--                                                data-bs-toggle="dropdown"><i--%>
-<%--                                                class="bx bx-dots-vertical-rounded me-2"></i></button>--%>
-<%--                                        <div class="dropdown-menu dropdown-menu-end m-0"><a--%>
-<%--                                                href="app-user-view-account.html" class="dropdown-item">View</a><a--%>
-<%--                                                href="javascript:;" class="dropdown-item">Suspend</a></div>--%>
-<%--                                    </div>--%>
-<%--                                </td>--%>
-<%--                            </tr>--%>
-<%--                            <tr class="odd">--%>
-<%--                                <td class="  control" tabindex="0" style="display: none;"></td>--%>
-<%--                                <td class="sorting_1">--%>
-<%--                                    <div class="d-flex justify-content-start align-items-center user-name">--%>
-<%--                                        <div class="avatar-wrapper">--%>
-<%--                                            <div class="avatar avatar-sm me-3"><span--%>
-<%--                                                    class="avatar-initial rounded-circle bg-label-dark">SM</span></div>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="d-flex flex-column"><a href="app-user-view-account.html"--%>
-<%--                                                                           class="text-body text-truncate"><span--%>
-<%--                                                class="fw-medium">Stephen MacGilfoyle</span></a><small--%>
-<%--                                                class="text-muted">smacgilfoyley@bigcartel.com</small></div>--%>
-<%--                                    </div>--%>
-<%--                                </td>--%>
-<%--                                <td><span class="text-truncate d-flex align-items-center"><span--%>
-<%--                                        class="badge badge-center rounded-pill bg-label-primary w-px-30 h-px-30 me-2"><i--%>
-<%--                                        class="bx bx-pie-chart-alt bx-xs"></i></span>Maintainer</span></td>--%>
-<%--                                <td><span class="fw-medium">Company</span></td>--%>
-<%--                                <td>Manual - Paypal</td>--%>
-<%--                                <td><span class="badge bg-label-warning">Pending</span></td>--%>
-<%--                                <td>--%>
-<%--                                    <div class="d-inline-block text-nowrap">--%>
-<%--                                        <button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button>--%>
-<%--                                        <button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i>--%>
-<%--                                        </button>--%>
-<%--                                        <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow"--%>
-<%--                                                data-bs-toggle="dropdown"><i--%>
-<%--                                                class="bx bx-dots-vertical-rounded me-2"></i></button>--%>
-<%--                                        <div class="dropdown-menu dropdown-menu-end m-0"><a--%>
-<%--                                                href="app-user-view-account.html" class="dropdown-item">View</a><a--%>
-<%--                                                href="javascript:;" class="dropdown-item">Suspend</a></div>--%>
-<%--                                    </div>--%>
-<%--                                </td>--%>
-<%--                            </tr>--%>
-<%--                            <tr class="even">--%>
-<%--                                <td class="  control" tabindex="0" style="display: none;"></td>--%>
-<%--                                <td class="sorting_1">--%>
-<%--                                    <div class="d-flex justify-content-start align-items-center user-name">--%>
-<%--                                        <div class="avatar-wrapper">--%>
-<%--                                            <div class="avatar avatar-sm me-3"><img src="../../assets/img/avatars/9.png"--%>
-<%--                                                                                    alt="Avatar" class="rounded-circle">--%>
-<%--                                            </div>--%>
-<%--                                        </div>--%>
-<%--                                        <div class="d-flex flex-column"><a href="app-user-view-account.html"--%>
-<%--                                                                           class="text-body text-truncate"><span--%>
-<%--                                                class="fw-medium">Skip Hebblethwaite</span></a><small--%>
-<%--                                                class="text-muted">shebblethwaite10@arizona.edu</small></div>--%>
-<%--                                    </div>--%>
-<%--                                </td>--%>
-<%--                                <td><span class="text-truncate d-flex align-items-center"><span--%>
-<%--                                        class="badge badge-center rounded-pill bg-label-secondary w-px-30 h-px-30 me-2"><i--%>
-<%--                                        class="bx bx-mobile-alt bx-xs"></i></span>Admin</span></td>--%>
-<%--                                <td><span class="fw-medium">Company</span></td>--%>
-<%--                                <td>Manual - Cash</td>--%>
-<%--                                <td><span class="badge bg-label-secondary">Inactive</span></td>--%>
-<%--                                <td>--%>
-<%--                                    <div class="d-inline-block text-nowrap">--%>
-<%--                                        <button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button>--%>
-<%--                                        <button class="btn btn-sm btn-icon delete-record"><i class="bx bx-trash"></i>--%>
-<%--                                        </button>--%>
-<%--                                        <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow"--%>
-<%--                                                data-bs-toggle="dropdown"><i--%>
-<%--                                                class="bx bx-dots-vertical-rounded me-2"></i></button>--%>
-<%--                                        <div class="dropdown-menu dropdown-menu-end m-0"><a--%>
-<%--                                                href="app-user-view-account.html" class="dropdown-item">View</a><a--%>
-<%--                                                href="javascript:;" class="dropdown-item">Suspend</a></div>--%>
-<%--                                    </div>--%>
-<%--                                </td>--%>
-<%--                            </tr>--%>
+
                             </tbody>
                         </table>
                         <div class="row mx-2">
@@ -601,45 +332,94 @@
                             <div class="col-sm-12 col-md-6">
                                 <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
                                     <ul class="pagination">
-                                        <li class="paginate_button page-item previous disabled"
-                                            id="DataTables_Table_0_previous"><a aria-controls="DataTables_Table_0"
-                                                                                aria-disabled="true" role="link"
-                                                                                data-dt-idx="previous" tabindex="-1"
-                                                                                class="page-link">Previous</a></li>
-                                        <li class="paginate_button page-item active"><a href="#"
-                                                                                        aria-controls="DataTables_Table_0"
-                                                                                        role="link" aria-current="page"
-                                                                                        data-dt-idx="0" tabindex="0"
-                                                                                        class="page-link">1</a></li>
-                                        <li class="paginate_button page-item "><a href="#"
-                                                                                  aria-controls="DataTables_Table_0"
-                                                                                  role="link" data-dt-idx="1"
-                                                                                  tabindex="0" class="page-link">2</a>
+                                        <c:set var="beginPage" value="${beginPage}"/>
+                                        <c:set var="endPage" value="${endPage}"/>
+                                        <c:set var="totalPage" value="${totalPage}"/>
+                                        <c:set var="prevPage" value="${page-1}"/>
+                                        <c:set var="page" value="${page}"/>
+
+                                        <li id="DataTables_Table_0_previous"
+                                                class="paginate_button page-item previous">
+                                            <a aria-controls="DataTables_Table_0"
+                                        <c:if test="${page!=1}">
+                                               href="${contextPath}/admin/settings/inviteAdmin?page=${prevPage}&sort=${sortBy}&sortBy=${sortBy}&display=${display}"
+
+                                        </c:if>
+                                        <c:if test="${page==1}">
+                                               href="${contextPath}/admin/settings/inviteAdmin?page=1&sort=${sortBy}&sortBy=${sortBy}&display=${display}"
+                                        </c:if>
+                                               aria-disabled="false" role="link"
+                                                        data-dt-idx="previous" tabindex="-1"
+                                                        class="page-link">Previous</a>
                                         </li>
-                                        <li class="paginate_button page-item "><a href="#"
-                                                                                  aria-controls="DataTables_Table_0"
-                                                                                  role="link" data-dt-idx="2"
-                                                                                  tabindex="0" class="page-link">3</a>
-                                        </li>
-                                        <li class="paginate_button page-item "><a href="#"
-                                                                                  aria-controls="DataTables_Table_0"
-                                                                                  role="link" data-dt-idx="3"
-                                                                                  tabindex="0" class="page-link">4</a>
-                                        </li>
-                                        <li class="paginate_button page-item "><a href="#"
-                                                                                  aria-controls="DataTables_Table_0"
-                                                                                  role="link" data-dt-idx="4"
-                                                                                  tabindex="0" class="page-link">5</a>
-                                        </li>
-                                        <li class="paginate_button page-item next" id="DataTables_Table_0_next"><a
-                                                href="#" aria-controls="DataTables_Table_0" role="link"
-                                                data-dt-idx="next" tabindex="0" class="page-link">Next</a></li>
+
+                                        <c:forEach items="${sessionScope.pageLinkList}" var="link" varStatus="vs">
+                                                <c:set var="currPage" value="${vs.count}"/>
+                                                <li class="paginate_button page-item">
+                                                    <a href="${link}" aria-controls="DataTables_Table_0"
+                                                       role="link" aria-current="page"
+                                                       data-dt-idx="${vs.index}" tabindex="0}"
+                                                                class="page-link"
+                                                            <c:if test="${page==currPage}">
+                                                                class="page-link active"
+                                                            </c:if>
+                                                            <c:if test="${vs.count>endPage}">
+                                                                style="display: none"
+                                                            </c:if>
+                                                    >${vs.count}</a>
+                                                </li>
+
+<%--                                        @TODO CHANGE THE ACTIVE STATUS FOR PAGE LINKS--%>
+                                        </c:forEach>
+
+                                            <c:set var="nextPage" value="${page+1}"/>
+                                            <li class="paginate_button page-item next" id="DataTables_Table_0_next"><a
+
+                                        <c:if test="${page}!=${totalPage}">
+                                                    href="${contextPath}/admin/settings/inviteAdmin?page=${nextPage}&sort=${sortBy}&sortBy=${sortBy}&display=${display}" aria-controls="DataTables_Table_0" role="link"
+                                        </c:if>
+                                        <c:if test="${page}==${totalPage}">
+                                                    href="${contextPath}/admin/settings/inviteAdmin?page=${totalPage}&sort=${sortBy}&sortBy=${sortBy}&display=${display}" aria-controls="DataTables_Table_0" role="link"
+                                        </c:if>
+                                                    data-dt-idx="next" tabindex="0" class="page-link">Next</a></li>
                                     </ul>
+                                    <script>
+
+                                    </script>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <script>
+                    const fnDisplay = () => {
+                        document.getElementById('display').value = '${display}';
+                        document.getElementById('display').addEventListener('change', (evt) => {
+                            location.href = '${contextPath}/admin/settings/inviteAdmin?page=1&sort=${sort}&sortBy=${sortBy}&display=' + evt.target.value;
+                        })
+                    }
+
+                    const fnSort = () => {
+                        $(':radio[value=${sort}]').prop('checked', true);
+                        $(':radio').on('click', (evt) => {
+                            location.href = '${contextPath}/admin/settings/inviteAdmin?page=${page}&sort=' + evt.target.value + '&sortBy=${sortBy}&display=${display}';
+                        })
+                    }
+                    const fnNextPage=()=>{
+
+                    }
+
+                    const fnClickPage=()=>{
+                        $('.page-link').addEventListener('click',(e)=>{
+                            alert(e.target.value);
+                        })
+                        $('.page-item')
+                    }
+                    fnDisplay();
+                    fnSort();
+                    fnClickPage();
+                </script>
                 <!-- Offcanvas to add new user -->
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasInviteUser"
                      aria-labelledby="offcanvasInviteUserLabel">
@@ -673,7 +453,8 @@
                             <div class="mb-3">
                                 <label class="form-label" for="add-user-center">유치원</label>
                                 <input type="text" id="add-user-center" class="form-control"
-                                       value="${sessionScope.user.center.name}" aria-label="centerName" name="centerName">
+                                       value="${sessionScope.user.center.name}" aria-label="centerName"
+                                       name="centerName">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="user-role">User Role</label>

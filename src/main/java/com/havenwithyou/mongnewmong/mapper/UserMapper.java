@@ -23,4 +23,8 @@ public interface UserMapper {
   void updateCenterId(UserDto admin);
 
   List<UserDto> getAllUsers(int userid);
+
+  int getAllUserCount(Map<String, Object> sortMap);
+
+  List<UserDto> getAllUserList(Map<String, Object> map);
 }

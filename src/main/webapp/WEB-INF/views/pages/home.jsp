@@ -8,6 +8,7 @@
 
 <jsp:include page="/WEB-INF/views/layout/newHeader.jsp"/>
 
+
 <c:if test="${sessionScope.user.userType==0}">
     <jsp:include page="/WEB-INF/views/layout/admin/sidebar.jsp"/>
 </c:if>
@@ -27,7 +28,11 @@
 <c:if test="${sessionScope.user.userType==2}">
     <jsp:include page="/WEB-INF/views/layout/navbar.jsp"/>
 </c:if>
+
+
 <jsp:include page="/WEB-INF/views/layout/user.jsp"/>
+
+
 
 <c:if test="${sessionScope.user.userType==0}">
     <jsp:include page="/WEB-INF/views/page_contents/home/admin/home.jsp"/>
