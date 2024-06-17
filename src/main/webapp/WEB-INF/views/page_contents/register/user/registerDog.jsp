@@ -62,6 +62,7 @@
 
     </div>
 
+
     <!-- ADD DOG Modal -->
     <div class="modal fade" id="dogModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-simple modal-edit-user">
@@ -74,70 +75,70 @@
                           method="POST"
                     >
                         <div class="text-center mb-4">
-                            <h3>Edit User Information</h3>
-                            <p>Updating user details will receive a privacy audit.</p>
-                            <!-------------AVATAR-------------->
-                            <div class="row">
-                                <div class="text-center">
-                                    <div class="d-flex align-items-start align-items-sm-center">
-                                        <div class="col-md-6">
-                                            <div class="img-container" style="margin-left:-35px">
-                                                <div class="align-center">
-                                                    <input type="hidden" id="dog-id" display="none"/>
-                                                    <%--                            @TODO CHANGE THE SETTING FOR THE IMAGE--%>
-                                                    <img
-                                                            src="${contextPath}/resources/images/roundStickers/kisses.png"
-                                                            alt="user-avatar"
-                                                            class="d-block rounded dogAvatar"
-                                                            style="height:150px; margin-bottom: 1rem"
-                                                            id="avatar"
-                                                    />
-                                                </div>
-                                                <div class="align-center">
-                                                    <div class="col-12 col-md-9 fv-plugins-icon-container">
-                                                        <label class="form-label"
-                                                               for="modalDogName">강아지 이름</label>
-                                                        <input type="text" id="modalDogName"
-                                                               name="modalDogName"
-                                                               class="form-control"
-                                                               placeholder="">
-                                                        <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+                            <h3 id="modalTitle">Edit User Information</h3>
+                            <p id="modalText">아이들의 안전과 원활한 소통을 위해 최대한 정확한 정보를 기입해주세요</p>
+                                <!-------------AVATAR-------------->
+                                <div class="row">
+                                    <div class="text-center">
+                                        <div class="d-flex align-items-start align-items-sm-center">
+                                            <div class="col-md-6">
+                                                <div class="img-container" style="margin-left:-35px">
+                                                    <div class="align-center">
+                                                        <input type="hidden" id="dog-id" name="dogId" display="none"/>
+                                                        <%--                            @TODO CHANGE THE SETTING FOR THE IMAGE--%>
+                                                        <img
+                                                                src="${contextPath}/resources/images/roundStickers/kisses.png"
+                                                                alt="user-avatar"
+                                                                class="d-block rounded dogAvatar"
+                                                                style="height:150px; margin-bottom: 1rem"
+                                                                id="avatar"
+                                                        />
+                                                    </div>
+                                                    <div class="align-center">
+                                                        <div class="col-12 col-md-9 fv-plugins-icon-container">
+                                                            <label class="form-label"
+                                                                   for="modalDogName">강아지 이름</label>
+                                                            <input type="text" id="modalDogName"
+                                                                   name="modalDogName"
+                                                                   class="form-control"
+                                                                   placeholder="">
+                                                            <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
 
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="button-wrapper col-md-6">
-                                            <label for="files" class="btn btn-primary me-2 mb-4"
-                                                   tabindex="0">
-                                                <span class="d-none d-sm-block">Upload new photo</span>
-                                                <i class="bx bx-upload d-block d-sm-none"></i>
-                                                <input
-                                                        type="file"
-                                                        name="files"
-                                                        id="files"
-                                                        class="account-file-input"
-                                                        hidden
-                                                        accept="image/png, image/jpeg"
-                                                        onchange="onFileUpload();"
-                                                />
-                                            </label>
-                                            <button type="button"
-                                                    class="btn btn-outline-secondary account-image-reset mb-4">
-                                                <i class="bx bx-reset d-block d-sm-none"></i>
-                                                <span class="d-none d-sm-block">Reset</span>
-                                            </button>
+                                            <div class="button-wrapper col-md-6">
+                                                <label for="files" class="btn btn-primary me-2 mb-4"
+                                                       tabindex="0">
+                                                    <span class="d-none d-sm-block">Upload new photo</span>
+                                                    <i class="bx bx-upload d-block d-sm-none"></i>
+                                                    <input
+                                                            type="file"
+                                                            name="files"
+                                                            id="files"
+                                                            class="account-file-input"
+                                                            hidden
+                                                            accept="image/png, image/jpeg"
+                                                            onchange="onFileUpload();"
+                                                    />
+                                                </label>
+                                                <button type="button"
+                                                        class="btn btn-outline-secondary account-image-reset mb-4">
+                                                    <i class="bx bx-reset d-block d-sm-none"></i>
+                                                    <span class="d-none d-sm-block">Reset</span>
+                                                </button>
 
-                                            <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size
-                                                of 800K</p>
+                                                <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size
+                                                    of 800K</p>
+                                            </div>
                                         </div>
+
                                     </div>
 
+
                                 </div>
-
-
-                            </div>
-                            <!-------------/AVATAR/-------------->
+                                <!-------------/AVATAR/-------------->
 
                         </div>
 
@@ -188,10 +189,8 @@
 
                                 </div>
                                 <div class="mb-3 address-container">
-
                                     <input type="button" class="form-control " onclick="execDaumPostcode()"
-                                           value="우편번호 찾기"><br>
-
+                                           value="우편번호 찾기">
                                 </div>
                             </div>
                             <div class="input-container">
@@ -207,7 +206,7 @@
                                    placeholder="참고항목">
 
                         </div>
-                        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+                        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"/>
                         <script>
                             function execDaumPostcode() {
                                 new daum.Postcode({
@@ -269,34 +268,37 @@
                             </div>
                         </div>
 
-                        <div id="re-classInput" class="" data-select2-id="46" style="display: none">
+                        <!---------_CLASSES----->
+                        <div id="re-classInput" class="" data-select2-id="46" style="">
 
                             <label for="re-select2Primary" class="form-label">현재등록한 반을 선택해주세요</label>
                             <div class="select2-primary" data-select2-id="45">
                                 <div class="position-relative" data-select2-id="44">
-                                    <select id="re-select2Primary"
-                                            class="select2 form-select select2-hidden-accessible"
-                                            multiple=""
-                                            data-select2-id="re-select2Primary"
-                                            tabindex="-1"
-                                            name="registeredClasses"
-                                            aria-hidden="true"
-                                            onchange="fnSelectArray(this)"
-                                    >
-                                        <option value="1" data-select2-id="1">월</option>
-                                        <option value="2" data-select2-id="2">화</option>
-                                        <option value="3" data-select2-id="3">수</option>
-                                        <option value="4" data-select2-id="4">목</option>
-                                        <option value="5" data-select2-id="5">금</option>
-                                        <option value="6" data-select2-id="6">토</option>
-                                        <option value="7" data-select2-id="7">일</option>
-                                    </select>
+                                    <div class="position-relative" data-select2-id="6">
+                                        <div class="position-relative" data-select2-id="5">
+                                            <select
+                                                    id="re-select2Primary"
+                                                    class="select2 form-select select2-hidden-accessible"
+                                                    multiple="multiple"
+                                                    tabindex="-1" name="registeredClasses" aria-hidden="true"
+                                                    onchange="fnSelectArray(this)" data-select2-id="re-select2Primary">
+                                                <option value="1" data-select2-id="11">월</option>
+                                                <option value="2" data-select2-id="12">화</option>
+                                                <option value="3" data-select2-id="13">수</option>
+                                                <option value="4" data-select2-id="14">목</option>
+                                                <option value="5" data-select2-id="15">금</option>
+                                                <option value="6" data-select2-id="16">토</option>
+                                                <option value="7" data-select2-id="17">일</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
+                            <input type="hidden" name="classes" value="2,3"></div>
                         <div class="col-12 text-center">
-                            <button type="button" id="modalBtn" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                            <button type="button" id="modalBtn" class="btn btn-primary me-sm-3 me-1 modal-submit-btn">
+                                Submit
+                            </button>
                             <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
                                     aria-label="Close">Cancel
                             </button>
@@ -310,6 +312,15 @@
 
 
     <script>
+        const frmModal = $('#frmModal');
+        const frmBtn = $('#modalBtn');
+        const modalTitle = $('#modalTitle');
+        const modalText = $('#modalText');
+
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+
         const goes2class = document.getElementById("re-class");
         const classInput = document.getElementById("re-classInput");
         const classes = document.getElementById("re-select2Primary");
@@ -325,7 +336,6 @@
 
         // Modal Class select
         function fnSelectArray(selectBox) {
-
             const inputContainer = document.getElementById("re-classInput");
             // let allValues;
             let arr = new Array();
@@ -336,10 +346,10 @@
 
             // clear selection
             console.log("select option:", selectBox.value)
-            for (var i = 0; i <= selectBox.options.length; i++) {
-                var selectedNode = selectBox.options[i];
-                if (selectedNode.selected) {
-                    arr[count] = selectedNode.value;
+            for(var i=0;i<=selectBox.options.length;i++) {
+                var selectedNode  = selectBox.options[i];
+                if(selectedNode.selected) {
+                    arr[count] =selectedNode.value;
                     count++;
 
                 }
@@ -347,7 +357,7 @@
                 console.log("ARRAY-----------")
                 console.log(arr)
 
-                valInput.setAttribute("value", arr.toString());
+                valInput.setAttribute("value",arr.toString());
                 console.log("Value-----------")
                 console.log(valInput.getAttribute("value"));
 
@@ -355,10 +365,10 @@
                 console.log(inputContainer.lastChild.nodeName)
                 console.log("----------------CHILD")
 
-                if (inputContainer.lastChild.nodeName === "INPUT") {
+                if(inputContainer.lastChild.nodeName==="INPUT"){
                     inputContainer.lastChild.remove();
                     inputContainer.appendChild(valInput);
-                } else {
+                }else{
                     inputContainer.appendChild(valInput);
                 }
 
@@ -388,7 +398,7 @@
                         str += '<div class="mb-3"><div class="class-text-container"><li class="dog class-name-list" style="height: 50px">';
                         str += '<a href="${contextPath}/user/dogDetail?dogId=' + dogId + '"  type="button" className="btn-edit btn-icon" style="width: 50px; height: 50px; border-radius: 3rem; overflow: hidden">';
                         str += '<img src="' + dogAvatar + '" style="height: 50px; aspect-ratio: auto"></a>';
-                        str+= '<div style="height: inherit;width: 80%; display: flex; justify-content: center; align-items: center"><a onclick="fnModal()" style="height: inherit;width: 40%; display: flex; justify-content: center; align-items: center">'+dogName+'</a>';
+                        str += '<div style="height: inherit;width: 80%; display: flex; justify-content: center; align-items: center"><a onclick="fnModal()" style="height: inherit;width: 40%; display: flex; justify-content: center; align-items: center">' + dogName + '</a>';
                         str += '<div id="class-parent" style="height: inherit;width: 60%; display: flex; justify-content: center; align-items: center">'
 
                         if (dogClasses.indexOf('0') === -1) {
@@ -425,14 +435,21 @@
                         $('#dogs').append(str);
 
 
-
-
                         //SET MODAL FOR EDIT
-                        $(document).on('click', '.edit-modal', function(event){
+                        $(document).on('click', '.edit-modal', function (event) {
                             event.preventDefault();
                             var dogId = $(this).data('dog-id');
-                            console.log("edit btn");
-                            console.log(dogId);
+
+                            //SET MODAL TO EDIT
+                            modalTitle.text('Edit User Information');
+
+                            frmBtn.off('click');
+                            frmBtn.click(function () {
+                                frmModal.attr('action', '${contextPath}/user/editDog');
+                                frmModal.submit();
+                            });
+                            frmBtn.text('EDIT');
+
 
                             $.ajax({
                                 // 요청
@@ -443,10 +460,15 @@
                                 dataType: 'json',
                                 success: (resData) => {
 
+                                    modalText.text(resData.dogDetail.name + '의 정보를 수정하세요');
+
+
                                     var classes = resData.dogDetail.classes;
+                                    let clsArr = new Array();
                                     console.log(classes)
 
                                     $('#dog-id').val(resData.dogDetail.dogId);
+                                    $('#avatar').attr('src', resData.dogDetail.avatar);
                                     $('#avatar').val(resData.dogDetail.avatar);
                                     $('#modalDogName').val(resData.dogDetail.name);
                                     $('#parent1Name').val(resData.dogDetail.parent1Name);
@@ -461,15 +483,34 @@
                                     $('#detailAddress').val(resData.detailAddress);
                                     $('#extraAddress').val(resData.extraAddress);
 
-                                    if(classes.indexOf('0')===-1) {
+                                    if (classes.indexOf('0') === -1) {
                                         $('#re-class').attr('checked', true);
                                         classInput.style.display = '';
-                                        var num = $('#re-select2Primary option').length;
-                                        for (let i = 0; i < num; i++) {
-                                            $('#re-select2Primary option')[i].prop('selected', true);
-                                         //   $('#re-select2Primary option')[i].prop('selected', false);
+                                        if (classes.indexOf('1') !== -1) {
+                                            clsArr.push(1);
                                         }
+                                        if (classes.indexOf('2') !== -1) {
+                                            clsArr.push(2);
+                                        }
+                                        if (classes.indexOf('3') !== -1) {
+                                            clsArr.push(3);
+                                        }
+                                        if (classes.indexOf('4') !== -1) {
+                                            clsArr.push(4);
+                                        }
+                                        if (classes.indexOf('5') !== -1) {
+                                            clsArr.push(5);
+                                        }
+                                        if (classes.indexOf('6') !== -1) {
+                                            clsArr.push(6);
+                                        }
+                                        if (classes.indexOf('7') !== -1) {
+                                            clsArr.push(7);
+                                        }
+                                        $('#re-select2Primary').val(clsArr);
+                                        $('#re-select2Primary').trigger('change');
                                     }
+
 
                                 },
                                 error: (jqXHR, textStatus, errorThrown) => {
@@ -495,7 +536,6 @@
                 // const deactivateAcc = document.querySelector('#formAccountDeactivation');
 
                 // Update/reset user image of account page
-                //let accountUserImage = document.getElementById('avatar');
                 const accountUserImage = document.querySelector('.dogAvatar');
                 const fileInput = document.querySelector('.account-file-input'),
                     resetFileInput = document.querySelector('.account-image-reset');
@@ -516,37 +556,60 @@
         });
 
 
+        const clearModalOnRegisterBtn = () => {
 
-        var frmModal = $('#frmModal');
+            $('#addDogBtn').click(function(){
+                modalTitle.text('Register User')
+                frmBtn.off('click');
+                frmBtn.click(function(){
+                    frmModal.attr('action', '${contextPath}/user/registerDog');
+                    frmModal.submit();
+                });
+                frmBtn.text('Submit');
 
-        const clearModal = ()=>{
-            $('#addDogBtn').on('click', function (e) {
-                frmModal
-                    .find("input,textarea,select")
-                    .val('')
-                    .end()
-                    .find("input[type=checkbox], input[type=radio]")
-                    .prop("checked", "")
-                    .end();
-            })
+                $('#avatar').val("/resources/images/roundStickers/kisses.png");
+                $('#modalDogName').val('');
+                $('#birthday').val('');
+                $('#breed').val('');
+                $('#weight').val('');
+
+                $('#re-class').attr('checked', false);
+                classInput.style.display = 'none';
+                $('#re-select2Primary').val(null);
+                $('#re-select2Primary').trigger('change');
+            });
         }
-        const registerDog = (e) => {
-            $('#modalBtn').on('click', (evt) => {
-                console.log("모바일 클릭!")
 
+        const clearForm = () => {
+            $('#avatar').val("/resources/images/roundStickers/kisses.png");
+            $('#modalDogName').val('');
+            $('#birthday').val('');
+            $('#breed').val('');
+            $('#weight').val('');
+
+            $('#re-class').attr('checked', false);
+            classInput.style.display = 'none';
+            $('#re-select2Primary').val(null);
+            $('#re-select2Primary').trigger('change');
+
+        }
+
+
+
+        const registerDog = (e) => {
+            frmBtn.click(function(){
                 frmModal.attr('action', '${contextPath}/user/registerDog');
                 frmModal.submit();
-            })
+            });
         }
 
-        clearModal();
+        clearModalOnRegisterBtn();
         registerDog();
         fnGetDogList();
 
         var dogId2Delete = 0;
         const dogList = document.getElementById("dogs");
         const dog = document.getElementsByClassName("dog")
-
 
 
         function fnDeleteDog(dogId, dogname) {

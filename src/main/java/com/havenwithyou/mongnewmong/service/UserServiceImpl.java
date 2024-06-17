@@ -483,34 +483,39 @@ public class UserServiceImpl implements UserService {
     @Override
     public int editDog(MultipartHttpServletRequest multipartRequest) {
         int dogId = Integer.parseInt(multipartRequest.getParameter("dogId"));
-
         DogDto dog2edit = dogMapper.getDogById(dogId);
 
-        dog2edit.setName(Objects.equals(multipartRequest.getParameter("edModalDogName"), dog2edit.getName()) ?dog2edit.getName():multipartRequest.getParameter("modalDogName"));
-        dog2edit.setParent1Name(Objects.equals(multipartRequest.getParameter("edParent1Name"), dog2edit.getParent1Name()) ?dog2edit.getParent1Name():multipartRequest.getParameter("parent1Name"));
-        dog2edit.setParent2Name(Objects.equals(multipartRequest.getParameter("edParent2Name"), dog2edit.getParent2Name()) ?dog2edit.getParent2Name():multipartRequest.getParameter("parent2Name"));
-        dog2edit.setParent1Phone(Objects.equals(multipartRequest.getParameter("edParent1phone"), dog2edit.getParent1Phone()) ?dog2edit.getParent1Phone():multipartRequest.getParameter("parent1phone"));
-        dog2edit.setParent2Phone(Objects.equals(multipartRequest.getParameter("edParent2phone"), dog2edit.getParent2Phone()) ?dog2edit.getParent2Phone():multipartRequest.getParameter("parent2phone"));
-        dog2edit.setBirthday(Objects.equals((String) multipartRequest.getParameter("edBirthday"), dog2edit.getBirthday()) ?dog2edit.getBirthday():multipartRequest.getParameter("birthday"));
-        dog2edit.setBreed(Objects.equals(multipartRequest.getParameter("edBreed"), dog2edit.getBreed()) ?dog2edit.getBreed():multipartRequest.getParameter("breed"));
-        dog2edit.setWeight(Integer.parseInt(multipartRequest.getParameter("edWeight"))==dog2edit.getWeight()?dog2edit.getWeight():Integer.parseInt(multipartRequest.getParameter("weight")));
-
-        String zipcode = multipartRequest.getParameter("edZonecode");
-        String address = multipartRequest.getParameter("edAddress");
-        String detailAddress = multipartRequest.getParameter("edDetailAddress");
-        String extraAddress = multipartRequest.getParameter("edExtraAddress");
+        String dogName = multipartRequest.getParameter("modalDogName");
+        String parent1Name = multipartRequest.getParameter("parent1Name");
+        String parent2Name = multipartRequest.getParameter("parent2Name");
+        String parent1phone = multipartRequest.getParameter("parent1phone");
+        String parent2phone = multipartRequest.getParameter("parent2phone");
+        String birthday = (String) multipartRequest.getParameter("birthday");
+        String breed = multipartRequest.getParameter("breed");
+        int weight = Integer.parseInt(multipartRequest.getParameter("weight"));
+        String zipcode = multipartRequest.getParameter("zipcode");
+        String address = multipartRequest.getParameter("address");
+        String detailAddress = multipartRequest.getParameter("detailAddress");
+        String extraAddress = multipartRequest.getParameter("extraAddress");
         String fullAddress = "(" + zipcode + ")" + address + ", " + detailAddress + ", " + extraAddress;
-
-        dog2edit.setAddress(fullAddress);
-        dog2edit.setClasses(multipartRequest.getParameter("classes"));
-
         String avatar;
+        String classes = multipartRequest.getParameter("classes");
+
+        dog2edit.setName(dogName);
+        dog2edit.setParent1Name(parent1Name);
+        dog2edit.setParent2Name(parent2Name);
+        dog2edit.setParent1Phone(parent1phone);
+        dog2edit.setParent2Phone(parent2phone);
+        dog2edit.setBirthday(birthday);
+        dog2edit.setBreed(breed);
+        dog2edit.setWeight(weight);
+        dog2edit.setAddress(fullAddress);
+        dog2edit.setClasses(classes);
 
         // avatar for dogs
-        List<MultipartFile> files = multipartRequest.getFiles("edFiles");
+        List<MultipartFile> files = multipartRequest.getFiles("files");
 
         String uploadPath = myFileUtils.getUploadPath();
-
         File dir = new File(uploadPath);
         if (!dir.exists()) {
             dir.mkdirs();
@@ -537,12 +542,12 @@ public class UserServiceImpl implements UserService {
             avatar = uploadPath + "/s_" + fileSystemName;
 
         } else {
-            avatar = "/resources/images/roundStickers/kisses.png";
+            avatar = dog2edit.getAvatar();
         }
+
         dog2edit.setAvatar(avatar);
 
         return dogMapper.updateDog(dog2edit);
-
     }
 
 

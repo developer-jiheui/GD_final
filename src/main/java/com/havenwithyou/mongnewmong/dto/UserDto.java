@@ -15,7 +15,7 @@ import java.util.List;
 @Builder
 public class UserDto {
   private int userid, userType, centerid, dogNo, accepted;
-  private String email, pw, name,username, phoneNo, inviteid, avatar;
+  private String email, pw, name, username, phoneNo, inviteid, avatar;
   private Date pwModifyDt, signupDt;
   private ArrayList<DogDto> doglist;
   private InviteDto invite;

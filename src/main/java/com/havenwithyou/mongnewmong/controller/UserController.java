@@ -88,6 +88,12 @@ public class UserController {
         return "pages/register/user/registerDog";
     }
 
+    @GetMapping("/registerDog")
+    public String registerDogPage() {
+        return "pages/register/user/registerDog";
+    }
+
+
     @PostMapping("/registerDog")
     public String registerDog(MultipartHttpServletRequest multipartRequest
             ) {
@@ -101,7 +107,7 @@ public class UserController {
     public String editDog(MultipartHttpServletRequest multipartRequest
             , RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("inserted", userService.editDog(multipartRequest));
-        return "redirect:/user/dogList";
+        return "pages/register/user/registerDog";
     }
 
     @GetMapping("/dogList")
