@@ -421,11 +421,8 @@ public class UserServiceImpl implements UserService {
             dogList.remove(deleteDog);
 
             user.setDoglist(dogList);
-            int currDogcount = dogList.size();
-
-            user.setDogNo(currDogcount);
+            user.setDogNo(dogList.size());
             userMapper.updateDogNo(user);
-
         }
         return deleteCount;
     }
@@ -445,15 +442,6 @@ public class UserServiceImpl implements UserService {
         String classes = dogDetail.getClasses().replace(",", "");
 
 
-
-//        System.out.println("------------------");
-//        System.out.println("------------------");
-//        System.out.println("-------CLASS-----------");
-//        System.out.println(classes);
-//        System.out.println(classes.replace(",", ""));
-//        System.out.println("------------------");
-//        System.out.println("------------------");
-
         for (int i = 0; i <restAddList.length; i++) {
             if(i==0){
              address = restAddList[i];
@@ -461,16 +449,6 @@ public class UserServiceImpl implements UserService {
             if(i==1){detailAddress = restAddList[i];}
             if(i==2){extraAddress = restAddList[i];}
         }
-
-
-//
-//        model.addAttribute("dogDetail", dogDetail);
-//        model.addAttribute("zipCode", zipCode);
-//        model.addAttribute("address", address);
-//        model.addAttribute("detailAddress", detailAddress);
-//        model.addAttribute("extraAddress", extraAddress);
-//        model.addAttribute("classes", classes);
-
         return new ResponseEntity<>(Map.of( "dogDetail", dogDetail
                 ,"zipCode", zipCode
                 ,"address", address

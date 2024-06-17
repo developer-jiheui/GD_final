@@ -60,6 +60,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                                 , "/user/settings"
                                 , "/user/billing"
                                 , "/user/userType"
+                                , "/user/editDog"
                                 , "/user/furtherRegister"
                                 , "/user/dogList"
                                 , "/user/registerDog"

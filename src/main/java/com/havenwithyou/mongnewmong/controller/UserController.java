@@ -103,6 +103,9 @@ public class UserController {
         userService.addDog(multipartRequest);
         return "pages/register/user/registerDog";
     }
+    @GetMapping("/editDog")
+    public String editDog() {return "pages/register/user/registerDog";}
+
     @PostMapping("/editDog")
     public String editDog(MultipartHttpServletRequest multipartRequest
             , RedirectAttributes redirectAttributes) {
@@ -121,8 +124,8 @@ public class UserController {
     }
 
     @GetMapping(value = "/removeDog")
-    public String removeDog(HttpServletRequest request, @RequestParam(value = "dogId", required = false, defaultValue = "0") int dogId) {
-        return userService.removeDog(request, dogId) == 1 ? "삭제되었습니다." : "삭제되지 않았습니다.";
+    public String removeDog() {
+        return "pages/register/user/registerDog";
     }
 
     @GetMapping("/dogDetail" )
@@ -131,14 +134,6 @@ public class UserController {
 }
     @PostMapping(value = "/dogDetail", produces = "application/json")
     public ResponseEntity<Map<String, Object>> dogDetail(HttpServletRequest request, @RequestParam(value = "dogId", required = false, defaultValue = "0") int dogId) {
-        System.out.println("-------------------------------");
-        System.out.println("-------------------------------");
-        System.out.println("---------------IN CONTROLLER----------------");
-        System.out.println("--------------------PARAM-----------");
-        System.out.println(dogId);
-        System.out.println("-------------------------------");
-        System.out.println("-------------------------------");
-        System.out.println("-------------------------------");
         return userService.loadDogDetail(dogId);
     }
 
