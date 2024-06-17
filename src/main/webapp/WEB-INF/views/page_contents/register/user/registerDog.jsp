@@ -36,167 +36,14 @@
                         <h4 class="mb-2">환영합니다 ${sessionScope.user.name} 보호자님❣️</h4>
                         <p class="mb-4">곧 회원가입 동의 메일이 도착할거에요!</p>
 
-                        <script>
-                            let dbClasses;
-                            const classParent = document.getElementById("class-parent");
-
-                        </script>
-
                         <div style="margin-bottom: 2rem"></div>
                         <ul id="dogs" class="class-list">
-                            <c:forEach items="${sessionScope.user.doglist}" var="dog" varStatus="vs">
-                                <div class="mb-3">
-                                    <div class="class-text-container">
-                                        <li class="dog class-name-list" style="height: 50px">
-                                            <a href="${contextPath}/user/dogDetail?dogId=${dog.dogId}" type="button" class="btn-edit btn-icon"
-                                                style="width: 50px; height: 50px; border-radius: 3rem; overflow: hidden"
-                                            >
-                                                <img src="${dog.avatar}" style="height: 50px; aspect-ratio: auto">
-
-                                            </a>
-                                            <div style="height: inherit;width: 80%; display: flex; justify-content: center; align-items: center">
-                                                <a   href="${contextPath}/user/dogDetail?dogId=${dog.dogId}" style="height: inherit;width: 40%; display: flex; justify-content: center; align-items: center">
-                                                        ${dog.name}
-                                                </a>
-                                                <div id="class-parent" style="height: inherit;width: 60%; display: flex; justify-content: center; align-items: center">
-                                                    <c:set var="cls" value="${dog.classes}"/>
-
-                                                    <c:if test = "${fn:contains(cls, '0')}">
-                                                        <span class="badge bg-label-danger me-1">등록한 수업이 없습니다</span>
-                                                    </c:if>
-                                                    <c:if test = "${fn:contains(cls, '1')}">
-                                                        <span class="badge bg-label-primary me-1">월</span>
-                                                    </c:if>
-                                                    <c:if test = "${fn:contains(cls, '2')}">
-                                                        <span class="badge bg-label-secondary me-1">화</span>
-                                                    </c:if>
-                                                    <c:if test = "${fn:contains(cls, '3')}">
-                                                        <span class="badge bg-label-success me-1">수</span>
-                                                    </c:if>
-                                                    <c:if test = "${fn:contains(cls, '4')}">
-                                                        <span class="badge bg-label-warning me-1" >목</span>
-                                                    </c:if>
-                                                    <c:if test = "${fn:contains(cls, '5')}">
-                                                        <span class="badge bg-label-info me-1">금</span>
-                                                    </c:if>
-                                                    <c:if test = "${fn:contains(cls, '6')}">
-                                                        <span class="badge bg-label-danger me-1">토</span>
-                                                    </c:if>
-                                                    <c:if test = "${fn:contains(cls, '7')}">
-                                                        <span class="badge badge-center-rounded-pill bg-danger me-1">일</span>
-                                                    </c:if>
-
-
-                                                </div>
-                                                    <script>
-                                                        dbClasses = ${dog.classes};
-
-                                                        if(dbClasses!==0){
-                                                            isRegistered.checked = true;
-                                                            registerClasses.style.display="";
-                                                            let arr = Array.from(dbClasses, Number);
-                                                            for (let i = 0; i < arr.length; i++) {
-                                                                if(arr[i]===1){classParent.children[0].style.display='';}
-                                                                if(arr[i]===2){classParent.children[1].style.display='';}
-                                                                if(arr[i]===3){classParent.children[2].style.display='';}
-                                                                if(arr[i]===4){classParent.children[3].style.display='';}
-                                                                if(arr[i]===5){classParent.children[4].style.display='';}
-                                                                if(arr[i]===6){classParent.children[5].style.display='';}
-                                                                if(arr[i]===7){classParent.children[6].style.display='';}
-                                                            }
-                                                        }
-                                                        else{
-                                                                classParent.children[7].style.display='';
-                                                        }
-                                                    </script>
-
-                                            </div>
-                                            <div style="height: inherit; display: flex; justify-content: center ; align-items: center">
-
-                                                <a href="#" onclick="fnDeleteDog(`${dog.dogId}`,`${dog.name}`)"
-                                                   class="btn-icon bg-delete btn-delete-dog">
-                                                    <i class="fa-solid fa-delete-left" style="color: #ff3f3f"></i>
-                                                </a>
-                                                <a href="${contextPath}/user/dogDetail?dogId=${dog.dogId}" type="button" class="btn-edit btn-icon">
-<%--                                                <a href="${contextPath}/user/dogDetail?dogId=${dog.dogId}" type="button" class="btn-edit btn-icon" data-bs-toggle="modal"--%>
-<%--                                                   data-bs-target="#editDog">--%>
-                                                    <i class="fa-solid fa-pen"></i>
-                                                </a>
-
-                                            </div>
-<%--                                            <div style="height: inherit; display: flex; justify-content: center ; align-items: center">--%>
-<%--                                                <a href="#" onclick="fnDeleteDog(`${dog.dogId}`,`${dog.name}`)"--%>
-<%--                                                   class="btn-icon ">--%>
-<%--                                                    <i class="fa-solid fa-pen"></i>                                                </a>--%>
-
-<%--                                            </div>--%>
-                                        </li>
-                                    </div>
-                                </div>
-                            </c:forEach>
-
-                            <script>
-                                var dogId2Delete = 0;
-                                const dogList = document.getElementById("dogs");
-                                const dog = document.getElementsByClassName("dog")
-                                // const modalBtn = document.querySelectorAll('.btn-edit')
-                                //
-                                // modalBtn.forEach(btn =>{
-                                //     btn.addEventListener('click',(e)=>{
-                                //         alert(e.target.value);
-                                //     })
-                                // })
-
-
-
-                                function fnDeleteDog(dogId, dogname) {
-                                    if (confirm(dogname + '을 지우겠습니까?')) {
-                                        dogId2Delete = dogId;
-                                        deleteTarget = event.currentTarget.parentNode.parentNode.parentNode.parentNode;
-                                        fnDeleteDiv(deleteTarget);
-                                        fnRemoveDog(dogId2Delete);
-
-                                    } else {
-                                        return;
-                                    }
-                                }
-
-                                function fnDeleteDiv(deleteTarget) {
-                                    dogList.removeChild(deleteTarget);
-
-                                }
-
-                                function fnRemoveDog(dogId) {
-                                    $.ajax({
-                                        // 요청
-                                        type: 'POST',
-                                        url: '${contextPath}/user/removeDog',
-                                        data: 'dogId=' + dogId,  // <form> 내부의 모든 입력을 파라미터 형식으로 보낼 때 사용, 입력 요소들은 name 속성을 가지고 있어야 함
-                                        // 응답
-                                        dataType: 'json',
-                                        success: (resData) => {
-                                            alert(resData.removeResult);
-                                        },
-                                        error: (jqXHR) => {
-                                            alert(jqXHR.statusText + '(' + jqXHR.status + ')');
-                                        }
-                                    })
-                                }
-
-
-
-
-
-
-
-                            </script>
-
+                            <!----dogList AJAX--->
                         </ul>
-
                         <div style="display: flex; justify-content: center; align-items: center;
                                     margin-top: 2rem; margin-bottom: 0.5rem">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#addDog"> 강아지 등록하기
+                            <button type="button" id="addDogBtn" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#dogModal"> 강아지 등록하기
                             </button>
                         </div>
 
@@ -216,15 +63,14 @@
     </div>
 
     <!-- ADD DOG Modal -->
-    <div class="modal fade" id="addDog" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="dogModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-simple modal-edit-user">
             <div class="modal-content p-3 p-md-5">
                 <div class="modal-body">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
-                    <form id="addDogForm" class="row g-3"
+                    <form id="frmModal" class="row g-3"
                           enctype="multipart/form-data"
-                          action="${pageContext.request.contextPath}/user/registerDog"
                           method="POST"
                     >
                         <div class="text-center mb-4">
@@ -237,11 +83,12 @@
                                         <div class="col-md-6">
                                             <div class="img-container" style="margin-left:-35px">
                                                 <div class="align-center">
+                                                    <input type="hidden" id="dog-id" display="none"/>
                                                     <%--                            @TODO CHANGE THE SETTING FOR THE IMAGE--%>
                                                     <img
                                                             src="${contextPath}/resources/images/roundStickers/kisses.png"
                                                             alt="user-avatar"
-                                                            class="d-block rounded"
+                                                            class="d-block rounded dogAvatar"
                                                             style="height:150px; margin-bottom: 1rem"
                                                             id="avatar"
                                                     />
@@ -275,33 +122,6 @@
                                                         onchange="onFileUpload();"
                                                 />
                                             </label>
-                                            <script>
-
-                                                document.addEventListener('DOMContentLoaded', function (e) {
-                                                    e.preventDefault();
-                                                    (function () {
-                                                        const deactivateAcc = document.querySelector('#formAccountDeactivation');
-
-                                                        // Update/reset user image of account page
-                                                        let accountUserImage = document.getElementById('avatar');
-                                                        const fileInput = document.querySelector('.account-file-input'),
-                                                            resetFileInput = document.querySelector('.account-image-reset');
-
-                                                        if (accountUserImage) {
-                                                            const resetImage = accountUserImage.src;
-                                                            fileInput.onchange = () => {
-                                                                if (fileInput.files[0]) {
-                                                                    accountUserImage.src = window.URL.createObjectURL(fileInput.files[0]);
-                                                                }
-                                                            };
-                                                            resetFileInput.onclick = () => {
-                                                                fileInput.value = '';
-                                                                accountUserImage.src = resetImage;
-                                                            };
-                                                        }
-                                                    })();
-                                                });
-                                            </script>
                                             <button type="button"
                                                     class="btn btn-outline-secondary account-image-reset mb-4">
                                                 <i class="bx bx-reset d-block d-sm-none"></i>
@@ -342,8 +162,8 @@
                                    placeholder=""/>
                         </div>
                         <div class="col-md-4 col-12 mb-md-0 mb-4">
-                            <label for="bs-datepicker-autoclose" class="form-label">댕댕이 생일</label>
-                            <input type="date" id="bs-datepicker-autoclose" name="birthday" placeholder="2020/00/00"
+                            <label for="birthday" class="form-label">댕댕이 생일</label>
+                            <input type="date" id="birthday" name="birthday" placeholder="2020/00/00"
                                    class="form-control">
                         </div>
                         <div class="col-12 col-md-4">
@@ -450,53 +270,7 @@
                         </div>
 
                         <div id="re-classInput" class="" data-select2-id="46" style="display: none">
-                            <script>
-                                function fnSelectArray(selectBox) {
 
-                                    const inputContainer = document.getElementById("re-classInput");
-                                    // let allValues;
-                                     let arr = new Array();
-                                     let count =0;
-                                     let valInput = document.createElement("input");
-                                     valInput.setAttribute("type","hidden");
-                                     valInput.setAttribute("name", "classes");
-
-                                    // clear selection
-                                    console.log("select option:",selectBox.value)
-                                    for(var i=0;i<=selectBox.options.length;i++) {
-                                        var selectedNode  = selectBox.options[i];
-                                        if(selectedNode.selected) {
-                                            arr[count] =selectedNode.value;
-                                            count++;
-
-                                        }
-
-                                        console.log("ARRAY-----------")
-                                        console.log(arr)
-
-                                        valInput.setAttribute("value",arr.toString());
-                                        console.log("Value-----------")
-                                        console.log(valInput.getAttribute("value"));
-
-                                        console.log("----------------CHILD")
-                                        console.log(inputContainer.lastChild.nodeName)
-                                        console.log("----------------CHILD")
-
-                                        if(inputContainer.lastChild.nodeName==="INPUT"){
-                                            inputContainer.lastChild.remove();
-                                            inputContainer.appendChild(valInput);
-                                        }else{
-                                            inputContainer.appendChild(valInput);
-                                        }
-
-                                    }
-
-
-                                }
-
-
-
-                            </script>
                             <label for="re-select2Primary" class="form-label">현재등록한 반을 선택해주세요</label>
                             <div class="select2-primary" data-select2-id="45">
                                 <div class="position-relative" data-select2-id="44">
@@ -508,7 +282,6 @@
                                             name="registeredClasses"
                                             aria-hidden="true"
                                             onchange="fnSelectArray(this)"
-                                            data-classes = '[{0:""}]'
                                     >
                                         <option value="1" data-select2-id="1">월</option>
                                         <option value="2" data-select2-id="2">화</option>
@@ -521,25 +294,9 @@
                                 </div>
                             </div>
                         </div>
-                        <script>
-                            const goes2class = document.getElementById("re-class");
-                            const classInput = document.getElementById("re-classInput");
-                            const classes = document.getElementById("re-select2Primary");
-
-                            goes2class.addEventListener('change', () => {
-                                if (event.currentTarget.checked) {
-                                    classInput.style.display='';
-                                } else {
-                                    classInput.style.display='none';
-                                }
-
-                            })
-
-
-                        </script>
 
                         <div class="col-12 text-center">
-                            <button type="submit" class="btn btn-primary me-sm-3 me-1">Submit</button>
+                            <button type="button" id="modalBtn" class="btn btn-primary me-sm-3 me-1">Submit</button>
                             <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
                                     aria-label="Close">Cancel
                             </button>
@@ -551,33 +308,283 @@
     </div>
     <!--/ ADD DOG Modal -->
 
-    <!--/EDIT DOG Modal -->
+
+    <script>
+        const goes2class = document.getElementById("re-class");
+        const classInput = document.getElementById("re-classInput");
+        const classes = document.getElementById("re-select2Primary");
+
+        goes2class.addEventListener('change', () => {
+            if (event.currentTarget.checked) {
+                classInput.style.display = '';
+            } else {
+                classInput.style.display = 'none';
+            }
+
+        })
+
+        // Modal Class select
+        function fnSelectArray(selectBox) {
+
+            const inputContainer = document.getElementById("re-classInput");
+            // let allValues;
+            let arr = new Array();
+            let count = 0;
+            let valInput = document.createElement("input");
+            valInput.setAttribute("type", "hidden");
+            valInput.setAttribute("name", "classes");
+
+            // clear selection
+            console.log("select option:", selectBox.value)
+            for (var i = 0; i <= selectBox.options.length; i++) {
+                var selectedNode = selectBox.options[i];
+                if (selectedNode.selected) {
+                    arr[count] = selectedNode.value;
+                    count++;
+
+                }
+
+                console.log("ARRAY-----------")
+                console.log(arr)
+
+                valInput.setAttribute("value", arr.toString());
+                console.log("Value-----------")
+                console.log(valInput.getAttribute("value"));
+
+                console.log("----------------CHILD")
+                console.log(inputContainer.lastChild.nodeName)
+                console.log("----------------CHILD")
+
+                if (inputContainer.lastChild.nodeName === "INPUT") {
+                    inputContainer.lastChild.remove();
+                    inputContainer.appendChild(valInput);
+                } else {
+                    inputContainer.appendChild(valInput);
+                }
+
+            }
 
 
-<%--    <script>--%>
-<%--        function fnDogDetail(dogId){--%>
-<%--            // editModal.ar;--%>
-<%--            // alert(editModal.style.display);--%>
+        }
 
-<%--            location.href= "${contextPath}/dogDetail?dogId="+dogId;--%>
-<%--            &lt;%&ndash;$.ajax({&ndash;%&gt;--%>
-<%--            &lt;%&ndash;    // 요청&ndash;%&gt;--%>
-<%--            &lt;%&ndash;    type: 'GET',&ndash;%&gt;--%>
-<%--            &lt;%&ndash;    url: '${contextPath}/user/dogDetail',&ndash;%&gt;--%>
-<%--            &lt;%&ndash;    data: 'dogId=' + dogId,&ndash;%&gt;--%>
+        const fnGetDogList = (e) => {
+            $.ajax({
+                // 요청
+                type: 'POST',
+                url: '${contextPath}/user/dogList',
+                // 응답
+                dataType: 'json',
+                success: (resData) => {
 
-<%--            &lt;%&ndash;    success: (resData) => {&ndash;%&gt;--%>
-<%--            &lt;%&ndash;        console.log("====resData====")&ndash;%&gt;--%>
-<%--            &lt;%&ndash;        console.log(resData)&ndash;%&gt;--%>
-<%--            &lt;%&ndash;        &ndash;%&gt;--%>
-<%--            &lt;%&ndash;        &lt;%&ndash;alert("dogDetail : " + "${dogDetail}")&ndash;%&gt;&ndash;%&gt;--%>
-<%--            &lt;%&ndash;    },&ndash;%&gt;--%>
-<%--            &lt;%&ndash;    error: (jqXHR) => {&ndash;%&gt;--%>
-<%--            &lt;%&ndash;        alert(jqXHR.statusText + '(' + jqXHR.status + ')');&ndash;%&gt;--%>
-<%--            &lt;%&ndash;    }&ndash;%&gt;--%>
-<%--            &lt;%&ndash;})&ndash;%&gt;--%>
-<%--        }--%>
-<%--    </script>--%>
+                    $.each(resData.dogList, (i, dog) => {
+                        let dogName = dog.name;
+                        let dogClasses = "";
+                        dogClasses += dog.classes;
+
+                        let dogId = dog.dogId;
+                        let dogAvatar = dog.avatar;
+
+                        let str = '';
+                        str += '<div class="mb-3"><div class="class-text-container"><li class="dog class-name-list" style="height: 50px">';
+                        str += '<a href="${contextPath}/user/dogDetail?dogId=' + dogId + '"  type="button" className="btn-edit btn-icon" style="width: 50px; height: 50px; border-radius: 3rem; overflow: hidden">';
+                        str += '<img src="' + dogAvatar + '" style="height: 50px; aspect-ratio: auto"></a>';
+                        str+= '<div style="height: inherit;width: 80%; display: flex; justify-content: center; align-items: center"><a onclick="fnModal()" style="height: inherit;width: 40%; display: flex; justify-content: center; align-items: center">'+dogName+'</a>';
+                        str += '<div id="class-parent" style="height: inherit;width: 60%; display: flex; justify-content: center; align-items: center">'
+
+                        if (dogClasses.indexOf('0') === -1) {
+                            console.log(dogClasses)
+                            if (dogClasses.indexOf('1') !== -1) {
+                                str += '<span class="badge bg-label-primary me-1">월</span>';
+                            }
+                            if (dogClasses.indexOf('2') !== -1) {
+                                str += '<span class="badge bg-label-secondary me-1">화</span>';
+                            }
+                            if (dogClasses.indexOf('3') !== -1) {
+                                str += '<span class="badge bg-label-success me-1">수</span>';
+                            }
+                            if (dogClasses.indexOf('4') !== -1) {
+                                str += '<span class="badge bg-label-warning me-1">목</span>';
+                            }
+                            if (dogClasses.indexOf('5') !== -1) {
+                                str += '<span class="badge bg-label-info me-1">금</span>';
+                            }
+                            if (dogClasses.indexOf('6') !== -1) {
+                                str += '<span class="badge bg-label-danger me-1">토</span>';
+                            }
+                            if (dogClasses.indexOf('7') !== -1) {
+                                str += '<span class="badge bg-center-rounded-pill bg-danger me-1">일</span>';
+                            }
+
+                        } else {
+                            str += '<span class="badge bg-label-danger me-1">등록한 수업이 없습니다</span>';
+                        }
+                        str += '</div><div style="height: inherit; display: flex; justify-content: center ; align-items: center">';
+                        str += '<a href="#" onclick="fnDeleteDog(' + dogId + ',' + dogName + ')" class="btn-icon bg-delete btn-delete-dog"><i class="fa-solid fa-delete-left" style="color: #ff3f3f"></i></a>';
+                        str += '<a data-dog-id=' + dogId + ' type="button" data-bs-toggle="modal" data-bs-target="#dogModal" class="btn-edit btn-icon edit-modal"><i class="fa-solid fa-pen"></i></a>'
+
+                        $('#dogs').append(str);
+
+
+
+
+                        //SET MODAL FOR EDIT
+                        $(document).on('click', '.edit-modal', function(event){
+                            event.preventDefault();
+                            var dogId = $(this).data('dog-id');
+                            console.log("edit btn");
+                            console.log(dogId);
+
+                            $.ajax({
+                                // 요청
+                                type: 'POST',
+                                url: '${contextPath}/user/dogDetail',
+                                data: 'dogId=' + dogId,
+                                // 응답
+                                dataType: 'json',
+                                success: (resData) => {
+
+                                    var classes = resData.dogDetail.classes;
+                                    console.log(classes)
+
+                                    $('#dog-id').val(resData.dogDetail.dogId);
+                                    $('#avatar').val(resData.dogDetail.avatar);
+                                    $('#modalDogName').val(resData.dogDetail.name);
+                                    $('#parent1Name').val(resData.dogDetail.parent1Name);
+                                    $('#parent2Name').val(resData.dogDetail.parent2Name);
+                                    $('#parent1phone').val(resData.dogDetail.parent1Phone);
+                                    $('#parent2phone').val(resData.dogDetail.parent2Phone);
+                                    $('#birthday').val(resData.dogDetail.birthday);
+                                    $('#breed').val(resData.dogDetail.breed);
+                                    $('#weight').val(resData.dogDetail.weight);
+                                    $('#zonecode').val(resData.zipCode);
+                                    $('#address').val(resData.address);
+                                    $('#detailAddress').val(resData.detailAddress);
+                                    $('#extraAddress').val(resData.extraAddress);
+
+                                    if(classes.indexOf('0')===-1) {
+                                        $('#re-class').attr('checked', true);
+                                        classInput.style.display = '';
+                                        var num = $('#re-select2Primary option').length;
+                                        for (let i = 0; i < num; i++) {
+                                            $('#re-select2Primary option')[i].prop('selected', true);
+                                         //   $('#re-select2Primary option')[i].prop('selected', false);
+                                        }
+                                    }
+
+                                },
+                                error: (jqXHR, textStatus, errorThrown) => {
+                                    console.error('Error fetching facility reserve list:', textStatus, errorThrown);
+                                    alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+                                }
+                            });
+                        });
+                    });
+                },
+                error: (jqXHR, textStatus, errorThrown) => {
+                    console.error('Error fetching dog Detail:', textStatus, errorThrown);
+                    alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+                }
+            });
+
+
+        }
+
+        document.addEventListener('DOMContentLoaded', function (e) {
+            e.preventDefault();
+            (function () {
+                // const deactivateAcc = document.querySelector('#formAccountDeactivation');
+
+                // Update/reset user image of account page
+                //let accountUserImage = document.getElementById('avatar');
+                const accountUserImage = document.querySelector('.dogAvatar');
+                const fileInput = document.querySelector('.account-file-input'),
+                    resetFileInput = document.querySelector('.account-image-reset');
+
+                if (accountUserImage) {
+                    const resetImage = accountUserImage.src;
+                    fileInput.onchange = () => {
+                        if (fileInput.files[0]) {
+                            accountUserImage.src = window.URL.createObjectURL(fileInput.files[0]);
+                        }
+                    };
+                    resetFileInput.onclick = () => {
+                        fileInput.value = '';
+                        accountUserImage.src = resetImage;
+                    };
+                }
+            })();
+        });
+
+
+
+        var frmModal = $('#frmModal');
+
+        const clearModal = ()=>{
+            $('#addDogBtn').on('click', function (e) {
+                frmModal
+                    .find("input,textarea,select")
+                    .val('')
+                    .end()
+                    .find("input[type=checkbox], input[type=radio]")
+                    .prop("checked", "")
+                    .end();
+            })
+        }
+        const registerDog = (e) => {
+            $('#modalBtn').on('click', (evt) => {
+                console.log("모바일 클릭!")
+
+                frmModal.attr('action', '${contextPath}/user/registerDog');
+                frmModal.submit();
+            })
+        }
+
+        clearModal();
+        registerDog();
+        fnGetDogList();
+
+        var dogId2Delete = 0;
+        const dogList = document.getElementById("dogs");
+        const dog = document.getElementsByClassName("dog")
+
+
+
+        function fnDeleteDog(dogId, dogname) {
+            if (confirm(dogname + '을 지우겠습니까?')) {
+                dogId2Delete = dogId;
+                deleteTarget = event.currentTarget.parentNode.parentNode.parentNode.parentNode;
+                fnDeleteDiv(deleteTarget);
+                fnRemoveDog(dogId2Delete);
+
+            } else {
+                return;
+            }
+        }
+
+        function fnDeleteDiv(deleteTarget) {
+            dogList.removeChild(deleteTarget);
+
+        }
+
+        function fnRemoveDog(dogId) {
+            $.ajax({
+                // 요청
+                type: 'POST',
+                url: '${contextPath}/user/removeDog',
+                data: 'dogId=' + dogId,  // <form> 내부의 모든 입력을 파라미터 형식으로 보낼 때 사용, 입력 요소들은 name 속성을 가지고 있어야 함
+                // 응답
+                dataType: 'json',
+                success: (resData) => {
+                    alert(resData.removeResult);
+                },
+                error: (jqXHR) => {
+                    alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+                }
+            })
+        }
+
+    </script>
+
 
     <!-- PAGE JS -->
     <script src="${contextPath}/frontend/assets/js/modal-edit-user.js"></script>

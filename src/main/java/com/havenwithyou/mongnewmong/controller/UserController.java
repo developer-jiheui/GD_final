@@ -90,9 +90,12 @@ public class UserController {
 
     @PostMapping("/registerDog")
     public String registerDog(MultipartHttpServletRequest multipartRequest
-            , RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("inserted", userService.addDog(multipartRequest));
-        return "redirect:/user/dogList";
+            ) {
+        //redirectAttributes.addFlashAttribute("inserted", );
+        System.out.println("REGISTER DOG-------------");
+        System.out.println(multipartRequest.getRequestURI());
+        userService.addDog(multipartRequest);
+        return "pages/register/user/registerDog";
     }
     @PostMapping("/editDog")
     public String editDog(MultipartHttpServletRequest multipartRequest
@@ -102,9 +105,13 @@ public class UserController {
     }
 
     @GetMapping("/dogList")
-    public String list(HttpServletRequest request) {
-        userService.loadDogList(request);
+    public String list() {
         return "pages/register/user/registerDog";
+    }
+
+    @PostMapping(value = "/dogList", produces = "application/json")
+    public ResponseEntity<Map<String, Object>> getDogList(HttpServletRequest request) {
+        return userService.loadDogList(request);
     }
 
     @GetMapping(value = "/removeDog")
@@ -112,11 +119,21 @@ public class UserController {
         return userService.removeDog(request, dogId) == 1 ? "삭제되었습니다." : "삭제되지 않았습니다.";
     }
 
-    @GetMapping("/dogDetail")
-    public String loadDogDetail(@RequestParam(value = "dogId", required = false, defaultValue = "0") int dogId, Model model
-    ) {
-        userService.loadDogDetail(dogId, model);
-        return "pages/editDog";
+    @GetMapping("/dogDetail" )
+    public String detail() {
+    return "pages/register/user/registerDog";
+}
+    @PostMapping(value = "/dogDetail", produces = "application/json")
+    public ResponseEntity<Map<String, Object>> dogDetail(HttpServletRequest request, @RequestParam(value = "dogId", required = false, defaultValue = "0") int dogId) {
+        System.out.println("-------------------------------");
+        System.out.println("-------------------------------");
+        System.out.println("---------------IN CONTROLLER----------------");
+        System.out.println("--------------------PARAM-----------");
+        System.out.println(dogId);
+        System.out.println("-------------------------------");
+        System.out.println("-------------------------------");
+        System.out.println("-------------------------------");
+        return userService.loadDogDetail(dogId);
     }
 
 
