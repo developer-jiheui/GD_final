@@ -112,8 +112,12 @@
     FROM USER_T
   </select>
 
-  <select id="getAllUserCount" resultType="java.lang.Integer">
-    SELECT COUNT(${count}) FROM USER_T
+  <select id="getAllUserCount"
+          resultType="java.lang.Integer">
+    SELECT COUNT(USER_ID) FROM USER_T
+    <where>
+      <if test="loadUserType!=null">USER_TYPE = ${loadUserType}</if>
+    </where>
   </select>
 
   <select id="getAllUserList"
@@ -124,7 +128,11 @@
     FROM(
     SELECT ROW_NUMBER() OVER (ORDER BY ${sortBy} ${sort}) AS RN,
     USER_ID, NAME, EMAIL, USER_NAME, USER_TYPE, AVATAR, DOG_NO,
-    CENTER_ID, INVITE_ID, ACCEPTED FROM USER_T U)
+    CENTER_ID, INVITE_ID, ACCEPTED FROM USER_T U
+    <where>
+      <if test="loadUserType!=null">USER_TYPE = ${loadUserType}</if>
+    </where>
+    )
     WHERE RN BETWEEN #{begin} AND #{end}
   </select>
 

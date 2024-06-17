@@ -188,11 +188,11 @@
                                     aria-label="User" aria-sort="descending">이용자
                                 </th>
                                 <th class="sorting_disabled" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 119px;"
+                                    colspan="1" style="width: 80px;"
                                     aria-label="Role: activate to sort column ascending">역할
                                 </th>
                                 <th class="sorting_disabled" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 119px;"
+                                    colspan="1" style="width: 100px;"
                                     aria-label="Role: activate to sort column ascending">닉네임
                                 </th>
                                 <th class="sorting_disabled" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"

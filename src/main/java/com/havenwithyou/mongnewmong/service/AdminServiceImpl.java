@@ -1,28 +1,31 @@
 package com.havenwithyou.mongnewmong.service;
 
+import com.havenwithyou.mongnewmong.dto.DogDto;
+import com.havenwithyou.mongnewmong.mapper.DogMapper;
 import org.springframework.ui.Model;
 import com.havenwithyou.mongnewmong.dto.CenterDto;
 import com.havenwithyou.mongnewmong.dto.UserDto;
 import com.havenwithyou.mongnewmong.mapper.CenterMapper;
 import com.havenwithyou.mongnewmong.mapper.UserMapper;
 import com.havenwithyou.mongnewmong.utils.MyPageUtils;
-import jakarta.mail.Session;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class AdminServiceImpl implements AdminService{
+public class AdminServiceImpl implements AdminService {
 
     private final UserMapper userMapper;
     private final CenterMapper centerMapper;
     private final MyPageUtils myPageUtils;
+    private final DogMapper dogMapper;
 
     @Override
     public void registerCenter(HttpServletRequest request, HttpServletResponse response) {
@@ -33,7 +36,7 @@ public class AdminServiceImpl implements AdminService{
         String name = request.getParameter("center");
         String phoneNo = request.getParameter("phoneNo");
 
-        String fullAddress = address+", "+detailedAddress+", "+extraAddress+", "+zipcode;
+        String fullAddress = address + ", " + detailedAddress + ", " + extraAddress + ", " + zipcode;
 
         CenterDto center = CenterDto.builder()
                 .address(fullAddress)
@@ -43,7 +46,7 @@ public class AdminServiceImpl implements AdminService{
 
         int centerId = centerMapper.insertCenter(center);
 
-        if(centerId >0) {
+        if (centerId > 0) {
             UserDto admin = (UserDto) request.getSession().getAttribute("user");
             admin.setCenterid(centerId);
             admin.setAccepted(1);
@@ -54,14 +57,26 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
+    public void loadUsers(HttpServletRequest request, Model model) {
+
+    }
+
+    @Override
+    public void loadTeachers(HttpServletRequest request, Model model) {
+
+    }
+
+    @Override
     public void loadAllUsers(HttpServletRequest request, Model model) {
-        UserDto admin = (UserDto) request.getSession().getAttribute("user");
+
+        UserDto user = (UserDto) request.getSession().getAttribute("user");
         Map<String, Object> modelMap = model.asMap();
 
+        int loadUserType = (int) request.getAttribute("loadUserType");
+        Map<String, Object> userTypeMap = Map.of("loadUserType", loadUserType);
 
-        Map<String, Object> countMap = Map.of("count","USER_ID");
+        int total = userMapper.getAllUserCount(userTypeMap);
 
-        int total = userMapper.getAllUserCount(countMap);
 
         Optional<String> optDisplay = Optional.ofNullable(request.getParameter("display"));
         int display = Integer.parseInt(optDisplay.orElse("5"));
@@ -78,15 +93,13 @@ public class AdminServiceImpl implements AdminService{
         String sortBy = optSortBy.orElse("USER_ID");
 
 
-
-
         Map<String, Object> map = Map.of("begin", myPageUtils.getBegin()
+                , "loadUserType", request.getAttribute("loadUserType")
                 , "end", myPageUtils.getEnd()
-                ,"sortBy", sortBy
-                , "sort", sort)
-                ;
+                , "sortBy", sortBy
+                , "sort", sort);
 
-        Map<String,Object> pageMap = myPageUtils.pagingMap(request.getRequestURI(),sort,sortBy);
+        Map<String, Object> pageMap = myPageUtils.pagingMap(request.getRequestURI(), sort, sortBy);
 
 
         Optional<String> optTotalPage = Optional.ofNullable(pageMap.get("totalPage").toString());
@@ -98,12 +111,41 @@ public class AdminServiceImpl implements AdminService{
         Optional<String> optEndPage = Optional.ofNullable(pageMap.get("endPage").toString());
         int endPage = Integer.parseInt(optEndPage.orElse("5"));
 
+        ArrayList<UserDto> userList = (ArrayList<UserDto>) userMapper.getAllUserList(map);
 
+        System.out.println("-------------------------------");
+        System.out.println("-------------------------------");
+        System.out.println("--------------USERLIST-----------------");
+        System.out.println(userList);
+        System.out.println("-------------------------------");
+        System.out.println("-------------------------------");
+        System.out.println("-------------------------------");
+
+        ArrayList<DogDto> dogList;
+
+        if (loadUserType == 2) {
+            for (UserDto dogUser : userList) {
+                int userid = dogUser.getUserid();
+                if (dogUser.getDogNo() > 0) {
+                    dogList = (ArrayList<DogDto>) dogMapper.getDogList(userid);
+                    System.out.println("-------------------------------");
+                    System.out.println("-------------------------------");
+                    System.out.println("-------------------------------");
+                    System.out.println("-------------------------------");
+                    System.out.println(dogList);
+                    System.out.println("-------------------------------");
+                    System.out.println("-------------------------------");
+                    System.out.println("-------------------------------");
+                    System.out.println("-------------------------------");
+                    dogUser.setDoglist(dogList);
+                }
+            }
+        }
 
 
         model.addAttribute("beginNo", total - (page - 1) * display);
-        model.addAttribute("endNo", page*display );
-        model.addAttribute("userList", userMapper.getAllUserList(map));
+        model.addAttribute("endNo", page * display);
+        model.addAttribute("userList", userList);
         model.addAttribute("display", display);
         model.addAttribute("sort", sort);
         model.addAttribute("sortBy", sortBy);
@@ -124,8 +166,6 @@ public class AdminServiceImpl implements AdminService{
         System.out.println("--------------------------------------");
         System.out.println("--------------------------------------");
     }
-
-
 
 
 }

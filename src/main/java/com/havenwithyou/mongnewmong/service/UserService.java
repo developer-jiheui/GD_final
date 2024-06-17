@@ -45,12 +45,13 @@ public interface UserService {
 
     int addDog(MultipartHttpServletRequest multipartRequest);
 
-    void loadDogList(HttpServletRequest request);
+   // void loadDogList(HttpServletRequest request);
 
+    ResponseEntity<Map<String, Object>> loadDogList(HttpServletRequest request);
     int removeDog(HttpServletRequest request, int dogId);
 
 
-    void loadDogDetail(int dogId, Model model);
+    ResponseEntity<Map<String, Object>> loadDogDetail(int dogId);
 
     int editDog(MultipartHttpServletRequest multipartRequest);
 }

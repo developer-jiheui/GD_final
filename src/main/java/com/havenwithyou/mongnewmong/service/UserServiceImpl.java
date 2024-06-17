@@ -273,7 +273,7 @@ public class UserServiceImpl implements UserService {
         userMapper.setUserType(user);
         if (userType == 0) {
             role = "pages/register/admin/register";
-        } else if (userType == 1) {
+        } else if (userType == 2) {
             role = "pages/register/user/registerDog";
         } else {
             role = "pages/register/teacher/register";
@@ -374,16 +374,38 @@ public class UserServiceImpl implements UserService {
     }
 
 //    @Transactional(readOnly = true)
+//    @Override
+//    public void loadDogList(HttpServletRequest request) {
+//
+//        HttpSession session = request.getSession();
+//        UserDto user = (UserDto) session.getAttribute("user");
+//        int dogCount = user.getDogNo();
+//        session.setAttribute("dogList", dogMapper.getDogList(user.getUserid()));
+//
+//    }
+
     @Override
-    public void loadDogList(HttpServletRequest request) {
+    public ResponseEntity<Map<String, Object>> loadDogList(HttpServletRequest request) {
 
         HttpSession session = request.getSession();
         UserDto user = (UserDto) session.getAttribute("user");
         int dogCount = user.getDogNo();
-        session.setAttribute("dogList", dogMapper.getDogList(user.getUserid()));
+        ArrayList<DogDto> dogList = (ArrayList<DogDto>) dogMapper.getDogList(user.getUserid());
 
+        System.out.println("-----------------------");
+        System.out.println("-----------------------");
+        System.out.println("------DOGLIST--------");
+        System.out.println(dogList);
+        System.out.println("-----------------------");
+        System.out.println("-----------------------");
+
+
+        //session.setAttribute("dogList", dogMapper.getDogList(user.getUserid()));
+        return new ResponseEntity<>(Map.of(
+                "dogCount", dogCount
+                , "dogList", dogList
+        ), HttpStatus.OK);
     }
-
 
 
     @Override
@@ -409,7 +431,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void loadDogDetail(int dogId, Model model) {
+    public ResponseEntity<Map<String, Object>> loadDogDetail(int dogId) {
 
         DogDto dogDetail = dogMapper.getDogById(dogId);
         String fullAddress = dogDetail.getAddress();
@@ -441,14 +463,21 @@ public class UserServiceImpl implements UserService {
         }
 
 
+//
+//        model.addAttribute("dogDetail", dogDetail);
+//        model.addAttribute("zipCode", zipCode);
+//        model.addAttribute("address", address);
+//        model.addAttribute("detailAddress", detailAddress);
+//        model.addAttribute("extraAddress", extraAddress);
+//        model.addAttribute("classes", classes);
 
-        model.addAttribute("dogDetail", dogDetail);
-        model.addAttribute("zipCode", zipCode);
-        model.addAttribute("address", address);
-        model.addAttribute("detailAddress", detailAddress);
-        model.addAttribute("extraAddress", extraAddress);
-        model.addAttribute("classes", classes);
-
+        return new ResponseEntity<>(Map.of( "dogDetail", dogDetail
+                ,"zipCode", zipCode
+                ,"address", address
+                ,"detailAddress", detailAddress
+                ,"extraAddress", extraAddress
+                ,"classes", classes
+        ),HttpStatus.OK);
     }
 
     @Override

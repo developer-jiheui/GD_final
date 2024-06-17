@@ -72,19 +72,25 @@ public class AdminController {
 
     @GetMapping("/settings/inviteAdmin")
     public String inviteAdmin(HttpServletRequest request, Model model) {
+        request.setAttribute("loadUserType", 0);
         adminService.loadAllUsers(request, model);
         return "pages/settings/admin/inviteAdmin";
     }
 
-    @GetMapping("/settings/inviteUser")
-    public String inviteUser() {
-        return "pages/settings/admin/inviteUser";
-    }
-
     @GetMapping("/settings/inviteTeacher")
-    public String inviteTeacher() {
+    public String inviteTeacher(HttpServletRequest request, Model model) {
+        request.setAttribute("loadUserType", 1);
+        adminService.loadAllUsers(request, model);
         return "pages/settings/admin/inviteTeacher";
     }
+    @GetMapping("/settings/inviteUser")
+    public String inviteUser(HttpServletRequest request, Model model) {
+        request.setAttribute("loadUserType", 2);
+        adminService.loadAllUsers(request, model);
+        return "pages/settings/admin/inviteUser";
+
+    }
+
 
     @GetMapping("/settings/classes")
     public String classes() {

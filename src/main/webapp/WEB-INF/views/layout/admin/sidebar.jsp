@@ -42,35 +42,73 @@
                     <span class="menu-header-text">Settings</span>
                 </li>
                 <!-- Settings -->
+
                 <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class='bx bxs-cog'></i>
-                        <div data-i18n="Layouts">유치원 설정</div>
+                        <i class='menu-icon tf-icons bx bx-envelope'></i>
+                        <div data-i18n="Layouts">초대 및 관리</div>
                     </a>
 
                     <ul class="menu-sub">
                         <li class="menu-item">
                             <a href="${contextPath}/admin/settings/inviteAdmin" class="menu-link">
-                                <div data-i18n="Without menu">멤버 관리</div>
+                                <div data-i18n="Without menu">관리자 관리</div>
                             </a>
                         </li>
 
                         <li class="menu-item">
-                            <a href="${contextPath}/admin/settings" class="menu-link">
-                                <div data-i18n="Without navbar">설정</div>
+                            <a href="${contextPath}/admin/settings/inviteUser" class="menu-link">
+                                <div data-i18n="Basic">원생관리</div>
                             </a>
                         </li>
 
                         <li class="menu-item">
-                            <a href="layouts-fluid.html" class="menu-link">
-                                <div data-i18n="Fluid">반 설정</div>
+                            <a href="${contextPath}/admin/settings/inviteTeacher" class="menu-link">
+                                <div data-i18n="Basic">교사관리</div>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="menu-item">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class='menu-icon tf-icons bx bxs-cog'></i>
+                        <div data-i18n="Layouts">유치원 관리</div>
+                    </a>
+
+                    <ul class="menu-sub">
+                        <li class="menu-item">
+                            <a href="${contextPath}/admin/settings/center" class="menu-link">
+                                <i class='menu-icon tf-icons bx bxs-graduation'></i>
+                                <div data-i18n="Basic">원 기본 정보 설정</div>
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="layouts-blank.html" class="menu-link">
-                                <div data-i18n="Blank">가격 설정</div>
+                            <a href="${contextPath}/admin/settings/classes" class="menu-link">
+                                <i class='menu-icon tf-icons bx bxs-capsule'></i>
+                                <div data-i18n="Basic">반 정보 관리</div>
                             </a>
                         </li>
+
+<%--                        <li class="menu-item">--%>
+<%--                            <a href="${contextPath}/admin/settings/users" class="menu-link">--%>
+<%--                                <div data-i18n="Basic">원생관리</div>--%>
+<%--                            </a>--%>
+<%--                        </li>--%>
+
+                        <li class="menu-item">
+                            <a href="${contextPath}/admin/settings/coupons" class="menu-link">
+                                <i class='menu-icon tf-icons bx bx-briefcase-alt-2'></i>
+                                <div data-i18n="Basic">쿠폰 관리</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="${contextPath}/admin/settings/classes" class="menu-link">
+                                <i class='menu-icon tf-icons bx bx-bus'></i>
+                                <div data-i18n="Basic">등하원 전자출결 설정</div>
+                            </a>
+                        </li>
+
                     </ul>
                 </li>
 

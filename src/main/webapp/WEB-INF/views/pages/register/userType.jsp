@@ -64,7 +64,7 @@
                                    id="btnradio3"
                                    autocomplete="off"/>
                             <label class="btn btn-outline-primary  btn-sticker" for="btnradio3"
-                                   style="background-image: url('/resources/images/roundStickers/dpg-family.png');"></label>
+                                   style="background-image: url('/resources/images/roundStickers/doglovers5.png');"></label>
                         </div>
                         <div class="label-group">
                             <div class="text-labels">원장님</div>

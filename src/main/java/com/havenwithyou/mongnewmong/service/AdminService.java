@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public interface AdminService {
     void registerCenter(HttpServletRequest request, HttpServletResponse response);
-
+    void loadUsers(HttpServletRequest request, Model model);
+    void loadTeachers(HttpServletRequest request, Model model);
     void loadAllUsers(HttpServletRequest request, Model model);
 }
