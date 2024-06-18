@@ -51,10 +51,6 @@ public class UserController {
     }
 //    ADMIN
 
-//    FAMILY
-
-    //@TODO SINGUP
-//    ADMIN
 
 
     //@TODO PROFILE SETTING
@@ -79,8 +75,8 @@ public class UserController {
     }
 
     @PostMapping("/userType")
-    public String userType(HttpServletRequest request, HttpServletResponse response) {
-        return userService.setType(request, response);
+    public String userType(HttpServletRequest request) {
+        return userService.setType(request);
     }
 
     @GetMapping("/furtherRegister")
@@ -88,11 +84,62 @@ public class UserController {
         return "pages/register/user/registerDog";
     }
 
+    @GetMapping(value = "/invitedOrNot")
+    public String invite() {
+        return "pages/invited";
+    }
+
+
+    @GetMapping(value = "/centerList", produces = "application/json")
+    public ResponseEntity<Map<String, Object>> centerList(HttpServletRequest request) {
+        return userService.loadAllCenters();
+    }
+
+    @PostMapping(value = "/checkInviteCode", produces = "application/json")
+    public ResponseEntity<Map<String, Object>> checkInviteCode(@RequestBody Map<String, Object> params) {
+        return userService.checkInviteCode(params);
+    }
+
+    @PostMapping("/finalSignUp")
+    public String finalSignUp(HttpServletRequest request) {
+        return userService.finalSignUp(request);
+    }
+
     @GetMapping("/registerDog")
     public String registerDogPage() {
         return "pages/register/user/registerDog";
     }
 
+    //@TODO SINGUP
+//    ADMIN
+
+    @GetMapping(value = "/getUserDetail", produces = "application/json")
+    public ResponseEntity<Map<String, Object>> getUserById(@RequestBody Map<String, Object> params) {
+
+        System.out.println("----------------CONTROLLER--------------------");
+        System.out.println("----------------CONTROLLER--------------------");
+        System.out.println(params);
+        System.out.println("----------------CONTROLLER--------------------");
+        System.out.println("----------------CONTROLLER--------------------");
+        return userService.getUserDetail(params);
+    }
+
+
+    @PostMapping(value = "/getUserDetail", produces = "application/json")
+    public ResponseEntity<Map<String, Object>> getUserDetail(HttpServletRequest request, @RequestParam(value = "userId", required = false, defaultValue = "0") int userId) {
+
+        System.out.println("----------------CONTROLLER--------------------");
+        System.out.println("----------------CONTROLLER--------------------");
+        System.out.println(userId);
+        System.out.println("----------------CONTROLLER--------------------");
+        System.out.println("----------------CONTROLLER--------------------");
+        return userService.getUserById(userId);
+    }
+
+
+
+
+//    USER
 
     @PostMapping("/registerDog")
     public String registerDog(MultipartHttpServletRequest multipartRequest
@@ -138,9 +185,12 @@ public class UserController {
     }
 
 
+
     @PostMapping(value = "/removeDog", produces = "application/json")
     public ResponseEntity<Map<String, Object>> removeDog(@RequestParam(value = "dogId", required = false, defaultValue = "0") int dogId, HttpServletRequest request) {
         return ResponseEntity.ok(Map.of("removeResult", userService.removeDog(request, dogId) == 1 ? "삭제되었습니다." : "삭제되지 않았습니다."));
     }
+
+
 
 }

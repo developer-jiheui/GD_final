@@ -7,9 +7,9 @@
 
     <resultMap id="centerMap" type="CenterDto">
         <id  property="centerid"	 column="CENTER_ID" />
-        <id  property="address"	 column="CENTER_ADDRESS" />
-        <id  property="name"	 column="CENTER_NAME" />
-        <id  property="centerPhone"   column="CENTER_PHONE_NUM"/>
+        <id  property="centerAddress"	 column="CENTER_ADDRESS" />
+        <id  property="centerName"	 column="CENTER_NAME" />
+        <id  property="centerPhoneNum"   column="CENTER_PHONE_NUM"/>
         <id property="logo" column="CENTER_LOGO"/>
     </resultMap>
 
@@ -28,10 +28,17 @@
         , CENTER_LOGO
         ) VALUES (
         CENTER_SEQ.NEXTVAL
-        , #{address}
-        , #{name}
-        , #{centerPhone}
+        , #{centerAddress}
+        , #{centerName}
+        , #{centerPhoneNum}
         , NULL
         )
     </insert>
+    <select id="getAllCenters" resultType="centerDto">
+        SELECT  CENTER_ID
+        , CENTER_ADDRESS
+        , CENTER_NAME
+        , CENTER_PHONE_NUM
+        , CENTER_LOGO FROM DAYCARE
+    </select>
 </mapper>

@@ -41,7 +41,7 @@ public interface UserService {
 
     boolean registerProfilePhoto(MultipartHttpServletRequest multipartHttpServletRequest);
 
-    String setType(HttpServletRequest request, HttpServletResponse response);
+    String setType(HttpServletRequest request);
 
     int addDog(MultipartHttpServletRequest multipartRequest);
 
@@ -54,4 +54,14 @@ public interface UserService {
     ResponseEntity<Map<String, Object>> loadDogDetail(int dogId);
 
     int editDog(MultipartHttpServletRequest multipartRequest);
+
+    ResponseEntity<Map<String, Object>> loadAllCenters();
+
+    String finalSignUp(HttpServletRequest request);
+
+    ResponseEntity<Map<String, Object>> checkInviteCode(Map<String, Object> params);
+
+    ResponseEntity<Map<String, Object>> getUserDetail(Map<String, Object> params);
+
+    ResponseEntity<Map<String, Object>> getUserById(int userId);
 }

@@ -8,4 +8,6 @@ public interface AdminService {
     void loadUsers(HttpServletRequest request, Model model);
     void loadTeachers(HttpServletRequest request, Model model);
     void loadAllUsers(HttpServletRequest request, Model model);
+
+    void sendInvite(HttpServletRequest request);
 }

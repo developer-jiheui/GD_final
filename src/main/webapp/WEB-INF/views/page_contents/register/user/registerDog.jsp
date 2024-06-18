@@ -34,13 +34,13 @@
                         </div>
                         <!-- /Logo -->
                         <h4 class="mb-2">환영합니다 ${sessionScope.user.name} 보호자님❣️</h4>
-                        <p class="mb-4">곧 회원가입 동의 메일이 도착할거에요!</p>
+                        <p class="mb-4">우리 유치원을 다니는 아이들을 등록해주세요 :)</p>
 
                         <div style="margin-bottom: 2rem"></div>
                         <ul id="dogs" class="class-list">
                             <!----dogList AJAX--->
                         </ul>
-                        <div style="display: flex; justify-content: center; align-items: center;
+                        <div id="registerBtnContainer" style="display: flex; justify-content: center; align-items: center;
                                     margin-top: 2rem; margin-bottom: 0.5rem">
                             <button type="button" id="addDogBtn" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#dogModal"> 강아지 등록하기
@@ -133,15 +133,10 @@
                                                 of 800K</p>
                                         </div>
                                     </div>
-
                                 </div>
-
-
                             </div>
                             <!-------------/AVATAR/-------------->
-
                         </div>
-
 
                         <div class="col-12 col-md-6">
                             <label class="form-label" for="parent1Name">보호자1 이름</label>
@@ -294,7 +289,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="hidden" name="classes" value="2,3"></div>
                         <div class="col-12 text-center">
                             <button type="button" id="modalBtn" class="btn btn-primary me-sm-3 me-1 modal-submit-btn">
                                 Submit
@@ -302,6 +296,7 @@
                             <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
                                     aria-label="Close">Cancel
                             </button>
+                        </div>
                         </div>
                     </form>
                 </div>
@@ -379,6 +374,14 @@
                 // 응답
                 dataType: 'json',
                 success: (resData) => {
+
+                    //create Next button
+                    if(resData.dogList.length>0){
+                        let gap ='<div style="width: 11%"></div>'
+                        let btn = '<a href="${contextPath}/user/invitedOrNot" class="btn btn-primary">등록 완료</a>';
+                        $('#registerBtnContainer').append(gap);
+                        $('#registerBtnContainer').append(btn);
+                    }
 
                     $.each(resData.dogList, (i, dog) => {
                         let dogName = dog.name;

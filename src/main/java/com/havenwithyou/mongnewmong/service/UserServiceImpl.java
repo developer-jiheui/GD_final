@@ -1,7 +1,9 @@
 package com.havenwithyou.mongnewmong.service;
 
+import com.havenwithyou.mongnewmong.dto.CenterDto;
 import com.havenwithyou.mongnewmong.dto.DogDto;
 import com.havenwithyou.mongnewmong.dto.UserDto;
+import com.havenwithyou.mongnewmong.mapper.CenterMapper;
 import com.havenwithyou.mongnewmong.mapper.DogMapper;
 import com.havenwithyou.mongnewmong.mapper.UserMapper;
 import com.havenwithyou.mongnewmong.utils.MyFileUtils;
@@ -36,13 +38,15 @@ public class UserServiceImpl implements UserService {
     private final MyJavaMailUtils myJavaMailUtils;
     private final MyFileUtils myFileUtils;
     private final DogMapper dogMapper;
+    private final CenterMapper centerMapper;
 
-    public UserServiceImpl(UserMapper userMapper, MyJavaMailUtils myJavaMailUtils, MyFileUtils myFileUtils, DogMapper dogMapper) {
+    public UserServiceImpl(UserMapper userMapper, MyJavaMailUtils myJavaMailUtils, MyFileUtils myFileUtils, DogMapper dogMapper, CenterMapper centerMapper) {
         super();
         this.userMapper = userMapper;
         this.myJavaMailUtils = myJavaMailUtils;
         this.myFileUtils = myFileUtils;
         this.dogMapper = dogMapper;
+        this.centerMapper = centerMapper;
     }
 
     @Override
@@ -263,7 +267,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String setType(HttpServletRequest request, HttpServletResponse response) {
+    public String setType(HttpServletRequest request) {
         int userType = Integer.parseInt(request.getParameter("userType"));
         String role;
         HttpSession session = request.getSession();
@@ -528,5 +532,95 @@ public class UserServiceImpl implements UserService {
         return dogMapper.updateDog(dog2edit);
     }
 
+    @Override
+    public ResponseEntity<Map<String, Object>> loadAllCenters() {
+        ArrayList<CenterDto> allCenters = (ArrayList<CenterDto>) centerMapper.getAllCenters();
+        return new ResponseEntity<>(Map.of("centerList", allCenters),HttpStatus.OK);
+    }
 
+    @Override
+    public String finalSignUp(HttpServletRequest request) {
+        UserDto user = (UserDto) request.getSession().getAttribute("user");
+
+        String invitationCode = request.getParameter("invitationCode");
+        String centerName =request.getParameter("centerName");
+        String centerId = request.getParameter("centerId");
+
+        System.out.println("-------------FINAL-----------------");
+        System.out.println("------------------------------");
+        System.out.println(invitationCode);
+        System.out.println("-------------INVITE CODE-----------------");
+
+
+
+        String goToURL = "";
+        if(invitationCode!=null&&!invitationCode.equals("")){
+            Map<String, Object> params = Map.of("userid", user.getUserid()
+                    , "inviteid", invitationCode);
+
+            System.out.println("-------------FINAL-----------------");
+            System.out.println("------------------------------");
+            System.out.println(invitationCode);
+            System.out.println();
+            System.out.println("------------------------------");
+            System.out.println("------------------------------");
+
+            if(userMapper.checkInviteCode(params)==user.getUserid()){
+                user.setAccepted(1);
+                userMapper.updateAccepted(user.getUserid());
+                goToURL = "pages/home";
+            }
+        }
+        if(centerName!=null&&!centerName.equals("")){
+            user.setCenterid(Integer.parseInt(centerId));
+            userMapper.updateCenterId(user);
+            System.out.println("-------------FINAL-----------------");
+            System.out.println("------------------------------");
+            System.out.println(centerId);
+            System.out.println(centerName);
+            System.out.println("------------------------------");
+            System.out.println("------------------------------");
+
+
+            goToURL ="pages/register/login";
+        }
+        return goToURL;
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> checkInviteCode(Map<String, Object> params) {
+        return new ResponseEntity<>(Map.of("validCode", userMapper.checkInviteCode(params) == null)
+                , HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> getUserDetail(Map<String, Object> params) {
+       //@TODO FIX THIS
+        return new ResponseEntity<>(Map.of("userDetail", userMapper.getUserDetail(params)),HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> getUserById(int userId) {
+        UserDto user = userMapper.getUserById(userId);
+//        String fullAddress = user.
+//
+//        String zipCode = fullAddress.substring(1,6);
+//        String restAdd = fullAddress.substring(7);
+//        String[] restAddList = restAdd.split(", ");
+//        String address ="";
+//        String detailAddress="";
+//        String extraAddress="";
+//        String classes = dogDetail.getClasses().replace(",", "");
+//
+//
+//        for (int i = 0; i <restAddList.length; i++) {
+//            if(i==0){
+//                address = restAddList[i];
+//            }
+//            if(i==1){detailAddress = restAddList[i];}
+//            if(i==2){extraAddress = restAddList[i];}
+//        }
+//
+        return new ResponseEntity<>(Map.of("userDetail",user),HttpStatus.OK);
+    }
 }

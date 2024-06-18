@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CenterDto {
     private int centerid;
-    private String address, name, centerPhone, logo;
+    private String centerAddress, centerName, centerPhoneNum, logo;
 }

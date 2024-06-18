@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -90,6 +91,16 @@ public class AdminController {
         return "pages/settings/admin/inviteUser";
 
     }
+
+    //@SEE INVITE USER
+    @PostMapping("/inviteUser")
+    public String sendInvite(HttpServletRequest request, Model model) {
+        adminService.sendInvite(request);
+        request.setAttribute("loadUserType", 0);
+        adminService.loadAllUsers(request, model);
+        return "pages/settings/admin/inviteAdmin";
+    }
+
 
 
     @GetMapping("/settings/classes")

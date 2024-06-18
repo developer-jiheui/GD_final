@@ -1,7 +1,10 @@
 package com.havenwithyou.mongnewmong.service;
 
 import com.havenwithyou.mongnewmong.dto.DogDto;
+import com.havenwithyou.mongnewmong.dto.InviteDto;
 import com.havenwithyou.mongnewmong.mapper.DogMapper;
+import com.havenwithyou.mongnewmong.mapper.InviteMapper;
+import com.havenwithyou.mongnewmong.utils.MySecurityUtils;
 import org.springframework.ui.Model;
 import com.havenwithyou.mongnewmong.dto.CenterDto;
 import com.havenwithyou.mongnewmong.dto.UserDto;
@@ -26,6 +29,7 @@ public class AdminServiceImpl implements AdminService {
     private final CenterMapper centerMapper;
     private final MyPageUtils myPageUtils;
     private final DogMapper dogMapper;
+    private final InviteMapper inviteMapper;
 
     @Override
     public void registerCenter(HttpServletRequest request, HttpServletResponse response) {
@@ -39,9 +43,9 @@ public class AdminServiceImpl implements AdminService {
         String fullAddress = address + ", " + detailedAddress + ", " + extraAddress + ", " + zipcode;
 
         CenterDto center = CenterDto.builder()
-                .address(fullAddress)
-                .name(name)
-                .centerPhone(phoneNo)
+                .centerAddress(fullAddress)
+                .centerName(name)
+                .centerPhoneNum(phoneNo)
                 .build();
 
         int centerId = centerMapper.insertCenter(center);
@@ -165,6 +169,36 @@ public class AdminServiceImpl implements AdminService {
         System.out.println("--------------------------------------");
         System.out.println("--------------------------------------");
         System.out.println("--------------------------------------");
+    }
+
+    @Override
+    public void sendInvite(HttpServletRequest request) {
+        UserDto admin = (UserDto) request.getSession().getAttribute("user");
+
+        String alias = request.getParameter("inviteUserAlias");
+        String email = request.getParameter("userEmail");
+        String contact = request.getParameter("userContact");
+
+        int centerid = admin.getCenterid();
+        int senderid = admin.getUserid();
+
+        // 인증코드 생성
+        String code = MySecurityUtils.getRandomString(6, true, true);
+
+        // 개발할 때 인증코드 찍어보기
+        System.out.println("인증코드 : " + code);
+
+        InviteDto inviteDto = InviteDto.builder()
+                .alias(alias)
+                .email(email)
+                .contact(contact)
+                .accepted(-1)
+                .centerid(centerid)
+                .senderid(senderid)
+                .inviteid(code)
+                .build();
+
+        inviteMapper.insertInvite(inviteDto);
     }
 
 

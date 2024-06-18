@@ -3,86 +3,38 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.havenwithyou.mongnewmong.mapper.UserMapper">
+<mapper namespace="com.havenwithyou.mongnewmong.mapper.InviteMapper">
 
-  <resultMap id="userMap" type="UserDto">
-    <id  property="userid"	 column="USER_ID" />
-<!--    <result  property="name"	 column="NAME" />-->
-    <id  property="name"	 column="NAME" />
-    <id  property="email"	 column="EMAIL" />
-    <id  property="phoneNo"   column="PHONE_NUM"/>
-    <id  property="username"	 column="USER_NAME" />
-    <id  property="pw"	 column="PW" />
-    <id  property="userType"	 column="USER_TYPE" />
-    <id  property="pwModifyDt"	 column="PW_MODIFY_DT" />
-    <id  property="signupDt"	 column="SIGNUP_DT" />
-    <id  property="centerid"     column="CENTER_ID"/>
-    <id  property="inviteid"     column="INVITE_ID"/>
-    <id  property="dogNo"     column="DOG_NO"/>
-    <id  property="accepted"     column="ACCEPTED"/>
-    <id property="avatar" column="AVATAR"/>
-    <association property="centerid" javaType="centerDto">
-      <id  property="centerid"	 column="CENTER_ID" />
-      <id  property="centerAddress"	 column="CENTER_ADDRESS" />
-      <id  property="centerName"	 column="CENTER_NAME" />
-      <id  property="centerPhoneNum"   column="CENTER_PHONE_NUM"/>
-      <id property="logo" column="CENTER_LOGO"/>    </association>
-
-    <association property="userid" javaType="dogDto">
-      <id  property="dogId"	 column="DOG_ID" />
-      <id  property="userid"	 column="USER_ID" />
-      <id  property="name"	 column="NAME" />
-      <id  property="parent1Name"	 column="PARENT1_NAME" />
-      <id  property="parent2Name"	 column="PARENT2_NAME" />
-      <id  property="parent1Phone"	 column="PARENT1_PHONE" />
-      <id  property="parent2Phone"	 column="PARENT2_PHONE" />
-      <id  property="address"	 column="ADDRESS" />
-      <id  property="breed"	 column="BREED" />
-      <id  property="birthday"	 column="BIRTHDAY" />
-      <id  property="avatar"	 column="AVATAR" />
-      <id  property="classes"	 column="CLASSES" />
-    </association>
-    <association property="invite" javaType="inviteDto">
+  <resultMap id="inviteMap" type="inviteDto">
       <id property="inviteid" column="INVITE_ID"/>
+      <id property="alias" column="ALIAS"/>
+      <id property="email" column="EMAIL"/>
+      <id property="contact" column="CONTACT"/>
       <id property="centerid" column="CENTER_ID"/>
       <id property="senderid" column="SENDER_ID"/>
       <id property="recieverid" column="RECEIVER_ID"/>
       <id property="accepted" column="ACCEPTED"/>
-    </association>
   </resultMap>
 
-  <insert id="insertUser"
-          parameterType="UserDto">
+  <insert id="insertInvite"
+          parameterType="InviteDto">
     INSERT INTO USER_T (
-    USER_ID
-    , NAME
+    INVITE_ID
+    , ALIAS
     , EMAIL
-    , PHONE_NUM
-    , USER_NAME
-    , PW
-    , USER_TYPE
-    , SIGNUP_DT
-    , PW_MODIFY_DT
+    , CONTACT
     , CENTER_ID
-    , INVITE_ID
-    , DOG_NO
+    , SENDER_ID
+    , RECIEVER_ID
     , ACCEPTED
-    , AVATAR
     ) VALUES (
-    USER_SEQ.NEXTVAL
-    , #{name}
+    #{inviteid}
+    , #{alias}
     , #{email}
-    , #{phoneNo}
-    , #{username}
-    , #{pw}
-    , #{userType}
-    , SYSDATE
-    , SYSDATE
-    , NULL
-    , NULL
-    , #{dogNo}
-    , #{accepted}
-    , #{avatar}
+    , #{contact}
+    , #{centerid}
+    , #{senderid}
+    , #{recieverid}
     )
   </insert>
 

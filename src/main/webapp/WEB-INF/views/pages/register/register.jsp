@@ -192,15 +192,6 @@
                                                     </button>
                                                 </div>
                                             </div>
-
-                                            <%--                                            <input--%>
-                                            <%--                                                    type="text"--%>
-                                            <%--                                                    class="form-control"--%>
-                                            <%--                                                    id="code"--%>
-                                            <%--                                                    name="code"--%>
-                                            <%--                                                    placeholder="인증번호는 10분동안 유효합니다"--%>
-                                            <%--                                                    autofocus--%>
-                                            <%--                                            />--%>
                                         </div>
                                         <br>
                                         <br>

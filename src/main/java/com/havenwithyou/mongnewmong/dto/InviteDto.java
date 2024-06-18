@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class InviteDto {
-    String id;
-    int senderid, recieverid, accepted;
+    String inviteid, alias,email,contact;
+    int centerid, senderid, recieverid, accepted;
 }

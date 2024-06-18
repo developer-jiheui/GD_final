@@ -27,4 +27,12 @@ public interface UserMapper {
   int getAllUserCount(Map<String, Object> sortMap);
 
   List<UserDto> getAllUserList(Map<String, Object> map);
+
+  Integer checkInviteCode(Map<String, Object> params);
+
+  void updateAccepted(int userid);
+
+  UserDto getUserDetail(Map<String, Object> params);
+
+  UserDto getUserById(int userId);
 }
