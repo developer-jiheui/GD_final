@@ -46,7 +46,7 @@
       <id property="inviteid" column="INVITE_ID"/>
       <id property="centerid" column="CENTER_ID"/>
       <id property="senderid" column="SENDER_ID"/>
-      <id property="recieverid" column="RECEIVER_ID"/>
+      <id property="receiverid" column="RECEIVER_ID"/>
       <id property="accepted" column="ACCEPTED"/>
     </association>
   </resultMap>

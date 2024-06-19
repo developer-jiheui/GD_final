@@ -141,7 +141,7 @@
                                         <label>
                                             <select id="display" name="display" aria-controls="DataTables_Table_0"
                                                     class="form-select">
-                                                <option value="5">5</option>
+                                                <option value="5" >5</option>
                                                 <option value="15">15</option>
                                                 <option value="30">30</option>
                                                 <option value="50">50</option>
@@ -185,27 +185,19 @@
                                     style="width: 0px; display: none;" aria-label=""></th>
                                 <th class="" tabindex="0" aria-controls="DataTables_Table_0"
                                     rowspan="1" colspan="1" style="width: 249px;"
-                                    aria-label="User" aria-sort="descending">이용자
+                                    aria-label="User" aria-sort="descending">초대된 이용자
                                 </th>
                                 <th class="sorting_disabled" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 119px;"
+                                    colspan="1" style="width: 80px;"
                                     aria-label="Role: activate to sort column ascending">역할
                                 </th>
                                 <th class="sorting_disabled" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width: 119px;"
-                                    aria-label="Role: activate to sort column ascending">닉네임
+                                    colspan="1" style="width: 100px;"
+                                    aria-label="Role: activate to sort column ascending">이메일
                                 </th>
                                 <th class="sorting_disabled" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width:150px;"
-                                    aria-label="Plan: activate to sort column ascending">반
-                                </th>
-                                <th class="sorting_disabled" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width:  76px;"
-                                    aria-label="Billing: activate to sort column ascending">원생
-                                </th>
-                                <th class="sorting_disabled" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-                                    colspan="1" style="width:  76px;"
-                                    aria-label="Billing: activate to sort column ascending">원생
+                                    colspan="1" style="width: 100px;"
+                                    aria-label="Role: activate to sort column ascending">연락처
                                 </th>
                                 <th class="sorting sorting_desc" tabindex="0" aria-controls="DataTables_Table_0"
                                     rowspan="1"
@@ -218,6 +210,7 @@
                             </tr>
                             </thead>
 
+                            <!------USER LIST----->
 
                             <tbody>
                             <c:forEach items="${userList}" var="user" varStatus="vs">
@@ -265,55 +258,71 @@
                                         </span>
                                     </td>
 
-                                    <td><span class="fw-medium">강아지 또는 선생님 반정보</span></td>
-                                    <td>${user.dogNo}</td>
+                                    <!----USER STATUS----->
+                                    <c:set var="accepted" value="${user.accepted}"/>
+                                    <c:set var="invite" value="${user.inviteid}"/>
                                     <td>
-                                        <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                                            <li
-                                                    data-bs-toggle="tooltip"
-                                                    data-popup="tooltip-custom"
-                                                    data-bs-placement="top"
-                                                    class="avatar avatar-xs pull-up"
-                                                    title="Lilian Fuller"
-                                            >
-                                                <img src="../assets/img/avatars/5.png" alt="Avatar"
-                                                     class="rounded-circle"/>
-                                            </li>
-                                            <li
-                                                    data-bs-toggle="tooltip"
-                                                    data-popup="tooltip-custom"
-                                                    data-bs-placement="top"
-                                                    class="avatar avatar-xs pull-up"
-                                                    title="Sophia Wilkerson"
-                                            >
-                                                <img src="../assets/img/avatars/6.png" alt="Avatar"
-                                                     class="rounded-circle"/>
-                                            </li>
-                                            <li
-                                                    data-bs-toggle="tooltip"
-                                                    data-popup="tooltip-custom"
-                                                    data-bs-placement="top"
-                                                    class="avatar avatar-xs pull-up"
-                                                    title="Christina Parker"
-                                            >
-                                                <img src="../assets/img/avatars/7.png" alt="Avatar"
-                                                     class="rounded-circle"/>
-                                            </li>
-                                        </ul>
+                                        <c:if test="${invite=='NONE'}">
+                                            <c:if test="${accepted>0}">
+                                                <span class="badge bg-label-success">정회원</span>
+                                            </c:if>
+                                            <c:if test="${accepted<=0}">
+                                                <span class="badge bg-label-danger">승인 필요</span>
+                                            </c:if>
+                                        </c:if>
+
+                                        <c:if test="${invite!='NONE'}">
+                                            <c:if test="${accepted>0}">
+                                                <span class="badge bg-label-success">정회원</span>
+                                            </c:if>
+                                            <c:if test="${accepted<=0}">
+                                                <span class="badge bg-label-primary">초대됨</span>
+                                            </c:if>
+                                        </c:if>
                                     </td>
-                                    <td><span class="badge bg-label-success">${user.inviteid}</span></td>
+                                    <!----------ACTIONS-------->
                                     <td>
                                         <div class="d-inline-block text-nowrap">
-                                            <button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button>
-                                            <button class="btn btn-sm btn-icon delete-record"><i
+                                            <button data-user-id="${user.userid}"
+                                                    class="btn btn-sm btn-icon editUserBtn" data-bs-toggle="modal"
+                                                    data-bs-target="#userModal"><i class="bx bx-edit"></i></button>
+                                            <button data-user-id="${user.userid}"
+                                                    class="deleteUserBtn btn btn-sm btn-icon delete-record"><i
                                                     class="bx bx-trash"></i>
                                             </button>
                                             <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow"
                                                     data-bs-toggle="dropdown"><i
                                                     class="bx bx-dots-vertical-rounded me-2"></i></button>
-                                            <div class="dropdown-menu dropdown-menu-end m-0"><a
-                                                    href="app-user-view-account.html" class="dropdown-item">View</a><a
-                                                    href="javascript:" class="dropdown-item">Suspend</a></div>
+                                            <c:if test="${invite=='NONE'}">
+                                                <c:if test="${accepted>0}">
+                                                    <div class="dropdown-menu dropdown-menu-end m-0">
+                                                        <a href="#" class="dropdown-item">이미 회원입니다</a>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${accepted<=0}">
+                                                    <div class="dropdown-menu dropdown-menu-end m-0">
+                                                        <a href="app-user-view-account.html"
+                                                           class="dropdown-item btn-accept">승인하기</a>
+                                                        <a href="javascript:" class="dropdown-item btn-invite">초대하기</a>
+                                                    </div>
+                                                </c:if>
+                                            </c:if>
+
+                                            <c:if test="${invite!='NONE'}">
+                                                <c:if test="${accepted>0}">
+                                                    <div class="dropdown-menu dropdown-menu-end m-0">
+                                                        <a href="#" class="dropdown-item">이미 회원입니다</a>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${accepted<=0}">
+                                                    <div class="dropdown-menu dropdown-menu-end m-0">
+                                                        <a href="app-user-view-account.html"
+                                                           class="dropdown-item btn-accept">승인하기</a>
+                                                    </div>
+                                                </c:if>
+                                            </c:if>
+
+
                                         </div>
                                     </td>
                                 </tr>
@@ -322,6 +331,9 @@
 
                             </tbody>
                         </table>
+                        <!------/USERLIST---->
+
+
                         <div class="row mx-2">
                             <div class="col-sm-12 col-md-6">
                                 <div class="dataTables_info" id="DataTables_Table_0_info" role="status"
@@ -406,12 +418,12 @@
                             location.href = '${contextPath}/admin/settings/inviteAdmin?page=${page}&sort=' + evt.target.value + '&sortBy=${sortBy}&display=${display}';
                         })
                     }
-                    const fnNextPage=()=>{
+                    const fnNextPage = () => {
 
                     }
 
-                    const fnClickPage=()=>{
-                        $('.page-link').addEventListener('click',(e)=>{
+                    const fnClickPage = () => {
+                        $('.page-link').addEventListener('click', (e) => {
                             alert(e.target.value);
                         })
                         $('.page-item')
@@ -421,6 +433,7 @@
                     fnClickPage();
                 </script>
                 <!-- Offcanvas to add new user -->
+
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasInviteUser"
                      aria-labelledby="offcanvasInviteUserLabel">
                     <div class="offcanvas-header">
@@ -429,12 +442,15 @@
                                 aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body mx-0 flex-grow-0">
-                        <form class="add-new-user pt-0 fv-plugins-bootstrap5 fv-plugins-framework" id="addNewUserForm"
-                              onsubmit="return false" novalidate="novalidate">
+                        <form class="inviteUser add-new-user pt-0 fv-plugins-bootstrap5 fv-plugins-framework"
+                              id="inviteUserForm"
+                              method="POST"
+                              action="${contextPath}/admin/inviteUser"
+                              novalidate="novalidate">
                             <div class="mb-3 fv-plugins-icon-container">
-                                <label class="form-label" for="add-user-fullname">이름</label>
-                                <input type="text" class="form-control" id="add-user-fullname" placeholder="초대할 이용자 이름"
-                                       name="userFullname" aria-label="userFullname">
+                                <label class="form-label" for="inviteUserAlias">누구를 초대하시겠습니까</label>
+                                <input type="text" class="form-control" id="inviteUserAlias" placeholder="초대할 분"
+                                       name="inviteUserAlias" aria-label="inviteUserAlias">
                                 <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
                             </div>
                             <div class="mb-3 fv-plugins-icon-container">
@@ -451,63 +467,21 @@
                                        name="userContact">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="add-user-center">유치원</label>
-                                <input type="text" id="add-user-center" class="form-control"
-                                       value="${sessionScope.user.center.name}" aria-label="centerName"
-                                       name="centerName">
+                                <input type="hidden" id="add-user-centerid" class="form-control"
+                                       value="${sessionScope.user.centerid}" aria-label="centerName"
+                                       name="centerid" display="none">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="user-role">User Role</label>
-                                <select id="user-role" class="form-select">
-                                    <option value="subscriber">원장님</option>
-                                    <option value="editor">선생님</option>
-                                    <option value="maintainer">보호자님</option>
+                                <select id="user-role" name="userType" class="form-select" style="margin-bottom: 3rem">
+                                    <option value="0">원장님</option>
+                                    <option value="1">선생님</option>
+                                    <option value="2">보호자님</option>
                                 </select>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="country">반</label>
-                                <div class="position-relative"><select id="country"
-                                                                       class="select2 form-select select2-hidden-accessible"
-                                                                       data-select2-id="country" tabindex="-1"
-                                                                       aria-hidden="true">
-                                    <option value="" data-select2-id="2">Select</option>
-                                    <option value="Australia">Australia</option>
-                                    <option value="Bangladesh">Bangladesh</option>
-                                    <option value="Belarus">Belarus</option>
-                                    <option value="Brazil">Brazil</option>
-                                    <option value="Canada">Canada</option>
-                                    <option value="China">China</option>
-                                    <option value="France">France</option>
-                                    <option value="Germany">Germany</option>
-                                    <option value="India">India</option>
-                                    <option value="Indonesia">Indonesia</option>
-                                    <option value="Israel">Israel</option>
-                                    <option value="Italy">Italy</option>
-                                    <option value="Japan">Japan</option>
-                                    <option value="Korea">Korea, Republic of</option>
-                                    <option value="Mexico">Mexico</option>
-                                    <option value="Philippines">Philippines</option>
-                                    <option value="Russia">Russian Federation</option>
-                                    <option value="South Africa">South Africa</option>
-                                    <option value="Thailand">Thailand</option>
-                                    <option value="Turkey">Turkey</option>
-                                    <option value="Ukraine">Ukraine</option>
-                                    <option value="United Arab Emirates">United Arab Emirates</option>
-                                    <option value="United Kingdom">United Kingdom</option>
-                                    <option value="United States">United States</option>
-                                </select><span class="select2 select2-container select2-container--default" dir="ltr"
-                                               data-select2-id="1" style="width: 352px;"><span class="selection"><span
-                                        class="select2-selection select2-selection--single" role="combobox"
-                                        aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false"
-                                        aria-labelledby="select2-country-container"><span
-                                        class="select2-selection__rendered" id="select2-country-container"
-                                        role="textbox" aria-readonly="true"><span
-                                        class="select2-selection__placeholder">Select Country</span></span><span
-                                        class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span
-                                        class="dropdown-wrapper" aria-hidden="true"></span></span></div>
-                            </div>
 
-                            <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Submit</button>
+
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit ">Submit</button>
                             <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">Cancel
                             </button>
                             <input type="hidden"></form>
@@ -517,4 +491,297 @@
 
 
         </div>
-        <!-- / Content -->
+<%--        <script>--%>
+<%--            $(document).on('click', '.editUserBtn', function (ev) {--%>
+<%--                var userid = $(this).data('user-id');--%>
+<%--                $.ajax({--%>
+<%--                    type: 'POST',--%>
+<%--                    url: '${contextPath}/user/getUserDetail',--%>
+<%--                    data: 'userId=' + userid,--%>
+<%--                    success: (resData) => {--%>
+<%--                        $('#userid').val(resData.userDetail.userid);--%>
+<%--                        $('#name').val(resData.userDetail.name);--%>
+<%--                        $('#username').val(resData.userDetail.username);--%>
+<%--                        $('#avatar').attr('src', resData.userDetail.avatar);--%>
+<%--                        $('#avatar').val(resData.userDetail.avatar);--%>
+<%--                        $('#email').val(resData.userDetail.email);--%>
+<%--                        $('#zonecode').val(resData.zipCode);--%>
+<%--                        $('#address').val(resData.address);--%>
+<%--                        $('#detailAddress').val(resData.detailAddress);--%>
+<%--                        $('#extraAddress').val(resData.extraAddress);--%>
+<%--                        console.log(resData);--%>
+<%--                        console.log(resData.userDetail);--%>
+
+<%--                    },--%>
+<%--                    error: (jqXHR, textStatus, errorThrown) => {--%>
+<%--                        console.error('Error fetching user detail:', textStatus, errorThrown);--%>
+<%--                        alert(jqXHR.statusText + '(' + jqXHR.status + ')');--%>
+<%--                    }--%>
+<%--                })--%>
+<%--            })--%>
+<%--        </script>--%>
+<%--        --%>
+
+
+        <!-------USER MODAL----------->
+
+        <div class="modal fade" id="userModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-simple modal-edit-user">
+                <div class="modal-content p-3 p-md-5">
+                    <div class="modal-body">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                        <form id="frmModal" class="row g-3"
+                              enctype="multipart/form-data"
+                              method="POST"
+                        >
+                            <div class="text-center mb-4">
+                                <h3 id="modalTitle">Edit User Information</h3>
+                                <p id="modalText">회원님의 정보를 수정하세요</p>
+                                <!-------------AVATAR-------------->
+                                <div class="row">
+                                    <div class="text-center">
+                                        <div class="d-flex align-items-start align-items-sm-center">
+                                            <div class="col-md-6">
+                                                <div class="img-container" style="margin-left:-35px">
+                                                    <div class="align-center">
+                                                        <input type="hidden" id="userid" name="userid" display="none"/>
+                                                        <%--                            @TODO CHANGE THE SETTING FOR THE IMAGE--%>
+                                                        <img
+                                                                src="${contextPath}/resources/images/roundStickers/kisses.png"
+                                                                alt="user-avatar"
+                                                                class="d-block rounded dogAvatar"
+                                                                style="height:150px; margin-bottom: 1rem"
+                                                                id="avatar"
+                                                        />
+                                                    </div>
+                                                    <div class="align-center">
+                                                        <div class="col-12 col-md-9 fv-plugins-icon-container">
+                                                            <label class="form-label"
+                                                                   for="name">이름</label>
+                                                            <input type="text" id="name"
+                                                                   name="name"
+                                                                   class="form-control"
+                                                                   placeholder="">
+                                                            <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="button-wrapper col-md-6">
+                                                <label for="files" class="btn btn-primary me-2 mb-4"
+                                                       tabindex="0">
+                                                    <span class="d-none d-sm-block">Upload new photo</span>
+                                                    <i class="bx bx-upload d-block d-sm-none"></i>
+                                                    <input
+                                                            type="file"
+                                                            name="files"
+                                                            id="files"
+                                                            class="account-file-input"
+                                                            hidden
+                                                            accept="image/png, image/jpeg"
+                                                            onchange="onFileUpload();"
+                                                    />
+                                                </label>
+                                                <button type="button"
+                                                        class="btn btn-outline-secondary account-image-reset mb-4">
+                                                    <i class="bx bx-reset d-block d-sm-none"></i>
+                                                    <span class="d-none d-sm-block">Reset</span>
+                                                </button>
+
+                                                <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size
+                                                    of 800K</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-------------/AVATAR/-------------->
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label" for="username">닉네임</label>
+                                <input type="text" id="username" name="username" class="form-control"
+                                       value="${sessionScope.user.username}"/>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label" for="email">이메일</label>
+                                <input type="text" id="email" name="email" class="form-control" placeholder=""/>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label class="form-label" for="phoneNo">연락처</label>
+                                <input type="text" id="phoneNo" name="phoneNo" class="form-control"
+                                       value="${sessionScope.user.phoneNo}"/>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label for="birthday" class="form-label">생일</label>
+                                <input type="date" id="birthday" name="birthday" placeholder="2020/00/00"
+                                       class="form-control">
+                            </div>
+
+                            <br><br><br>
+
+                            <!------------------ADDRESS--------------->
+                            <label for="zonecode" class="form-label">집 주소</label>
+                            <div class="input-container">
+                                <div class="address-input-group">
+                                    <div class="mb-3 address-container">
+
+                                        <input type="text" class="form-control" id="zonecode" name="zipcode"
+                                               onclick="execDaumPostcode()" placeholder="우편번호" readonly>
+
+                                    </div>
+                                    <div class="mb-3 address-container">
+                                        <input type="button" class="form-control " onclick="execDaumPostcode()"
+                                               value="우편번호 찾기">
+                                    </div>
+                                </div>
+                                <div class="input-container">
+
+                                </div>
+                            </div>
+                            <div class="mb-3 address-input-group" style="margin-bottom: 5% !important;">
+                                <input type="text" class="form-control address-input" id="address" name="address"
+                                       placeholder="주소" readonly>
+                                <input type="text" class="form-control address-input" id="detailAddress"
+                                       name="detailAddress" placeholder="상세주소">
+                                <input type="text" class="form-control address-input" id="extraAddress"
+                                       name="extraAddress"
+                                       placeholder="참고항목">
+
+                            </div>
+                            <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"/>
+                            <script>
+                                function execDaumPostcode() {
+                                    new daum.Postcode({
+                                        oncomplete: function (data) {
+                                            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+                                            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                                            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                                            var addr = ''; // 주소 변수
+                                            var extraAddr = ''; // 참고항목 변수
+                                            // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                                            if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                                                addr = data.roadAddress;
+                                            } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                                                addr = data.jibunAddress;
+                                            }
+                                            // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                                            if (data.userSelectedType === 'R') {
+                                                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                                                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                                                if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                                                    extraAddr += data.bname;
+                                                }
+                                                // 건물명이 있고, 공동주택일 경우 추가한다.
+                                                if (data.buildingName !== '' && data.apartment === 'Y') {
+                                                    extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                                                }
+                                                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                                                if (extraAddr !== '') {
+                                                    extraAddr = ' (' + extraAddr + ')';
+                                                }
+                                                // 조합된 참고항목을 해당 필드에 넣는다.
+                                                document.getElementById('extraAddress').value = extraAddr;
+                                            } else {
+                                                document.getElementById('extraAddress').value = '';
+                                            }
+                                            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                                            document.getElementById('zonecode').value = data.zonecode;
+                                            document.getElementById('address').value = addr;
+                                            // 커서를 상세주소 필드로 이동한다.
+                                            document.getElementById('detailAddress').focus();
+                                        }
+                                    }).open();
+                                }
+                            </script>
+                            <!------------------/ADDRESS/--------------->
+
+                            <%--                            <div class="d-flex mb-3">--%>
+                            <%--                                <div class="flex-grow-1 row">--%>
+                            <%--                                    <div class="col-9">--%>
+                            <%--                                        <h6 class="mb-0">유치원을 다니는 중인가요?</h6>--%>
+                            <%--                                        <small class="text-muted">현재 유치원을 등록했다면 선택해주세요</small>--%>
+                            <%--                                    </div>--%>
+                            <%--                                    <div class="col-3 text-end">--%>
+                            <%--                                        <div class="form-check form-switch">--%>
+                            <%--                                            <input id="re-class" name="class" class="form-check-input float-end"--%>
+                            <%--                                                   type="checkbox" role="switch">--%>
+                            <%--                                        </div>--%>
+                            <%--                                    </div>--%>
+                            <%--                                </div>--%>
+                            <%--                            </div>--%>
+
+                            <!---------_CLASSES----->
+                            <%--                            <div id="re-classInput" class="" data-select2-id="46" style="">--%>
+
+                            <%--                                <label for="re-select2Primary" class="form-label">현재등록한 반을 선택해주세요</label>--%>
+                            <%--                                <div class="select2-primary" data-select2-id="45">--%>
+                            <%--                                    <div class="position-relative" data-select2-id="44">--%>
+                            <%--                                        <div class="position-relative" data-select2-id="6">--%>
+                            <%--                                            <div class="position-relative" data-select2-id="5">--%>
+                            <%--                                                <select--%>
+                            <%--                                                        id="re-select2Primary"--%>
+                            <%--                                                        class="select2 form-select select2-hidden-accessible"--%>
+                            <%--                                                        multiple="multiple"--%>
+                            <%--                                                        tabindex="-1" name="registeredClasses" aria-hidden="true"--%>
+                            <%--                                                        onchange="fnSelectArray(this)" data-select2-id="re-select2Primary">--%>
+                            <%--                                                    <option value="1" data-select2-id="11">월</option>--%>
+                            <%--                                                    <option value="2" data-select2-id="12">화</option>--%>
+                            <%--                                                    <option value="3" data-select2-id="13">수</option>--%>
+                            <%--                                                    <option value="4" data-select2-id="14">목</option>--%>
+                            <%--                                                    <option value="5" data-select2-id="15">금</option>--%>
+                            <%--                                                    <option value="6" data-select2-id="16">토</option>--%>
+                            <%--                                                    <option value="7" data-select2-id="17">일</option>--%>
+                            <%--                                                </select>--%>
+                            <%--                                            </div>--%>
+                            <%--                                        </div>--%>
+                            <%--                                    </div>--%>
+                            <%--                                </div>--%>
+                            <div class="col-12 text-center">
+                                <button type="button" id="modalBtn"
+                                        class="btn btn-primary me-sm-3 me-1 modal-submit-btn">
+                                    Submit
+                                </button>
+                                <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                                        aria-label="Close">Cancel
+                                </button>
+                            </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/ USER Modal -->
+
+    <script>
+        $(document).on('click', '.editUserBtn', function (ev) {
+            var userid = $(this).data('user-id');
+            $.ajax({
+                type: 'POST',
+                url: '${contextPath}/user/getUserDetail',
+                data: 'userId=' + userid,
+                success: (resData) => {
+                    $('#userid').val(resData.userDetail.userid);
+                    $('#name').val(resData.userDetail.name);
+                    $('#username').val(resData.userDetail.username);
+                    $('#avatar').attr('src', resData.userDetail.avatar);
+                    $('#avatar').val(resData.userDetail.avatar);
+                    $('#email').val(resData.userDetail.email);
+                    $('#zonecode').val(resData.zipCode);
+                    $('#address').val(resData.address);
+                    $('#detailAddress').val(resData.detailAddress);
+                    $('#extraAddress').val(resData.extraAddress);
+                    console.log(resData);
+                    console.log(resData.userDetail);
+
+                },
+                error: (jqXHR, textStatus, errorThrown) => {
+                    console.error('Error fetching user detail:', textStatus, errorThrown);
+                    alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+                }
+            })
+        })
+    </script>
+    <!-- / Content -->

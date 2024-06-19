@@ -5,6 +5,7 @@ import com.havenwithyou.mongnewmong.dto.InviteDto;
 import com.havenwithyou.mongnewmong.mapper.DogMapper;
 import com.havenwithyou.mongnewmong.mapper.InviteMapper;
 import com.havenwithyou.mongnewmong.utils.MySecurityUtils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import com.havenwithyou.mongnewmong.dto.CenterDto;
 import com.havenwithyou.mongnewmong.dto.UserDto;
@@ -178,7 +179,7 @@ public class AdminServiceImpl implements AdminService {
         String alias = request.getParameter("inviteUserAlias");
         String email = request.getParameter("userEmail");
         String contact = request.getParameter("userContact");
-
+        int userType = Integer.parseInt(request.getParameter("userType"));
         int centerid = admin.getCenterid();
         int senderid = admin.getUserid();
 
@@ -196,9 +197,26 @@ public class AdminServiceImpl implements AdminService {
                 .centerid(centerid)
                 .senderid(senderid)
                 .inviteid(code)
+                .userType(userType)
                 .build();
 
         inviteMapper.insertInvite(inviteDto);
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> getStatistics(int userId) {
+        int numOfDeans;
+        int numOfInvites;
+        int numOfDogs;
+        int numOfTeachers;
+        return null;
+    }
+
+    @Override
+    public void acceptUser(int userId) {
+
+        userMapper.updateAccepted(userId);
+
     }
 
 

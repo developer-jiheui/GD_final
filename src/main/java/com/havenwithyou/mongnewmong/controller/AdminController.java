@@ -57,6 +57,8 @@ public class AdminController {
 //        return "pages/settings/admin/admins";
 //    }
 //
+    //INVITATION
+
 
     @GetMapping("/settings/admins")
     public String admins() {
@@ -111,6 +113,18 @@ public class AdminController {
     @GetMapping("/settings/center")
     public String center() {
         return "pages/settings/admin/center";
+    }
+
+    @PostMapping(value = "/acceptUser", produces = "application/json")
+    public String acceptUser(HttpServletRequest request, @RequestParam(value = "userId", required = false, defaultValue = "0") int userId) {
+
+        adminService.acceptUser(userId);
+         return request.getRequestURI();
+    }
+
+    @PostMapping(value = "/getStatistics", produces = "application/json")
+    public ResponseEntity<Map<String, Object>> getStatistics(HttpServletRequest request, @RequestParam(value = "userId", required = false, defaultValue = "0") int userId) {
+        return adminService.getStatistics(userId);
     }
 
 

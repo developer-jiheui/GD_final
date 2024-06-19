@@ -127,12 +127,6 @@ public class UserController {
 
     @PostMapping(value = "/getUserDetail", produces = "application/json")
     public ResponseEntity<Map<String, Object>> getUserDetail(HttpServletRequest request, @RequestParam(value = "userId", required = false, defaultValue = "0") int userId) {
-
-        System.out.println("----------------CONTROLLER--------------------");
-        System.out.println("----------------CONTROLLER--------------------");
-        System.out.println(userId);
-        System.out.println("----------------CONTROLLER--------------------");
-        System.out.println("----------------CONTROLLER--------------------");
         return userService.getUserById(userId);
     }
 

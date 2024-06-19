@@ -12,29 +12,35 @@
       <id property="contact" column="CONTACT"/>
       <id property="centerid" column="CENTER_ID"/>
       <id property="senderid" column="SENDER_ID"/>
-      <id property="recieverid" column="RECEIVER_ID"/>
+      <id property="receiverid" column="RECEIVER_ID"/>
       <id property="accepted" column="ACCEPTED"/>
+     <id property="userType" column="USER_TYPE"/>
   </resultMap>
 
   <insert id="insertInvite"
           parameterType="InviteDto">
-    INSERT INTO USER_T (
-    INVITE_ID
+    INSERT INTO INVITE_T (
+    INVITE_NO
+    , INVITE_ID
     , ALIAS
     , EMAIL
     , CONTACT
     , CENTER_ID
     , SENDER_ID
-    , RECIEVER_ID
+    , RECEIVER_ID
     , ACCEPTED
+    ,USER_TYPE
     ) VALUES (
-    #{inviteid}
+    INVITE_SEQ.NEXTVAL
+    , #{inviteid}
     , #{alias}
     , #{email}
     , #{contact}
     , #{centerid}
     , #{senderid}
-    , #{recieverid}
+    , NULL
+    , #{accepted}
+    , #{userType}
     )
   </insert>
 

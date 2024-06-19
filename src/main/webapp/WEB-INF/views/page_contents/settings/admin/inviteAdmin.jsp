@@ -23,7 +23,7 @@
                                 <div class="content-left">
                                     <span>원장 선생님</span>
                                     <div class="d-flex align-items-end mt-2">
-                                        <h4 class="mb-0 me-2">2명</h4>
+                                        <h4 id="numOfDeans" class="mb-0 me-2">2명</h4>
                                         <small class="text-success">(1명)</small>
                                     </div>
                                     <p class="mb-0">총 원장선생님</p>
@@ -44,7 +44,7 @@
                                 <div class="content-left">
                                     <span>선생님</span>
                                     <div class="d-flex align-items-end mt-2">
-                                        <h4 class="mb-0 me-2">4명</h4>
+                                        <h4 id="numOfTeachers" class="mb-0 me-2">4명</h4>
                                         <small class="text-success">(2명)</small>
                                     </div>
                                     <p class="mb-0">총 선생님수</p>
@@ -65,7 +65,7 @@
                                 <div class="content-left">
                                     <span>현재 원생</span>
                                     <div class="d-flex align-items-end mt-2">
-                                        <h4 class="mb-0 me-2">58</h4>
+                                        <h4 id="numOfDogs" class="mb-0 me-2">58</h4>
                                         <small class="text-danger">(-1%)</small>
                                     </div>
                                     <p class="mb-0">이번달 실적</p>
@@ -86,7 +86,7 @@
                                 <div class="content-left">
                                     <span>초대된 사용자들</span>
                                     <div class="d-flex align-items-end mt-2">
-                                        <h4 class="mb-0 me-2">23</h4>
+                                        <h4 id="numOfInvite" class="mb-0 me-2">23</h4>
                                         <small class="text-success">(+42%)</small>
                                     </div>
                                     <p class="mb-0">전달 실적</p>
@@ -102,6 +102,38 @@
                 </div>
             </div>
 
+            <script>
+                const fnStatistic=()=>{
+                    const numOfDeans = $('#numOfDeans').text();
+                    const numOfInvite = $('#numOfInvite').text();
+                    const numOfDogs = $('#numOfDogs').text();
+                    const numOfTeachers = $('#numOfTeachers').text();
+                    console.log("-------------------------");
+                    console.log("-------------------------");
+                    console.log("-------------------------");
+                    console.log(numOfDeans);
+                    console.log(numOfInvite);
+                    console.log(numOfDogs);
+                    console.log(numOfTeachers);
+                    console.log("-------------------------");
+                    console.log("-------------------------");
+                    $.ajax({
+                        type: 'POST',
+                        url: '${contextPath}/admin/getStatistics',
+                        data: 'userId=' + ${sessionScope.user.userid},
+                        success: (resData) => {
+                            console.log(resData);
+
+                        },
+                        error: (jqXHR, textStatus, errorThrown) => {
+                            console.error('Error fetching user detail:', textStatus, errorThrown);
+                            alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+                        }
+                    })
+                }
+
+                fnStatistic();
+            </script>
 
             <!-- Users List Table -->
             <div class="card">
@@ -141,7 +173,7 @@
                                         <label>
                                             <select id="display" name="display" aria-controls="DataTables_Table_0"
                                                     class="form-select">
-                                                <option value="5">5</option>
+                                                <option value="5" selected>5</option>
                                                 <option value="15">15</option>
                                                 <option value="30">30</option>
                                                 <option value="50">50</option>
@@ -221,7 +253,7 @@
                                                         alt="Avatar" class="rounded-circle">
                                                 </div>
                                             </div>
-                                            <%-- @TODO USER DETAIL PAGE--%>
+                                                <%-- @TODO USER DETAIL PAGE--%>
                                             <div class="d-flex flex-column">
                                                 <a href="#" class="text-body text-truncate"><span
                                                         class="fw-medium">${user.name}</span></a><small
@@ -256,23 +288,70 @@
                                     </td>
 
                                     <!----USER STATUS----->
+                                    <c:set var="accepted" value="${user.accepted}"/>
+                                    <c:set var="invite" value="${user.inviteid}"/>
                                     <td>
+                                        <c:if test="${invite=='NONE'}">
+                                            <c:if test="${accepted>0}">
+                                                <span class="badge bg-label-success">정회원</span>
+                                            </c:if>
+                                            <c:if test="${accepted<=0}">
+                                                <span class="badge bg-label-danger">승인 필요</span>
+                                            </c:if>
+                                        </c:if>
 
-                                        <span class="badge bg-label-success">${user.inviteid}</span>
+                                        <c:if test="${invite!='NONE'}">
+                                            <c:if test="${accepted>0}">
+                                                <span class="badge bg-label-success">정회원</span>
+                                            </c:if>
+                                            <c:if test="${accepted<=0}">
+                                                <span class="badge bg-label-primary">초대됨</span>
+                                            </c:if>
+                                        </c:if>
                                     </td>
+                                    <!----------ACTIONS-------->
                                     <td>
                                         <div class="d-inline-block text-nowrap">
-                                            <button data-user-id="${user.userid}" class="btn btn-sm btn-icon editUserBtn" data-bs-toggle="modal"
+                                            <button data-user-id="${user.userid}"
+                                                    class="btn btn-sm btn-icon editUserBtn" data-bs-toggle="modal"
                                                     data-bs-target="#userModal"><i class="bx bx-edit"></i></button>
-                                            <button data-user-id="${user.userid}" class="deleteUserBtn btn btn-sm btn-icon delete-record"><i
+                                            <button data-user-id="${user.userid}"
+                                                    class="deleteUserBtn btn btn-sm btn-icon delete-record"><i
                                                     class="bx bx-trash"></i>
                                             </button>
                                             <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow"
                                                     data-bs-toggle="dropdown"><i
                                                     class="bx bx-dots-vertical-rounded me-2"></i></button>
-                                            <div class="dropdown-menu dropdown-menu-end m-0"><a
-                                                    href="app-user-view-account.html" class="dropdown-item">View</a><a
-                                                    href="javascript:" class="dropdown-item">Suspend</a></div>
+                                            <c:if test="${invite=='NONE'}">
+                                                <c:if test="${accepted>0}">
+                                                    <div class="dropdown-menu dropdown-menu-end m-0">
+                                                        <a data-user-id=${user.userid} href="#" class="dropdown-item">이미 회원입니다</a>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${accepted<=0}">
+                                                    <div class="dropdown-menu dropdown-menu-end m-0">
+                                                        <a data-user-id=${user.userid} href=""
+                                                           class="dropdown-item btn-accept">승인하기</a>
+                                                        <a data-user-id=${user.userid} href="" class="dropdown-item btn-invite">초대하기</a>
+                                                    </div>
+                                                </c:if>
+                                            </c:if>
+
+                                            <c:if test="${invite!='NONE'}">
+                                                <c:if test="${accepted>0}">
+                                                    <div class="dropdown-menu dropdown-menu-end m-0">
+                                                        <a href="#" class="dropdown-item">이미 회원입니다</a>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${accepted<=0}">
+                                                    <div class="dropdown-menu dropdown-menu-end m-0">
+                                                        <a data-user-id=${user.userid} href=""
+                                                           class="dropdown-item btn-accept">승인하기</a>
+                                                    </div>
+                                                </c:if>
+                                            </c:if>
+
+
                                         </div>
                                     </td>
                                 </tr>
@@ -282,6 +361,36 @@
                             </tbody>
                         </table>
                         <!------/USERLIST---->
+
+                        <script>
+                            $(document).on('click', '.btn-accept', function (ev) {
+                                var userid = $(this).data('user-id');
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '${contextPath}/admin/acceptUser',
+                                    data: 'userId=' + userid,
+                                    success: (resData) => {
+                                        // $('#userid').val(resData.userDetail.userid);
+                                        // $('#name').val(resData.userDetail.name);
+                                        // $('#username').val(resData.userDetail.username);
+                                        // $('#avatar').attr('src', resData.userDetail.avatar);
+                                        // $('#avatar').val(resData.userDetail.avatar);
+                                        // $('#email').val(resData.userDetail.email);
+                                        // $('#zonecode').val(resData.zipCode);
+                                        // $('#address').val(resData.address);
+                                        // $('#detailAddress').val(resData.detailAddress);
+                                        // $('#extraAddress').val(resData.extraAddress);
+                                        console.log(resData);
+                                        console.log(resData.userDetail);
+
+                                    },
+                                    error: (jqXHR, textStatus, errorThrown) => {
+                                        console.error('Error fetching user detail:', textStatus, errorThrown);
+                                        alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+                                    }
+                                })
+                            })
+                        </script>
 
 
                         <div class="row mx-2">
@@ -301,49 +410,49 @@
                                         <c:set var="page" value="${page}"/>
 
                                         <li id="DataTables_Table_0_previous"
-                                                class="paginate_button page-item previous">
+                                            class="paginate_button page-item previous">
                                             <a aria-controls="DataTables_Table_0"
-                                        <c:if test="${page!=1}">
-                                               href="${contextPath}/admin/settings/inviteAdmin?page=${prevPage}&sort=${sortBy}&sortBy=${sortBy}&display=${display}"
+                                                    <c:if test="${page!=1}">
+                                                        href="${contextPath}/admin/settings/inviteAdmin?page=${prevPage}&sort=${sortBy}&sortBy=${sortBy}&display=${display}"
 
-                                        </c:if>
-                                        <c:if test="${page==1}">
-                                               href="${contextPath}/admin/settings/inviteAdmin?page=1&sort=${sortBy}&sortBy=${sortBy}&display=${display}"
-                                        </c:if>
+                                                    </c:if>
+                                                    <c:if test="${page==1}">
+                                                        href="${contextPath}/admin/settings/inviteAdmin?page=1&sort=${sortBy}&sortBy=${sortBy}&display=${display}"
+                                                    </c:if>
                                                aria-disabled="false" role="link"
-                                                        data-dt-idx="previous" tabindex="-1"
-                                                        class="page-link">Previous</a>
+                                               data-dt-idx="previous" tabindex="-1"
+                                               class="page-link">Previous</a>
                                         </li>
 
                                         <c:forEach items="${sessionScope.pageLinkList}" var="link" varStatus="vs">
-                                                <c:set var="currPage" value="${vs.count}"/>
-                                                <li class="paginate_button page-item">
-                                                    <a href="${link}" aria-controls="DataTables_Table_0"
-                                                       role="link" aria-current="page"
-                                                       data-dt-idx="${vs.index}" tabindex="0}"
-                                                                class="page-link"
-                                                            <c:if test="${page==currPage}">
-                                                                class="page-link active"
-                                                            </c:if>
-                                                            <c:if test="${vs.count>endPage}">
-                                                                style="display: none"
-                                                            </c:if>
-                                                    >${vs.count}</a>
-                                                </li>
+                                            <c:set var="currPage" value="${vs.count}"/>
+                                            <li class="paginate_button page-item">
+                                                <a href="${link}" aria-controls="DataTables_Table_0"
+                                                   role="link" aria-current="page"
+                                                   data-dt-idx="${vs.index}" tabindex="0}"
+                                                   class="page-link"
+                                                        <c:if test="${page==currPage}">
+                                                            class="page-link active"
+                                                        </c:if>
+                                                        <c:if test="${vs.count>endPage}">
+                                                            style="display: none"
+                                                        </c:if>
+                                                >${vs.count}</a>
+                                            </li>
 
-<%--                                        @TODO CHANGE THE ACTIVE STATUS FOR PAGE LINKS--%>
+                                            <%--                                        @TODO CHANGE THE ACTIVE STATUS FOR PAGE LINKS--%>
                                         </c:forEach>
 
-                                            <c:set var="nextPage" value="${page+1}"/>
-                                            <li class="paginate_button page-item next" id="DataTables_Table_0_next"><a
+                                        <c:set var="nextPage" value="${page+1}"/>
+                                        <li class="paginate_button page-item next" id="DataTables_Table_0_next"><a
 
-                                        <c:if test="${page}!=${totalPage}">
+                                                <c:if test="${page}!=${totalPage}">
                                                     href="${contextPath}/admin/settings/inviteAdmin?page=${nextPage}&sort=${sortBy}&sortBy=${sortBy}&display=${display}" aria-controls="DataTables_Table_0" role="link"
-                                        </c:if>
-                                        <c:if test="${page}==${totalPage}">
+                                                </c:if>
+                                                <c:if test="${page}==${totalPage}">
                                                     href="${contextPath}/admin/settings/inviteAdmin?page=${totalPage}&sort=${sortBy}&sortBy=${sortBy}&display=${display}" aria-controls="DataTables_Table_0" role="link"
-                                        </c:if>
-                                                    data-dt-idx="next" tabindex="0" class="page-link">Next</a></li>
+                                                </c:if>
+                                                data-dt-idx="next" tabindex="0" class="page-link">Next</a></li>
                                     </ul>
                                     <script>
 
@@ -368,13 +477,13 @@
                             location.href = '${contextPath}/admin/settings/inviteAdmin?page=${page}&sort=' + evt.target.value + '&sortBy=${sortBy}&display=${display}';
                         })
                     }
-                    const fnNextPage=()=>{
+                    const fnNextPage = () => {
 
                     }
 
-                    const fnClickPage=()=>{
-                        $('.page-link').addEventListener('click',(e)=>{
-                            alert(e.target.value);
+                    const fnClickPage = () => {
+                        $('.page-link').addEventListener('click', (e) => {
+                            // alert(e.target.value);
                         })
                         $('.page-item')
                     }
@@ -382,7 +491,7 @@
                     fnSort();
                     fnClickPage();
                 </script>
-<!-- Offcanvas to add new user -->
+                <!-- Offcanvas to add new user -->
 
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasInviteUser"
                      aria-labelledby="offcanvasInviteUserLabel">
@@ -396,7 +505,7 @@
                               id="inviteUserForm"
                               method="POST"
                               action="${contextPath}/admin/inviteUser"
-                              onsubmit="return false" novalidate="novalidate">
+                              novalidate="novalidate">
                             <div class="mb-3 fv-plugins-icon-container">
                                 <label class="form-label" for="inviteUserAlias">누구를 초대하시겠습니까</label>
                                 <input type="text" class="form-control" id="inviteUserAlias" placeholder="초대할 분"
@@ -419,14 +528,14 @@
                             <div class="mb-3">
                                 <input type="hidden" id="add-user-centerid" class="form-control"
                                        value="${sessionScope.user.centerid}" aria-label="centerName"
-                                       name="centerid" display="none" >
+                                       name="centerid" display="none">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="user-role">User Role</label>
-                                <select id="user-role" class="form-select" style="margin-bottom: 3rem">
-                                    <option value="dean">원장님</option>
-                                    <option value="teacher">선생님</option>
-                                    <option value="user">보호자님</option>
+                                <select id="user-role" name="userType" class="form-select" style="margin-bottom: 3rem">
+                                    <option value="0">원장님</option>
+                                    <option value="1">선생님</option>
+                                    <option value="2">보호자님</option>
                                 </select>
                             </div>
 
@@ -539,6 +648,8 @@
                                        class="form-control">
                             </div>
 
+                            <br><br><br>
+
                             <!------------------ADDRESS--------------->
                             <label for="zonecode" class="form-label">집 주소</label>
                             <div class="input-container">
@@ -563,7 +674,8 @@
                                        placeholder="주소" readonly>
                                 <input type="text" class="form-control address-input" id="detailAddress"
                                        name="detailAddress" placeholder="상세주소">
-                                <input type="text" class="form-control address-input" id="extraAddress" name="extraAddress"
+                                <input type="text" class="form-control address-input" id="extraAddress"
+                                       name="extraAddress"
                                        placeholder="참고항목">
 
                             </div>
@@ -614,90 +726,91 @@
                             </script>
                             <!------------------/ADDRESS/--------------->
 
-<%--                            <div class="d-flex mb-3">--%>
-<%--                                <div class="flex-grow-1 row">--%>
-<%--                                    <div class="col-9">--%>
-<%--                                        <h6 class="mb-0">유치원을 다니는 중인가요?</h6>--%>
-<%--                                        <small class="text-muted">현재 유치원을 등록했다면 선택해주세요</small>--%>
-<%--                                    </div>--%>
-<%--                                    <div class="col-3 text-end">--%>
-<%--                                        <div class="form-check form-switch">--%>
-<%--                                            <input id="re-class" name="class" class="form-check-input float-end"--%>
-<%--                                                   type="checkbox" role="switch">--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
+                            <%--                            <div class="d-flex mb-3">--%>
+                            <%--                                <div class="flex-grow-1 row">--%>
+                            <%--                                    <div class="col-9">--%>
+                            <%--                                        <h6 class="mb-0">유치원을 다니는 중인가요?</h6>--%>
+                            <%--                                        <small class="text-muted">현재 유치원을 등록했다면 선택해주세요</small>--%>
+                            <%--                                    </div>--%>
+                            <%--                                    <div class="col-3 text-end">--%>
+                            <%--                                        <div class="form-check form-switch">--%>
+                            <%--                                            <input id="re-class" name="class" class="form-check-input float-end"--%>
+                            <%--                                                   type="checkbox" role="switch">--%>
+                            <%--                                        </div>--%>
+                            <%--                                    </div>--%>
+                            <%--                                </div>--%>
+                            <%--                            </div>--%>
 
                             <!---------_CLASSES----->
-<%--                            <div id="re-classInput" class="" data-select2-id="46" style="">--%>
+                            <%--                            <div id="re-classInput" class="" data-select2-id="46" style="">--%>
 
-<%--                                <label for="re-select2Primary" class="form-label">현재등록한 반을 선택해주세요</label>--%>
-<%--                                <div class="select2-primary" data-select2-id="45">--%>
-<%--                                    <div class="position-relative" data-select2-id="44">--%>
-<%--                                        <div class="position-relative" data-select2-id="6">--%>
-<%--                                            <div class="position-relative" data-select2-id="5">--%>
-<%--                                                <select--%>
-<%--                                                        id="re-select2Primary"--%>
-<%--                                                        class="select2 form-select select2-hidden-accessible"--%>
-<%--                                                        multiple="multiple"--%>
-<%--                                                        tabindex="-1" name="registeredClasses" aria-hidden="true"--%>
-<%--                                                        onchange="fnSelectArray(this)" data-select2-id="re-select2Primary">--%>
-<%--                                                    <option value="1" data-select2-id="11">월</option>--%>
-<%--                                                    <option value="2" data-select2-id="12">화</option>--%>
-<%--                                                    <option value="3" data-select2-id="13">수</option>--%>
-<%--                                                    <option value="4" data-select2-id="14">목</option>--%>
-<%--                                                    <option value="5" data-select2-id="15">금</option>--%>
-<%--                                                    <option value="6" data-select2-id="16">토</option>--%>
-<%--                                                    <option value="7" data-select2-id="17">일</option>--%>
-<%--                                                </select>--%>
-<%--                                            </div>--%>
-<%--                                        </div>--%>
-<%--                                    </div>--%>
-<%--                                </div>--%>
-                                <div class="col-12 text-center">
-                                    <button type="button" id="modalBtn" class="btn btn-primary me-sm-3 me-1 modal-submit-btn">
-                                        Submit
-                                    </button>
-                                    <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
-                                            aria-label="Close">Cancel
-                                    </button>
-                                </div>
+                            <%--                                <label for="re-select2Primary" class="form-label">현재등록한 반을 선택해주세요</label>--%>
+                            <%--                                <div class="select2-primary" data-select2-id="45">--%>
+                            <%--                                    <div class="position-relative" data-select2-id="44">--%>
+                            <%--                                        <div class="position-relative" data-select2-id="6">--%>
+                            <%--                                            <div class="position-relative" data-select2-id="5">--%>
+                            <%--                                                <select--%>
+                            <%--                                                        id="re-select2Primary"--%>
+                            <%--                                                        class="select2 form-select select2-hidden-accessible"--%>
+                            <%--                                                        multiple="multiple"--%>
+                            <%--                                                        tabindex="-1" name="registeredClasses" aria-hidden="true"--%>
+                            <%--                                                        onchange="fnSelectArray(this)" data-select2-id="re-select2Primary">--%>
+                            <%--                                                    <option value="1" data-select2-id="11">월</option>--%>
+                            <%--                                                    <option value="2" data-select2-id="12">화</option>--%>
+                            <%--                                                    <option value="3" data-select2-id="13">수</option>--%>
+                            <%--                                                    <option value="4" data-select2-id="14">목</option>--%>
+                            <%--                                                    <option value="5" data-select2-id="15">금</option>--%>
+                            <%--                                                    <option value="6" data-select2-id="16">토</option>--%>
+                            <%--                                                    <option value="7" data-select2-id="17">일</option>--%>
+                            <%--                                                </select>--%>
+                            <%--                                            </div>--%>
+                            <%--                                        </div>--%>
+                            <%--                                    </div>--%>
+                            <%--                                </div>--%>
+                            <div class="col-12 text-center">
+                                <button type="button" id="modalBtn"
+                                        class="btn btn-primary me-sm-3 me-1 modal-submit-btn">
+                                    Submit
+                                </button>
+                                <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
+                                        aria-label="Close">Cancel
+                                </button>
                             </div>
-                        </form>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <!--/ USER Modal -->
+    </div>
+    <!--/ USER Modal -->
 
-        <script>
-            $(document).on('click','.editUserBtn',function(ev){
-                var userid = $(this).data('user-id');
-                $.ajax({
-                    type: 'POST',
-                    url: '${contextPath}/user/getUserDetail',
-                    data: 'userId=' + userid,
-                    success: (resData) => {
-                        $('#userid').val(resData.userDetail.userid);
-                        $('#name').val(resData.userDetail.name);
-                        $('#username').val(resData.userDetail.username);
-                        $('#avatar').attr('src',resData.userDetail.avatar);
-                        $('#avatar').val(resData.userDetail.avatar);
-                        $('#email').val(resData.userDetail.email);
-                        $('#zonecode').val(resData.zipCode);
-                        $('#address').val(resData.address);
-                        $('#detailAddress').val(resData.detailAddress);
-                        $('#extraAddress').val(resData.extraAddress);
-                        console.log(resData);
-                        console.log(resData.userDetail);
+    <script>
+        $(document).on('click', '.editUserBtn', function (ev) {
+            var userid = $(this).data('user-id');
+            $.ajax({
+                type: 'POST',
+                url: '${contextPath}/user/getUserDetail',
+                data: 'userId=' + userid,
+                success: (resData) => {
+                    $('#userid').val(resData.userDetail.userid);
+                    $('#name').val(resData.userDetail.name);
+                    $('#username').val(resData.userDetail.username);
+                    $('#avatar').attr('src', resData.userDetail.avatar);
+                    $('#avatar').val(resData.userDetail.avatar);
+                    $('#email').val(resData.userDetail.email);
+                    $('#zonecode').val(resData.zipCode);
+                    $('#address').val(resData.address);
+                    $('#detailAddress').val(resData.detailAddress);
+                    $('#extraAddress').val(resData.extraAddress);
+                    console.log(resData);
+                    console.log(resData.userDetail);
 
-                    },
-                    error: (jqXHR, textStatus, errorThrown) => {
-                        console.error('Error fetching user detail:', textStatus, errorThrown);
-                        alert(jqXHR.statusText + '(' + jqXHR.status + ')');
-                    }
-                })
+                },
+                error: (jqXHR, textStatus, errorThrown) => {
+                    console.error('Error fetching user detail:', textStatus, errorThrown);
+                    alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+                }
             })
-        </script>
-        <!-- / Content -->
+        })
+    </script>
+    <!-- / Content -->

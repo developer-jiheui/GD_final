@@ -289,6 +289,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <input type="hidden" name="classes" value="2,3"></div>
                         <div class="col-12 text-center">
                             <button type="button" id="modalBtn" class="btn btn-primary me-sm-3 me-1 modal-submit-btn">
                                 Submit
@@ -296,7 +297,6 @@
                             <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="modal"
                                     aria-label="Close">Cancel
                             </button>
-                        </div>
                         </div>
                     </form>
                 </div>
@@ -396,6 +396,7 @@
                         str += '<a href="${contextPath}/user/dogDetail?dogId=' + dogId + '"  type="button" className="btn-edit btn-icon" style="width: 50px; height: 50px; border-radius: 3rem; overflow: hidden">';
                         str += '<img src="' + dogAvatar + '" style="height: 50px; aspect-ratio: auto"></a>';
                         str += '<div style="height: inherit;width: 80%; display: flex; justify-content: center; align-items: center"><a onclick="fnModal()" style="height: inherit;width: 40%; display: flex; justify-content: center; align-items: center">' + dogName + '</a>';
+                        str += '<div id="class-parent" style="height: inherit;width: 60%; display: flex; justify-content: center; align-items: center">'
                         str += '<div id="class-parent" style="height: inherit;width: 60%; display: flex; justify-content: center; align-items: center">'
 
                         if (dogClasses.indexOf('0') === -1) {

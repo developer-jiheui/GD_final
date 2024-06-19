@@ -49,7 +49,9 @@
                         <div data-i18n="Layouts">초대 및 관리</div>
                     </a>
 
+
                     <ul class="menu-sub">
+
                         <li class="menu-item">
                             <a href="${contextPath}/admin/settings/inviteAdmin" class="menu-link">
                                 <div data-i18n="Without menu">관리자 관리</div>
@@ -67,7 +69,11 @@
                                 <div data-i18n="Basic">교사관리</div>
                             </a>
                         </li>
-
+                        <li class="menu-item">
+                            <a href="${contextPath}/admin/settings/users" class="menu-link">
+                                <div data-i18n="Basic">가입승인 및 초대하기</div>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="menu-item">
