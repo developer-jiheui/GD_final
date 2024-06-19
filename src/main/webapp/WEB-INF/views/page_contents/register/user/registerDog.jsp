@@ -201,7 +201,7 @@
                                    placeholder="참고항목">
 
                         </div>
-                        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"/>
+                        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
                         <script>
                             function execDaumPostcode() {
                                 new daum.Postcode({
@@ -427,121 +427,11 @@
                             str += '<span class="badge bg-label-danger me-1">등록한 수업이 없습니다</span>';
                         }
                         str += '</div><div style="height: inherit; display: flex; justify-content: center ; align-items: center">';
-                        str += '<a href="" data-dog-id=' + dogId + ' data-dog-name=' + dogName + ' class="btn-icon bg-delete btn-delete-dog delete-dog"><i class="fa-solid fa-delete-left" style="color: #ff3f3f"></i></a>';
+                        str += '<a href="" data-dog-id=' + dogId + ' data-dog-name=' + dogName + ' class="btn-icon bg-delete delete-dog"><i class="fa-solid fa-delete-left" style="color: #ff3f3f"></i></a>';
                         str += '<a data-dog-id=' + dogId + ' type="button" data-bs-toggle="modal" data-bs-target="#dogModal" class="btn-edit btn-icon edit-modal"><i class="fa-solid fa-pen"></i></a>'
 
                         $('#dogs').append(str);
 
-
-                        //SET MODAL FOR EDIT
-                        $(document).on('click', '.edit-modal', function (event) {
-                            event.preventDefault();
-                            var dogId = $(this).data('dog-id');
-
-                            //SET MODAL TO EDIT
-                            modalTitle.text('Edit User Information');
-
-                            frmBtn.off('click');
-                            frmBtn.click(function () {
-                                frmModal.attr('action', '${contextPath}/user/editDog');
-                                frmModal.submit();
-                            });
-                            frmBtn.text('EDIT');
-
-
-                            $.ajax({
-                                type: 'POST',
-                                url: '${contextPath}/user/dogDetail',
-                                data: 'dogId=' + dogId,
-                                dataType: 'json',
-                                success: (resData) => {
-
-                                    modalText.text(resData.dogDetail.name + '의 정보를 수정하세요');
-
-                                    var classes = resData.dogDetail.classes;
-                                    let clsArr = new Array();
-                                    console.log(classes)
-
-                                    $('#dog-id').val(resData.dogDetail.dogId);
-                                    $('#avatar').attr('src', resData.dogDetail.avatar);
-                                    $('#avatar').val(resData.dogDetail.avatar);
-                                    $('#modalDogName').val(resData.dogDetail.name);
-                                    $('#parent1Name').val(resData.dogDetail.parent1Name);
-                                    $('#parent2Name').val(resData.dogDetail.parent2Name);
-                                    $('#parent1phone').val(resData.dogDetail.parent1Phone);
-                                    $('#parent2phone').val(resData.dogDetail.parent2Phone);
-                                    $('#birthday').val(resData.dogDetail.birthday);
-                                    $('#breed').val(resData.dogDetail.breed);
-                                    $('#weight').val(resData.dogDetail.weight);
-                                    $('#zonecode').val(resData.zipCode);
-                                    $('#address').val(resData.address);
-                                    $('#detailAddress').val(resData.detailAddress);
-                                    $('#extraAddress').val(resData.extraAddress);
-
-                                    if (classes.indexOf('0') === -1) {
-                                        $('#re-class').attr('checked', true);
-                                        classInput.style.display = '';
-                                        if (classes.indexOf('1') !== -1) {
-                                            clsArr.push(1);
-                                        }
-                                        if (classes.indexOf('2') !== -1) {
-                                            clsArr.push(2);
-                                        }
-                                        if (classes.indexOf('3') !== -1) {
-                                            clsArr.push(3);
-                                        }
-                                        if (classes.indexOf('4') !== -1) {
-                                            clsArr.push(4);
-                                        }
-                                        if (classes.indexOf('5') !== -1) {
-                                            clsArr.push(5);
-                                        }
-                                        if (classes.indexOf('6') !== -1) {
-                                            clsArr.push(6);
-                                        }
-                                        if (classes.indexOf('7') !== -1) {
-                                            clsArr.push(7);
-                                        }
-                                        $('#re-select2Primary').val(clsArr);
-                                        $('#re-select2Primary').trigger('change');
-                                    }
-
-
-                                },
-                                error: (jqXHR, textStatus, errorThrown) => {
-                                    console.error('Error fetching dog detail:', textStatus, errorThrown);
-                                    alert(jqXHR.statusText + '(' + jqXHR.status + ')');
-                                }
-                            });
-                        });
-
-                        $(document).on('click','.delete-dog',function(ev){
-                            var dogId = $(this).data('dog-id');
-                            var dogName = $(this).data('dog-name');
-
-                            let result = confirm("Do you really wanna delete?");
-
-                            if (result) {
-                                $(this).parent().parent().parent().parent().parent().get(0).remove();
-
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '${contextPath}/user/removeDog',
-                                    data: 'dogId=' + dogId,
-                                    dataType: 'json',
-                                    success: (resData) => {
-                                        alert(resData.removeResult);
-                                    },
-                                    error: (jqXHR, textStatus, errorThrown) => {
-                                        console.error('Error fetching removing dog:', textStatus, errorThrown);
-                                        alert(jqXHR.statusText + '(' + jqXHR.status + ')');
-                                    }
-                                })
-                            }
-                            else{
-                                return false;
-                            }
-                        })
 
 
 
@@ -556,6 +446,120 @@
 
         }
 
+
+        //SET MODAL FOR EDIT, EDIT DOG
+        $(document).on('click', '.edit-modal', function (event) {
+            event.preventDefault();
+            var dogId = $(this).data('dog-id');
+
+            //SET MODAL TO EDIT
+            modalTitle.text('Edit User Information');
+
+            frmBtn.off('click');
+            frmBtn.click(function () {
+                frmModal.attr('action', '${contextPath}/user/editDog');
+                frmModal.submit();
+            });
+            frmBtn.text('EDIT');
+
+
+            $.ajax({
+                type: 'POST',
+                url: '${contextPath}/user/dogDetail',
+                data: 'dogId=' + dogId,
+                dataType: 'json',
+                success: (resData) => {
+
+                    modalText.text(resData.dogDetail.name + '의 정보를 수정하세요');
+
+                    var classes = resData.dogDetail.classes;
+                    let clsArr = new Array();
+                    console.log(classes)
+
+                    $('#dog-id').val(resData.dogDetail.dogId);
+                    $('#avatar').attr('src', resData.dogDetail.avatar);
+                    $('#avatar').val(resData.dogDetail.avatar);
+                    $('#modalDogName').val(resData.dogDetail.name);
+                    $('#parent1Name').val(resData.dogDetail.parent1Name);
+                    $('#parent2Name').val(resData.dogDetail.parent2Name);
+                    $('#parent1phone').val(resData.dogDetail.parent1Phone);
+                    $('#parent2phone').val(resData.dogDetail.parent2Phone);
+                    $('#birthday').val(resData.dogDetail.birthday);
+                    $('#breed').val(resData.dogDetail.breed);
+                    $('#weight').val(resData.dogDetail.weight);
+                    $('#zonecode').val(resData.zipCode);
+                    $('#address').val(resData.address);
+                    $('#detailAddress').val(resData.detailAddress);
+                    $('#extraAddress').val(resData.extraAddress);
+
+                    if (classes.indexOf('0') === -1) {
+                        $('#re-class').attr('checked', true);
+                        classInput.style.display = '';
+                        if (classes.indexOf('1') !== -1) {
+                            clsArr.push(1);
+                        }
+                        if (classes.indexOf('2') !== -1) {
+                            clsArr.push(2);
+                        }
+                        if (classes.indexOf('3') !== -1) {
+                            clsArr.push(3);
+                        }
+                        if (classes.indexOf('4') !== -1) {
+                            clsArr.push(4);
+                        }
+                        if (classes.indexOf('5') !== -1) {
+                            clsArr.push(5);
+                        }
+                        if (classes.indexOf('6') !== -1) {
+                            clsArr.push(6);
+                        }
+                        if (classes.indexOf('7') !== -1) {
+                            clsArr.push(7);
+                        }
+                        $('#re-select2Primary').val(clsArr);
+                        $('#re-select2Primary').trigger('change');
+                    }
+
+
+                },
+                error: (jqXHR, textStatus, errorThrown) => {
+                    console.error('Error fetching dog detail:', textStatus, errorThrown);
+                    alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+                }
+            });
+        });
+
+        //DELETE DOG
+        $(document).on('click','.delete-dog',function(ev){
+            var dogId = $(this).data('dog-id');
+            var dogName = $(this).data('dog-name');
+
+            let result = confirm(dogName+": 정말 지우시겠습니까?");
+
+            if (result) {
+                $(this).parent().parent().parent().parent().parent().get(0).remove();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '${contextPath}/user/removeDog',
+                    data: 'dogId=' + dogId,
+                    dataType: 'json',
+                    success: (resData) => {
+                        alert(resData.removeResult);
+                    },
+                    error: (jqXHR, textStatus, errorThrown) => {
+                        console.error('Error fetching removing dog:', textStatus, errorThrown);
+                        alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+                    }
+                })
+            }
+            else{
+                return false;
+            }
+        })
+
+
+        //USER IMAGE CHANGE
         document.addEventListener('DOMContentLoaded', function (e) {
             e.preventDefault();
             (function () {
@@ -606,19 +610,7 @@
             });
         }
 
-        // const clearForm = () => {
-        //     $('#avatar').val("/resources/images/roundStickers/kisses.png");
-        //     $('#modalDogName').val('');
-        //     $('#birthday').val('');
-        //     $('#breed').val('');
-        //     $('#weight').val('');
-        //
-        //     $('#re-class').attr('checked', false);
-        //     classInput.style.display = 'none';
-        //     $('#re-select2Primary').val(null);
-        //     $('#re-select2Primary').trigger('change');
-        //
-        // }
+
 
         const fnGetConfirm = (dogName) => {
             return confirm(dogName + "을/를 지우시겠습니까?");
@@ -635,45 +627,6 @@
         clearModalOnRegisterBtn();
         registerDog();
         fnGetDogList();
-
-        <%--var dogId2Delete = 0;--%>
-        <%--const dogList = document.getElementById("dogs");--%>
-        <%--const dog = document.getElementsByClassName("dog")--%>
-
-
-        <%--function fnDeleteDog(dogId, dogname) {--%>
-        <%--    if (confirm(dogname + '을 지우겠습니까?')) {--%>
-        <%--        dogId2Delete = dogId;--%>
-        <%--        deleteTarget = event.currentTarget.parentNode.parentNode.parentNode.parentNode;--%>
-        <%--        fnDeleteDiv(deleteTarget);--%>
-        <%--        fnRemoveDog(dogId2Delete);--%>
-
-        <%--    } else {--%>
-        <%--        return;--%>
-        <%--    }--%>
-        <%--}--%>
-
-        <%--function fnDeleteDiv(deleteTarget) {--%>
-        <%--    dogList.removeChild(deleteTarget);--%>
-
-        <%--}--%>
-
-        <%--function fnRemoveDog(dogId) {--%>
-        <%--    $.ajax({--%>
-        <%--        // 요청--%>
-        <%--        type: 'POST',--%>
-        <%--        url: '${contextPath}/user/removeDog',--%>
-        <%--        data: 'dogId=' + dogId,  // <form> 내부의 모든 입력을 파라미터 형식으로 보낼 때 사용, 입력 요소들은 name 속성을 가지고 있어야 함--%>
-        <%--        // 응답--%>
-        <%--        dataType: 'json',--%>
-        <%--        success: (resData) => {--%>
-        <%--            alert(resData.removeResult);--%>
-        <%--        },--%>
-        <%--        error: (jqXHR) => {--%>
-        <%--            alert(jqXHR.statusText + '(' + jqXHR.status + ')');--%>
-        <%--        }--%>
-        <%--    })--%>
-        <%--}--%>
 
     </script>
 
