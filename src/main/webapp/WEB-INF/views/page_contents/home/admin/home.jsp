@@ -75,14 +75,15 @@
                                     </div>
                                 </div>
                                 <span class="fw-semibold d-block mb-1">이번달<br>선물 이벤트</span>
-                                <h3 class="card-title mb-2">8/27</h3>
+                                <h3 class="card-title mb-2">6/21</h3>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-12 col-6 mb-4">
                         <div class="card">
                             <div class="card-body">
-                                <span class="fw-semibold d-block mb-1">이번달<br>생일</span>
+                                <h3 class="card-title mb-2">6월</h3>
+                                <span class="fw-semibold d-block mb-1">이번달<br>생일친구들</span>
                                 <h3 class="card-title mb-2">
                                     <div class="card-title d-flex align-items-start justify-content-between">
                                         <div class="avatar flex-shrink-0">
