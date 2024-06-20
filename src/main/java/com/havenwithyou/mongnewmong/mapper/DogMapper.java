@@ -3,6 +3,7 @@ package com.havenwithyou.mongnewmong.mapper;
 import com.havenwithyou.mongnewmong.dto.DogDto;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mapper
@@ -15,4 +16,6 @@ public interface DogMapper {
     DogDto getDogById(int dogId);
 
     int updateDog(DogDto dog2edit);
+
+    ArrayList<DogDto> getAllDogs();
 }

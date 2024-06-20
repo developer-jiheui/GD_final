@@ -8,6 +8,7 @@
 <c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
 
 <jsp:include page="/WEB-INF/views/layout/header.jsp"/>
+<jsp:include page="/WEB-INF/views/layout/newHeader.jsp"/>
 <body>
 <!-- Content -->
 <div id="register">

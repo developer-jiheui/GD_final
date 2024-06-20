@@ -104,25 +104,16 @@
 
             <script>
                 const fnStatistic=()=>{
-                    const numOfDeans = $('#numOfDeans').text();
-                    const numOfInvite = $('#numOfInvite').text();
-                    const numOfDogs = $('#numOfDogs').text();
-                    const numOfTeachers = $('#numOfTeachers').text();
-                    console.log("-------------------------");
-                    console.log("-------------------------");
-                    console.log("-------------------------");
-                    console.log(numOfDeans);
-                    console.log(numOfInvite);
-                    console.log(numOfDogs);
-                    console.log(numOfTeachers);
-                    console.log("-------------------------");
-                    console.log("-------------------------");
                     $.ajax({
                         type: 'POST',
                         url: '${contextPath}/admin/getStatistics',
                         data: 'userId=' + ${sessionScope.user.userid},
                         success: (resData) => {
-                            console.log(resData);
+                            console.log(resData)
+                            $('#numOfDeans').text(resData.numOfDeans + '명');
+                            $('#numOfInvite').text(resData.numOfInvites);
+                            $('#numOfDogs').text(resData.numOfDogs);
+                            $('#numOfTeachers').text(resData.numOfTeachers);
 
                         },
                         error: (jqXHR, textStatus, errorThrown) => {
@@ -370,16 +361,6 @@
                                     url: '${contextPath}/admin/acceptUser',
                                     data: 'userId=' + userid,
                                     success: (resData) => {
-                                        // $('#userid').val(resData.userDetail.userid);
-                                        // $('#name').val(resData.userDetail.name);
-                                        // $('#username').val(resData.userDetail.username);
-                                        // $('#avatar').attr('src', resData.userDetail.avatar);
-                                        // $('#avatar').val(resData.userDetail.avatar);
-                                        // $('#email').val(resData.userDetail.email);
-                                        // $('#zonecode').val(resData.zipCode);
-                                        // $('#address').val(resData.address);
-                                        // $('#detailAddress').val(resData.detailAddress);
-                                        // $('#extraAddress').val(resData.extraAddress);
                                         console.log(resData);
                                         console.log(resData.userDetail);
 
@@ -491,8 +472,8 @@
                     fnSort();
                     fnClickPage();
                 </script>
-                <!-- Offcanvas to add new user -->
 
+                <!-- Offcanvas to add new user -->
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasInviteUser"
                      aria-labelledby="offcanvasInviteUserLabel">
                     <div class="offcanvas-header">

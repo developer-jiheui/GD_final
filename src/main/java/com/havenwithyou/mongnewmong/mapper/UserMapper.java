@@ -35,4 +35,8 @@ public interface UserMapper {
   UserDto getUserDetail(Map<String, Object> params);
 
   UserDto getUserById(int userId);
+
+    int countDeans();
+
+  int countTeachers();
 }

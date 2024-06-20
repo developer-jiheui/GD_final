@@ -264,8 +264,7 @@
                                     <td><span class="fw-medium">강아지 또는 선생님 반정보</span></td>
                                     <td>
                                         <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                                            <c:if test="${user.dogNo>0}">
-                                                <c:forEach items="${user.doglist}" var="dog" varStatus="vs">
+                                                <c:forEach items="${doglist}" var="dog" varStatus="vs">
                                                     <script>
                                                         console.log("${dog}");
                                                     </script>
@@ -281,7 +280,6 @@
                                                              class="rounded-circle"/>
                                                     </li>
                                                 </c:forEach>
-                                            </c:if>
 
 
 <%--                                            <li--%>

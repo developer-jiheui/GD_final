@@ -6,4 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface InviteMapper {
     void insertInvite(InviteDto inviteDto);
+
+    int countInvite();
 }

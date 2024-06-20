@@ -213,22 +213,22 @@
                             <!------USER LIST----->
 
                             <tbody>
-                            <c:forEach items="${userList}" var="user" varStatus="vs">
+                            <c:forEach items="${dogList}" var="dog" varStatus="vs">
                                 <tr class=>
                                     <td class="  control" tabindex="0" style="display: none;"></td>
                                     <td class="sorting_1">
                                         <div class="d-flex justify-content-start align-items-center user-name">
                                             <div class="avatar-wrapper">
                                                 <div class="avatar avatar-sm me-3"><img
-                                                        src="${contextPath}${user.avatar}"
+                                                        src="${contextPath}${dog.avatar}"
                                                         alt="Avatar" class="rounded-circle">
                                                 </div>
                                             </div>
                                                 <%-- @TODO USER DETAIL PAGE--%>
                                             <div class="d-flex flex-column">
                                                 <a href="#" class="text-body text-truncate"><span
-                                                        class="fw-medium">${user.name}</span></a><small
-                                                    class="text-muted">${user.email}</small>
+                                                        class="fw-medium">${dog.name}</span></a><small
+                                                    class="text-muted">${dog.parent1}</small>
                                             </div>
                                         </div>
                                     </td>
@@ -433,7 +433,6 @@
                     fnClickPage();
                 </script>
                 <!-- Offcanvas to add new user -->
-
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasInviteUser"
                      aria-labelledby="offcanvasInviteUserLabel">
                     <div class="offcanvas-header">

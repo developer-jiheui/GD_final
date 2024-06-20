@@ -95,6 +95,7 @@ public class UserServiceImpl implements UserService {
         if (insertCount > 0) {
             ArrayList<DogDto> doglist = new ArrayList<>();
             userDto.setDoglist(doglist);
+            request.getSession().setAttribute("user", userDto);
         }
 
         return new ResponseEntity<>(Map.of("insertCount", insertCount)

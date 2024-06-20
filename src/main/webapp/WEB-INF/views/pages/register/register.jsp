@@ -38,7 +38,7 @@
                                 </ul>
                                 <!-- Logo -->
                                 <div class="app-brand justify-content-center big-brand">
-                                    <a href="${contextPath}/pages/home" class="app-brand-link gap-2">
+                                    <a href="${contextPath}/pages/start" class="app-brand-link gap-2">
                                       <span class="app-brand-logo demo">
                                                       <img src="${contextPath}/frontend/assets/img/favicon/favicon.ico"
                                                            style="height: 30px; width: 30px;">

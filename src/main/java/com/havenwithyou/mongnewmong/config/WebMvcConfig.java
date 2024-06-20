@@ -81,7 +81,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
                                 , "/pages/education"
                                 , "/pages/entrance"
                                 , "/pages/agreement"
-                                , "/pages/agreement"
                                 , "/pages/medical"
                                 , "/pages/transportation"
                                 , "/user/profile"

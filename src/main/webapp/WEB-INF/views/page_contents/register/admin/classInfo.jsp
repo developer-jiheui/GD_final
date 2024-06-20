@@ -80,7 +80,7 @@
 
                                     // add class to li
                                     li.className = 'form-control class-name-list';
-
+                                    li.style.display='flex'
                                     containerDiv.className ="class-text-container";
                                     containerDiv.nodeName="className"
                                     containerDiv.appendChild(document.createTextNode(inputValue));

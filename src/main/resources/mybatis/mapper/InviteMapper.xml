@@ -165,11 +165,15 @@
     </where>
     </select>
 
+    <select id="countInvite" resultType="java.lang.Integer">
+      SELECT COUNT(INVITE_ID) FROM INVITE_T
+    </select>
 
-  <update id="updateAccessHistory">
+
+    <update id="updateAccessHistory">
     UPDATE ACCESS_HISTORY_T
        SET SIGNOUT_DT = CURRENT_DATE
-     WHERE SESSION_ID = #{sessionId} 
+     WHERE SESSION_ID = #{sessionId}
   </update>
 
   <update id="updateProfilePhoto"

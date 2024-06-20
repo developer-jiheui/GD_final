@@ -5,6 +5,7 @@ import com.havenwithyou.mongnewmong.dto.InviteDto;
 import com.havenwithyou.mongnewmong.mapper.DogMapper;
 import com.havenwithyou.mongnewmong.mapper.InviteMapper;
 import com.havenwithyou.mongnewmong.utils.MySecurityUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import com.havenwithyou.mongnewmong.dto.CenterDto;
@@ -63,7 +64,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void loadUsers(HttpServletRequest request, Model model) {
-
+        ArrayList<DogDto> dogList = dogMapper.getAllDogs();
+        model.addAttribute("dogList", dogList);
     }
 
     @Override
@@ -118,13 +120,6 @@ public class AdminServiceImpl implements AdminService {
 
         ArrayList<UserDto> userList = (ArrayList<UserDto>) userMapper.getAllUserList(map);
 
-        System.out.println("-------------------------------");
-        System.out.println("-------------------------------");
-        System.out.println("--------------USERLIST-----------------");
-        System.out.println(userList);
-        System.out.println("-------------------------------");
-        System.out.println("-------------------------------");
-        System.out.println("-------------------------------");
 
         ArrayList<DogDto> dogList;
 
@@ -133,15 +128,6 @@ public class AdminServiceImpl implements AdminService {
                 int userid = dogUser.getUserid();
                 if (dogUser.getDogNo() > 0) {
                     dogList = (ArrayList<DogDto>) dogMapper.getDogList(userid);
-                    System.out.println("-------------------------------");
-                    System.out.println("-------------------------------");
-                    System.out.println("-------------------------------");
-                    System.out.println("-------------------------------");
-                    System.out.println(dogList);
-                    System.out.println("-------------------------------");
-                    System.out.println("-------------------------------");
-                    System.out.println("-------------------------------");
-                    System.out.println("-------------------------------");
                     dogUser.setDoglist(dogList);
                 }
             }
@@ -160,16 +146,6 @@ public class AdminServiceImpl implements AdminService {
         model.addAttribute("endPage", endPage);
         request.getSession().setAttribute("pageLinkList", pageMap.get("pageLinkList"));
 
-        System.out.println("--------------------------------------");
-        System.out.println("--------------------------------------");
-        System.out.println("--------------------------------------");
-        System.out.println("--------------------------------------");
-        System.out.println("--------------MODEL------------------------");
-        System.out.println(model);
-        System.out.println("-------------------MODEL-------------------");
-        System.out.println("--------------------------------------");
-        System.out.println("--------------------------------------");
-        System.out.println("--------------------------------------");
     }
 
     @Override
@@ -209,7 +185,15 @@ public class AdminServiceImpl implements AdminService {
         int numOfInvites;
         int numOfDogs;
         int numOfTeachers;
-        return null;
+
+        numOfDeans = userMapper.countDeans();
+        numOfInvites = inviteMapper.countInvite();
+        numOfDogs = dogMapper.getAllDogs().size();
+        numOfTeachers = userMapper.countTeachers();
+        return new ResponseEntity<>(Map.of("numOfDeans", numOfDeans
+        ,"numOfInvites",numOfInvites, "numOfDogs", numOfDogs
+                ,"numOfTeachers",numOfTeachers
+                ), HttpStatus.OK);
     }
 
     @Override

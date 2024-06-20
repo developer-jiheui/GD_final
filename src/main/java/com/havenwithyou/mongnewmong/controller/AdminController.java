@@ -66,7 +66,11 @@ public class AdminController {
     }
 
     @GetMapping("/settings/users")
-    public String users() {return "pages/settings/admin/users";}
+    public String users(HttpServletRequest request, Model model) {
+
+        adminService.loadUsers(request, model);
+
+        return "pages/settings/admin/users";}
 
     @GetMapping("/settings/teachers")
     public String teachers() {

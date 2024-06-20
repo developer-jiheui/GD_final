@@ -15,6 +15,7 @@
         <div class="flex-shrink-1 flex-grow-1 container-p-x container-p-y">
 
 
+
             <div class="row g-4 mb-4">
                 <div class="col-sm-6 col-xl-3">
                     <div class="card">
@@ -23,7 +24,7 @@
                                 <div class="content-left">
                                     <span>원장 선생님</span>
                                     <div class="d-flex align-items-end mt-2">
-                                        <h4 class="mb-0 me-2">2명</h4>
+                                        <h4 id="numOfDeans" class="mb-0 me-2">2명</h4>
                                         <small class="text-success">(1명)</small>
                                     </div>
                                     <p class="mb-0">총 원장선생님</p>
@@ -44,7 +45,7 @@
                                 <div class="content-left">
                                     <span>선생님</span>
                                     <div class="d-flex align-items-end mt-2">
-                                        <h4 class="mb-0 me-2">4명</h4>
+                                        <h4 id="numOfTeachers" class="mb-0 me-2">4명</h4>
                                         <small class="text-success">(2명)</small>
                                     </div>
                                     <p class="mb-0">총 선생님수</p>
@@ -65,7 +66,7 @@
                                 <div class="content-left">
                                     <span>현재 원생</span>
                                     <div class="d-flex align-items-end mt-2">
-                                        <h4 class="mb-0 me-2">58</h4>
+                                        <h4 id="numOfDogs" class="mb-0 me-2">58</h4>
                                         <small class="text-danger">(-1%)</small>
                                     </div>
                                     <p class="mb-0">이번달 실적</p>
@@ -86,7 +87,7 @@
                                 <div class="content-left">
                                     <span>초대된 사용자들</span>
                                     <div class="d-flex align-items-end mt-2">
-                                        <h4 class="mb-0 me-2">23</h4>
+                                        <h4 id="numOfInvite" class="mb-0 me-2">23</h4>
                                         <small class="text-success">(+42%)</small>
                                     </div>
                                     <p class="mb-0">전달 실적</p>
@@ -102,6 +103,29 @@
                 </div>
             </div>
 
+            <script>
+                const fnStatistic=()=>{
+                    $.ajax({
+                        type: 'POST',
+                        url: '${contextPath}/admin/getStatistics',
+                        data: 'userId=' + ${sessionScope.user.userid},
+                        success: (resData) => {
+                            console.log(resData)
+                            $('#numOfDeans').text(resData.numOfDeans + '명');
+                            $('#numOfInvite').text(resData.numOfInvites);
+                            $('#numOfDogs').text(resData.numOfDogs);
+                            $('#numOfTeachers').text(resData.numOfTeachers);
+
+                        },
+                        error: (jqXHR, textStatus, errorThrown) => {
+                            console.error('Error fetching user detail:', textStatus, errorThrown);
+                            alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+                        }
+                    })
+                }
+
+                fnStatistic();
+            </script>
 
             <!-- Users List Table -->
             <div class="card">
@@ -265,16 +289,18 @@
                                                         console.log("${dog}");
                                                     </script>
                                                     <li
-                                                            data-popup="tooltip-custom"
-                                                            data-bs-placement="top"
                                                             class="avatar avatar-md pull-up dogDetail"
                                                             title="${dog.name}"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#dogModal"
                                                             data-dog-id="${dog.dogId}"
-
                                                     >
-                                                        <img src="${contextPath}${dog.avatar}" alt="Avatar"
+                                                        <img src="${contextPath}${dog.avatar}"
+                                                             data-bs-toggle="tooltip"
+                                                             data-popup="tooltip-custom"
+                                                             data-bs-placement="top"
+                                                             title="${dog.name}"
+                                                             alt="Avatar"
                                                              class="rounded-circle"/>
                                                     </li>
                                                 </c:forEach>
@@ -284,24 +310,95 @@
 
                                         </ul>
                                     </td>
-                                    <td><span class="badge bg-label-success">${user.inviteid}</span></td>
+
+                                    <!----USER STATUS----->
+                                    <c:set var="accepted" value="${user.accepted}"/>
+                                    <c:set var="invite" value="${user.inviteid}"/>
+                                    <td>
+                                        <c:if test="${invite=='NONE'}">
+                                            <c:if test="${accepted>0}">
+                                                <span class="badge bg-label-success">정회원</span>
+                                            </c:if>
+                                            <c:if test="${accepted<=0}">
+                                                <span class="badge bg-label-danger">승인 필요</span>
+                                            </c:if>
+                                        </c:if>
+
+                                        <c:if test="${invite!='NONE'}">
+                                            <c:if test="${accepted>0}">
+                                                <span class="badge bg-label-success">정회원</span>
+                                            </c:if>
+                                            <c:if test="${accepted<=0}">
+                                                <span class="badge bg-label-primary">초대됨</span>
+                                            </c:if>
+                                        </c:if>
+                                    </td>
+                                    <!----------ACTIONS-------->
                                     <td>
                                         <div class="d-inline-block text-nowrap">
-                                            <button class="btn btn-sm btn-icon"><i class="bx bx-edit"></i></button>
-                                            <button class="btn btn-sm btn-icon delete-record"><i
+                                            <button data-user-id="${user.userid}"
+                                                    class="btn btn-sm btn-icon editUserBtn" data-bs-toggle="modal"
+                                                    data-bs-target="#userModal"><i class="bx bx-edit"></i></button>
+                                            <button data-user-id="${user.userid}"
+                                                    class="deleteUserBtn btn btn-sm btn-icon delete-record"><i
                                                     class="bx bx-trash"></i>
                                             </button>
                                             <button class="btn btn-sm btn-icon dropdown-toggle hide-arrow"
                                                     data-bs-toggle="dropdown"><i
                                                     class="bx bx-dots-vertical-rounded me-2"></i></button>
-                                            <div class="dropdown-menu dropdown-menu-end m-0"><a
-                                                    href="app-user-view-account.html" class="dropdown-item">View</a><a
-                                                    href="javascript:" class="dropdown-item">Suspend</a></div>
+                                            <c:if test="${invite=='NONE'}">
+                                                <c:if test="${accepted>0}">
+                                                    <div class="dropdown-menu dropdown-menu-end m-0">
+                                                        <a data-user-id=${user.userid} href="#" class="dropdown-item">이미 회원입니다</a>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${accepted<=0}">
+                                                    <div class="dropdown-menu dropdown-menu-end m-0">
+                                                        <a data-user-id=${user.userid} href=""
+                                                           class="dropdown-item btn-accept">승인하기</a>
+                                                        <a data-user-id=${user.userid} href="" class="dropdown-item btn-invite">초대하기</a>
+                                                    </div>
+                                                </c:if>
+                                            </c:if>
+
+                                            <c:if test="${invite!='NONE'}">
+                                                <c:if test="${accepted>0}">
+                                                    <div class="dropdown-menu dropdown-menu-end m-0">
+                                                        <a href="#" class="dropdown-item">이미 회원입니다</a>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${accepted<=0}">
+                                                    <div class="dropdown-menu dropdown-menu-end m-0">
+                                                        <a data-user-id=${user.userid} href=""
+                                                           class="dropdown-item btn-accept">승인하기</a>
+                                                    </div>
+                                                </c:if>
+                                            </c:if>
+
+
                                         </div>
                                     </td>
                                 </tr>
 
                             </c:forEach>
+
+                            <script>
+                                $(document).on('click', '.btn-accept', function (ev) {
+                                    var userid = $(this).data('user-id');
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '${contextPath}/admin/acceptUser',
+                                        data: 'userId=' + userid,
+                                        success: (resData) => {
+                                        },
+                                        error: (jqXHR, textStatus, errorThrown) => {
+                                            console.error('Error fetching user detail:', textStatus, errorThrown);
+                                            alert(jqXHR.statusText + '(' + jqXHR.status + ')');
+                                        }
+                                    })
+                                })
+                            </script>
+
 
                             </tbody>
                         </table>
@@ -384,12 +481,15 @@
                                 aria-label="Close"></button>
                     </div>
                     <div class="offcanvas-body mx-0 flex-grow-0">
-                        <form class="add-new-user pt-0 fv-plugins-bootstrap5 fv-plugins-framework" id="addNewUserForm"
-                              onsubmit="return false" novalidate="novalidate">
+                        <form class="inviteUser add-new-user pt-0 fv-plugins-bootstrap5 fv-plugins-framework"
+                              id="inviteUserForm"
+                              method="POST"
+                              action="${contextPath}/admin/inviteUser"
+                              novalidate="novalidate">
                             <div class="mb-3 fv-plugins-icon-container">
-                                <label class="form-label" for="add-user-fullname">이름</label>
-                                <input type="text" class="form-control" id="add-user-fullname" placeholder="초대할 이용자 이름"
-                                       name="userFullname" aria-label="userFullname">
+                                <label class="form-label" for="inviteUserAlias">누구를 초대하시겠습니까</label>
+                                <input type="text" class="form-control" id="inviteUserAlias" placeholder="초대할 분"
+                                       name="inviteUserAlias" aria-label="inviteUserAlias">
                                 <div class="fv-plugins-message-container fv-plugins-message-container--enabled invalid-feedback"></div>
                             </div>
                             <div class="mb-3 fv-plugins-icon-container">
@@ -406,63 +506,21 @@
                                        name="userContact">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="add-user-center">유치원</label>
-                                <input type="text" id="add-user-center" class="form-control"
-                                       value="${sessionScope.user.center.name}" aria-label="centerName"
-                                       name="centerName">
+                                <input type="hidden" id="add-user-centerid" class="form-control"
+                                       value="${sessionScope.user.centerid}" aria-label="centerName"
+                                       name="centerid" display="none">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="user-role">User Role</label>
-                                <select id="user-role" class="form-select">
-                                    <option value="subscriber">원장님</option>
-                                    <option value="editor">선생님</option>
-                                    <option value="maintainer">보호자님</option>
+                                <select id="user-role" name="userType" class="form-select" style="margin-bottom: 3rem">
+                                    <option value="0">원장님</option>
+                                    <option value="1">선생님</option>
+                                    <option value="2">보호자님</option>
                                 </select>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="country">반</label>
-                                <div class="position-relative"><select id="country"
-                                                                       class="select2 form-select select2-hidden-accessible"
-                                                                       data-select2-id="country" tabindex="-1"
-                                                                       aria-hidden="true">
-                                    <option value="" data-select2-id="2">Select</option>
-                                    <option value="Australia">Australia</option>
-                                    <option value="Bangladesh">Bangladesh</option>
-                                    <option value="Belarus">Belarus</option>
-                                    <option value="Brazil">Brazil</option>
-                                    <option value="Canada">Canada</option>
-                                    <option value="China">China</option>
-                                    <option value="France">France</option>
-                                    <option value="Germany">Germany</option>
-                                    <option value="India">India</option>
-                                    <option value="Indonesia">Indonesia</option>
-                                    <option value="Israel">Israel</option>
-                                    <option value="Italy">Italy</option>
-                                    <option value="Japan">Japan</option>
-                                    <option value="Korea">Korea, Republic of</option>
-                                    <option value="Mexico">Mexico</option>
-                                    <option value="Philippines">Philippines</option>
-                                    <option value="Russia">Russian Federation</option>
-                                    <option value="South Africa">South Africa</option>
-                                    <option value="Thailand">Thailand</option>
-                                    <option value="Turkey">Turkey</option>
-                                    <option value="Ukraine">Ukraine</option>
-                                    <option value="United Arab Emirates">United Arab Emirates</option>
-                                    <option value="United Kingdom">United Kingdom</option>
-                                    <option value="United States">United States</option>
-                                </select><span class="select2 select2-container select2-container--default" dir="ltr"
-                                               data-select2-id="1" style="width: 352px;"><span class="selection"><span
-                                        class="select2-selection select2-selection--single" role="combobox"
-                                        aria-haspopup="true" aria-expanded="false" tabindex="0" aria-disabled="false"
-                                        aria-labelledby="select2-country-container"><span
-                                        class="select2-selection__rendered" id="select2-country-container"
-                                        role="textbox" aria-readonly="true"><span
-                                        class="select2-selection__placeholder">Select Country</span></span><span
-                                        class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span
-                                        class="dropdown-wrapper" aria-hidden="true"></span></span></div>
-                            </div>
 
-                            <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit">Submit</button>
+
+                            <button type="submit" class="btn btn-primary me-sm-3 me-1 data-submit ">Submit</button>
                             <button type="reset" class="btn btn-label-secondary" data-bs-dismiss="offcanvas">Cancel
                             </button>
                             <input type="hidden"></form>
@@ -716,9 +774,7 @@
                         }
                     }).open();
                 }
-            </script>
 
-            <script>
                 const frmModal = $('#frmModal');
                 const frmBtn = $('#modalBtn');
                 const modalTitle = $('#modalTitle');
@@ -778,89 +834,9 @@
                 }
 
 
-                const fnGetDogList = (e) => {
-                    $.ajax({
-                        // 요청
-                        type: 'POST',
-                        url: '${contextPath}/user/dogList',
-                        // 응답
-                        dataType: 'json',
-                        success: (resData) => {
-
-                            //create Next button
-                            if(resData.dogList.length>0){
-                                let gap ='<div style="width: 11%"></div>'
-                                let btn = '<a href="${contextPath}/user/invitedOrNot" class="btn btn-primary">등록 완료</a>';
-                                $('#registerBtnContainer').append(gap);
-                                $('#registerBtnContainer').append(btn);
-                            }
-
-                            $.each(resData.dogList, (i, dog) => {
-                                let dogName = dog.name;
-                                let dogClasses = "";
-                                dogClasses += dog.classes;
-
-                                let dogId = dog.dogId;
-                                let dogAvatar = dog.avatar;
-
-                                let str = '';
-                                str += '<div class="mb-3"><div class="class-text-container"><li class="dog class-name-list" style="height: 50px">';
-                                str += '<a href="${contextPath}/user/dogDetail?dogId=' + dogId + '"  type="button" className="btn-edit btn-icon" style="width: 50px; height: 50px; border-radius: 3rem; overflow: hidden">';
-                                str += '<img src="' + dogAvatar + '" style="height: 50px; aspect-ratio: auto"></a>';
-                                str += '<div style="height: inherit;width: 80%; display: flex; justify-content: center; align-items: center"><a onclick="fnModal()" style="height: inherit;width: 40%; display: flex; justify-content: center; align-items: center">' + dogName + '</a>';
-                                str += '<div id="class-parent" style="height: inherit;width: 60%; display: flex; justify-content: center; align-items: center">'
-                                str += '<div id="class-parent" style="height: inherit;width: 60%; display: flex; justify-content: center; align-items: center">'
-
-                                if (dogClasses.indexOf('0') === -1) {
-                                    console.log(dogClasses)
-                                    if (dogClasses.indexOf('1') !== -1) {
-                                        str += '<span class="badge bg-label-primary me-1">월</span>';
-                                    }
-                                    if (dogClasses.indexOf('2') !== -1) {
-                                        str += '<span class="badge bg-label-secondary me-1">화</span>';
-                                    }
-                                    if (dogClasses.indexOf('3') !== -1) {
-                                        str += '<span class="badge bg-label-success me-1">수</span>';
-                                    }
-                                    if (dogClasses.indexOf('4') !== -1) {
-                                        str += '<span class="badge bg-label-warning me-1">목</span>';
-                                    }
-                                    if (dogClasses.indexOf('5') !== -1) {
-                                        str += '<span class="badge bg-label-info me-1">금</span>';
-                                    }
-                                    if (dogClasses.indexOf('6') !== -1) {
-                                        str += '<span class="badge bg-label-danger me-1">토</span>';
-                                    }
-                                    if (dogClasses.indexOf('7') !== -1) {
-                                        str += '<span class="badge bg-center-rounded-pill bg-danger me-1">일</span>';
-                                    }
-
-                                } else {
-                                    str += '<span class="badge bg-label-danger me-1">등록한 수업이 없습니다</span>';
-                                }
-                                str += '</div><div style="height: inherit; display: flex; justify-content: center ; align-items: center">';
-                                str += '<a href="" data-dog-id=' + dogId + ' data-dog-name=' + dogName + ' class="btn-icon bg-delete delete-dog"><i class="fa-solid fa-delete-left" style="color: #ff3f3f"></i></a>';
-                                str += '<a data-dog-id=' + dogId + ' type="button" data-bs-toggle="modal" data-bs-target="#dogModal" class="btn-edit btn-icon edit-modal"><i class="fa-solid fa-pen"></i></a>'
-
-                                $('#dogs').append(str);
-
-
-
-
-                            });
-                        },
-                        error: (jqXHR, textStatus, errorThrown) => {
-                            console.error('Error fetching dog Detail:', textStatus, errorThrown);
-                            alert(jqXHR.statusText + '(' + jqXHR.status + ')');
-                        }
-                    });
-
-
-                }
-
 
                 //SET MODAL FOR EDIT, EDIT DOG
-                $(document).on('click', '.edit-modal', function (event) {
+                $(document).on('click', '.dogDetail', function (event) {
                     event.preventDefault();
                     var dogId = $(this).data('dog-id');
 

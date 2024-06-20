@@ -636,5 +636,5 @@
     <script src="${contextPath}/frontend/assets/js/forms-pickers.js"></script>
     <script src="${contextPath}/frontend/assets/js/forms-extras.js"></script>
     <script src="${contextPath}/frontend/assets/js/forms-selects.js"></script>
-    <%--    <script src="${contextPath}/frontend/assets/js/forms-tagify.js"></script>--%>
-    <%--    <script src="${contextPath}/frontend/assets/js/forms-typeahead.js"></script>--%>"
+        <script src="${contextPath}/frontend/assets/js/forms-tagify.js"></script>
+        <script src="${contextPath}/frontend/assets/js/forms-typeahead.js"></script>

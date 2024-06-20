@@ -5,6 +5,33 @@
 <c:set var="contextPath" value="<%=request.getContextPath()%>"/>
 <c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
 
+<%--<!-- Footer -->--%>
+<%--<footer class="content-footer footer bg-footer-theme">--%>
+<%--  <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">--%>
+<%--    <div class="mb-2 mb-md-0">--%>
+<%--      ©--%>
+<%--      <script>--%>
+<%--        document.write(new Date().getFullYear());--%>
+<%--      </script>--%>
+<%--      , made with ❤️ by--%>
+<%--      <a href="" target="_blank" class="footer-link fw-bolder">Jiheui Lee</a>--%>
+<%--    </div>--%>
+<%--    <div>--%>
+<%--      <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>--%>
+
+<%--      <a--%>
+<%--              href=""--%>
+<%--              target="_blank"--%>
+<%--              class="footer-link me-4"--%>
+<%--      >Documentation</a--%>
+<%--      >--%>
+
+
+<%--    </div>--%>
+<%--  </div>--%>
+<%--</footer>--%>
+<%--<!-- / Footer -->--%>
+
 <div class="content-backdrop fade"></div>
 </div>
 <!-- Content wrapper -->
@@ -14,14 +41,8 @@
 
 
 
-<!-- Overlay -->
-<div class="layout-overlay layout-menu-toggle"></div>
 
 
-<!-- Drag Target Area To SlideIn Menu On Small Screens -->
-<div class="drag-target"></div>
-
-</div>
 <!-- / Layout wrapper -->
 
 
@@ -42,27 +63,20 @@
 <!-- endbuild -->
 
 <!-- Vendors JS -->
-<script src="${contextPath}/frontend/assets/vendor/libs/fullcalendar/fullcalendar.js"></script>
-<script src="${contextPath}/frontend/assets/vendor/libs/@form-validation/popular.js"></script>
-<script src="${contextPath}/frontend/assets/vendor/libs/@form-validation/bootstrap5.js"></script>
-<script src="${contextPath}/frontend/assets/vendor/libs/@form-validation/auto-focus.js"></script>
-<script src="${contextPath}/frontend/assets/vendor/libs/select2/select2.js"></script>
-<script src="${contextPath}/frontend/assets/vendor/libs/moment/moment.js"></script>
-<script src="${contextPath}/frontend/assets/vendor/libs/flatpickr/flatpickr.js"></script>
-<script src="${contextPath}/frontend/assets/vendor/libs/cleavejs/cleave.js"></script>
-<script src="${contextPath}/frontend/assets/vendor/libs/cleavejs/cleave-phone.js"></script>
-<script src="${contextPath}/frontend/assets/vendor/libs/sweetalert2/sweetalert2.js"></script>
-<script src="${contextPath}/frontend/assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-<script src="${contextPath}/frontend/assets/vendor/libs/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
-<script src="${contextPath}/frontend/assets/vendor/libs/jquery-timepicker/jquery-timepicker.js"></script>
-<script src="${contextPath}/frontend/assets/vendor/libs/pickr/pickr.js"></script>
+<script src="${contextPath}/frontend/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
 <!-- Main JS -->
 <script src="${contextPath}/frontend/assets/js/main.js"></script>
 
 <script src="${contextPath}/frontend/assets/js/tables-datatables-basic.js"></script>
 
 <!-- Page JS -->
+<script src="${contextPath}/frontend/assets/js/dashboards-analytics.js"></script>
 
+<!-- Place this tag in your head or just before your close body tag. -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<script src="${contextPath}/resources/assets/js/index.js"></script>
 </body>
 
 </html>
