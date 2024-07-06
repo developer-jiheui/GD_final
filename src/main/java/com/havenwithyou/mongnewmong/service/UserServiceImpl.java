@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
                 .name(name).email(email).phoneNo(phone)
                 .username(username).pw(password)
                 .username(username).userType(-1)
-                .dogNo(0).accepted(0).avatar("/resources/images/roundStickers/defaultAvatar.png")
+                .dogNo(0).accepted(-1).avatar("/resources/images/roundStickers/defaultAvatar.png")
                 .build();
 
         int insertCount = userMapper.insertUser(userDto);
@@ -583,7 +583,7 @@ public class UserServiceImpl implements UserService {
             System.out.println("------------------------------");
 
 
-            goToURL ="pages/register/login";
+            goToURL ="pages/register/start";
         }
         return goToURL;
     }

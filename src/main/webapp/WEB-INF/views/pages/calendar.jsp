@@ -6,6 +6,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
 
+
 <jsp:include page="/WEB-INF/views/layout/header.jsp"/>
 <jsp:include page="/WEB-INF/views/layout/newHeader.jsp"/>
 <jsp:include page="/WEB-INF/views/layout/sidebar.jsp"/>
@@ -14,8 +15,8 @@
 
 <jsp:include page="/WEB-INF/views/page_contents/home/user/calendar.jsp"/>
 
-<jsp:include page="/WEB-INF/views/layout/footer.jsp"/>
-<jsp:include page="/WEB-INF/views/layout/newFooter.jsp"/>
+<jsp:include page="/WEB-INF/views/layout/src_footer.jsp"/>
+<jsp:include page="/WEB-INF/views/layout/oldFooter.jsp"/>
 
 
 

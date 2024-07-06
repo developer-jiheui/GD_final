@@ -248,7 +248,7 @@
   <update id="updateCenterId">
     UPDATE USER_T
     SET CENTER_ID = #{centerid},
-    ACCEPTED = #{accepted}
+    ACCEPTED = 0
     WHERE USER_ID = #{userid}
 
   </update>

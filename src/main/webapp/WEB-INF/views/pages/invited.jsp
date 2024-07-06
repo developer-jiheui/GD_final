@@ -35,22 +35,6 @@
 
                         <form id="formAuthentication" class="mb-3" action="${contextPath}/user/finalSignUp"
                               method="POST">
-<%--                            <div class="mb-3">--%>
-<%--                                <label for="invitationCode" class="form-label">초대코드</label>--%>
-<%--                                <input--%>
-<%--                                        type="text"--%>
-<%--                                        class="form-control"--%>
-<%--                                        id="invitationCode"--%>
-<%--                                        name="invitationCode"--%>
-<%--                                        placeholder="초대코드를 입력해주세요"--%>
-<%--                                        autofocus--%>
-<%--                                />--%>
-
-
-
-
-
-<%--                            </div>--%>
                                         <label for="invitationCode" class="form-label">초대코드</label>
                             <div class="mb-3">
                                 <div class="input-container">
@@ -144,10 +128,6 @@
 
                                             $('#datalistOptions').append(str);
 
-                                            // $(document).on('click', '.edit-modal', function (event) {
-                                            //
-                                            //
-                                            // });
                                         });
                                     },
                                     error: (jqXHR, textStatus, errorThrown) => {
@@ -164,7 +144,6 @@
                                 if($('#datalistOptions option').filter(function(){
                                     return this.value.toUpperCase() === val.toUpperCase();
                                 }).length) {
-                                    alert(this + this.value);
                                     let result =  $('#datalistOptions option').filter(function () { return $(this).html() == val; });
 
                                     console.log("printing Start");

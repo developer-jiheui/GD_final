@@ -13,4 +13,4 @@
 <jsp:include page="/WEB-INF/views/page_contents/register/user/registerDog.jsp"/>
 
 
-<jsp:include page="/WEB-INF/views/layout/newFooter.jsp"/>
+<jsp:include page="/WEB-INF/views/layout/oldFooter.jsp"/>

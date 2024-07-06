@@ -320,7 +320,8 @@
                                                 <span class="badge bg-label-success">정회원</span>
                                             </c:if>
                                             <c:if test="${accepted<=0}">
-                                                <span class="badge bg-label-danger">승인 필요</span>
+                                                <span class="badge bg-label-primary">초대됨</span>
+
                                             </c:if>
                                         </c:if>
 
@@ -329,7 +330,7 @@
                                                 <span class="badge bg-label-success">정회원</span>
                                             </c:if>
                                             <c:if test="${accepted<=0}">
-                                                <span class="badge bg-label-primary">초대됨</span>
+                                                <span class="badge bg-label-danger">승인 필요</span>
                                             </c:if>
                                         </c:if>
                                     </td>
@@ -356,7 +357,6 @@
                                                     <div class="dropdown-menu dropdown-menu-end m-0">
                                                         <a data-user-id=${user.userid} href=""
                                                            class="dropdown-item btn-accept">승인하기</a>
-                                                        <a data-user-id=${user.userid} href="" class="dropdown-item btn-invite">초대하기</a>
                                                     </div>
                                                 </c:if>
                                             </c:if>
@@ -371,6 +371,8 @@
                                                     <div class="dropdown-menu dropdown-menu-end m-0">
                                                         <a data-user-id=${user.userid} href=""
                                                            class="dropdown-item btn-accept">승인하기</a>
+                                                        <a data-user-id=${user.userid} href="" class="dropdown-item btn-invite">초대하기</a>
+
                                                     </div>
                                                 </c:if>
                                             </c:if>

@@ -9,10 +9,42 @@
 
 <jsp:include page="/WEB-INF/views/layout/newHeader.jsp"/>
 <jsp:include page="/WEB-INF/views/layout/header.jsp"/>
-<jsp:include page="/WEB-INF/views/layout/sidebar.jsp"/>
-<jsp:include page="/WEB-INF/views/layout/navbar.jsp"/>
+
+
+<c:if test="${sessionScope.user.userType==0}">
+    <jsp:include page="/WEB-INF/views/layout/admin/sidebar.jsp"/>
+</c:if>
+<c:if test="${sessionScope.user.userType==1}">
+    <jsp:include page="/WEB-INF/views/layout/sidebar.jsp"/>
+</c:if>
+<c:if test="${sessionScope.user.userType==2}">
+    <jsp:include page="/WEB-INF/views/layout/sidebar.jsp"/>
+</c:if>
+
+<c:if test="${sessionScope.user.userType==0}">
+    <jsp:include page="/WEB-INF/views/layout/admin/navbar.jsp"/>
+</c:if>
+<c:if test="${sessionScope.user.userType==1}">
+    <jsp:include page="/WEB-INF/views/layout/navbar.jsp"/>
+</c:if>
+<c:if test="${sessionScope.user.userType==2}">
+    <jsp:include page="/WEB-INF/views/layout/navbar.jsp"/>
+</c:if>
+
+
 <jsp:include page="/WEB-INF/views/layout/user.jsp"/>
-<jsp:include page="/WEB-INF/views/page_contents/user/profile.jsp"/>
+
+
+
+<c:if test="${sessionScope.user.userType==0}">
+    <jsp:include page="/WEB-INF/views/page_contents/user/profile.jsp"/>
+</c:if>
+<c:if test="${sessionScope.user.userType==1}">
+    <jsp:include page="/WEB-INF/views/page_contents/user/profile.jsp"/>
+</c:if>
+<c:if test="${sessionScope.user.userType==2}">
+    <jsp:include page="/WEB-INF/views/page_contents/user/profile.jsp"/>
+</c:if>
 
 
 <jsp:include page="/WEB-INF/views/layout/newFooter.jsp"/>

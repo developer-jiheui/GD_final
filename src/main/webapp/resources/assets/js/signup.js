@@ -208,12 +208,15 @@ const fnCheckEmail = () => {
     })
         .then(response => response.json())  // .then( (response) => { return response.json(); } )
         .then(resData => {
+            msgEmail = document.getElementById('msg-email');
             if (resData.enableEmail) {
-                document.getElementById('msg-email').innerHTML = '사용가능한 이메일입니다';
+                msgEmail.classList.remove('error-msg');
+                msgEmail.classList.add('ok-msg');
+                msgEmail.innerHTML = '사용가능한 이메일입니다';
                 emailCheck = true;
                 return emailCheck;
             } else {
-                document.getElementById('msg-email').innerHTML = '이미 사용 중인 이메일입니다.';
+                msgEmail.innerHTML = '이미 사용 중인 이메일입니다.';
                 emailCheck = false;
                 return emailCheck;
             }

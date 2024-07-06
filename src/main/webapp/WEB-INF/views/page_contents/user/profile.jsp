@@ -161,7 +161,6 @@
                                            placeholder="참고항목">
 
                                 </div>
-                                <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"/>
                                 <script>
                                     function execDaumPostcode() {
                                         new daum.Postcode({
@@ -266,3 +265,4 @@
     </div>
     </div>
     <!-- / Content -->
+    <script src="//t1.daumcdn.net/JSAPI/bundle/postcode/prod/postcode.v2.js"/>

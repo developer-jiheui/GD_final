@@ -639,7 +639,6 @@
 
                                         <input type="text" class="form-control" id="zonecode" name="zipcode"
                                                onclick="execDaumPostcode()" placeholder="우편번호" readonly>
-
                                     </div>
                                     <div class="mb-3 address-container">
                                         <input type="button" class="form-control " onclick="execDaumPostcode()"
@@ -660,7 +659,6 @@
                                        placeholder="참고항목">
 
                             </div>
-                            <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"/>
                             <script>
                                 function execDaumPostcode() {
                                     new daum.Postcode({
@@ -757,7 +755,6 @@
                                         aria-label="Close">Cancel
                                 </button>
                             </div>
-                    </div>
                     </form>
                 </div>
             </div>
@@ -793,5 +790,32 @@
                 }
             })
         })
+
+        document.addEventListener('DOMContentLoaded', function (e) {
+            e.preventDefault();
+            (function () {
+                // const deactivateAcc = document.querySelector('#formAccountDeactivation');
+
+                // Update/reset user image of account page
+                const accountUserImage = document.querySelector('.dogAvatar');
+                const fileInput = document.querySelector('.account-file-input'),
+                    resetFileInput = document.querySelector('.account-image-reset');
+
+                if (accountUserImage) {
+                    const resetImage = accountUserImage.src;
+                    fileInput.onchange = () => {
+                        if (fileInput.files[0]) {
+                            accountUserImage.src = window.URL.createObjectURL(fileInput.files[0]);
+                        }
+                    };
+                    resetFileInput.onclick = () => {
+                        fileInput.value = '';
+                        accountUserImage.src = resetImage;
+                    };
+                }
+            })();
+        });
+
     </script>
     <!-- / Content -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"/>

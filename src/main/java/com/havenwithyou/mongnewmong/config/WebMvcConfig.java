@@ -3,6 +3,7 @@ package com.havenwithyou.mongnewmong.config;
 import com.havenwithyou.mongnewmong.interceptor.RequiredFurtherSignupInterceptor;
 import com.havenwithyou.mongnewmong.interceptor.RequiredSigninInterceptor;
 import com.havenwithyou.mongnewmong.interceptor.RequiredSignoutInterceptor;
+import com.havenwithyou.mongnewmong.interceptor.WaitInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -12,19 +13,22 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-    private final RequiredFurtherSignupInterceptor requiredFurtherSignupInterceptor;
     //application.properties 파일의 설정값 저장
     @Value("${service.file.uploadurl}")
     public String UP_DIR;
 
     private final RequiredSigninInterceptor requiredSigninInterceptor;
     private final RequiredSignoutInterceptor requiredSignoutInterceptor;
+    private final RequiredFurtherSignupInterceptor requiredFurtherSignupInterceptor;
+    private final WaitInterceptor waitInterceptor;
+
 
     public WebMvcConfig(RequiredSigninInterceptor requiredSigninInterceptor,
-                        RequiredSignoutInterceptor requiredSignoutInterceptor, RequiredFurtherSignupInterceptor requiredFurtherSignupInterceptor) {
+                        RequiredSignoutInterceptor requiredSignoutInterceptor, RequiredFurtherSignupInterceptor requiredFurtherSignupInterceptor, WaitInterceptor waitInterceptor) {
         this.requiredSigninInterceptor = requiredSigninInterceptor;
         this.requiredSignoutInterceptor = requiredSignoutInterceptor;
         this.requiredFurtherSignupInterceptor = requiredFurtherSignupInterceptor;
+        this.waitInterceptor = waitInterceptor;
     }
 
     @Override
@@ -87,6 +91,27 @@ public class WebMvcConfig implements WebMvcConfigurer {
                                 , "/user/settings"
                                 , "/user/billing"
                         );
+        registry.addInterceptor(waitInterceptor)
+                .addPathPatterns
+                        ("/pages/home"
+                                , "/"
+                                , "/pages/notes"
+                                , "/pages/news"
+                                , "/pages/album"
+                                , "/pages/calendar"
+                                , "/pages/diet"
+                                , "/pages/med"
+                                , "/pages/attendance"
+                                , "/pages/education"
+                                , "/pages/entrance"
+                                , "/pages/agreement"
+                                , "/pages/medical"
+                                , "/pages/transportation"
+                                , "/user/profile"
+                                , "/user/settings"
+                                , "/user/billing"
+                        );
+
         registry.addInterceptor(requiredSignoutInterceptor)
                 .addPathPatterns("/pages/register"
                         , "/pages/start"

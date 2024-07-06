@@ -16,7 +16,7 @@
     <div class="misc-wrapper">
         <p class="mx-2" style="margin-bottom: 0.5rem">우리 아이들의 하루와 가정이 가까워지는 따뜻한 소통공간</p>
         <h2 class=" mx-2" style="margin-bottom: 4rem">mummoo에 오신걸 환영합니다!❣️</h2>
-        <a href="${contextPath}/pages/userType" class="btn btn-primary">START</a>
+        <a href="${contextPath}/pages/login" class="btn btn-primary">START</a>
         <div class="">
             <img
                     src="${contextPath}/resources/images/frontpage/dog.png"
@@ -33,12 +33,6 @@
 
 <!-- / Content -->
 
-<div class="buy-now">
-    <button type="button" class="btn btn-danger btn-buy-now" data-bs-toggle="modal"
-            data-bs-target="#modalLong">
-        <i class='bx bx-message-square-dots bx-md' ></i>
-    </button>
-</div>
 
 
 
