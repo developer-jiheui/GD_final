@@ -16966,3 +16966,14 @@ html:not(.layout-footer-fixed) .content-wrapper {
   justify-content: center;
   align-items: center;
 }
+
+/******************************************/
+.flatpickr-next-month, .flatpickr-prev-month{
+  display : flex;
+  justify-content: center;
+}
+
+.custom-option-check .checked{
+  border-width: 3px !important;
+}
+

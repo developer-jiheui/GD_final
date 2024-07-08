@@ -86,7 +86,7 @@
   <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
   <script src="${contextPath}/frontend/assets/js/config.js"></script>
 
-  <link rel="stylesheet" type="text/css" href="${contextPath}/frontend/assets/vendor/css/rtl/core.css"
+  <link rel="stylesheet" type="text/css" href="${contextPath}/frontend/assets/vendor/css/rtl/core_original.css"
         class="template-customizer-core-css">
   <link rel="stylesheet" type="text/css" href="${contextPath}/frontend/assets/vendor/css/rtl/theme-default.css"
         class="template-customizer-theme-css">
