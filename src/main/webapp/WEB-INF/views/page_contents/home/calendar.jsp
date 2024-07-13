@@ -6,6 +6,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <c:set var="dt" value="<%=System.currentTimeMillis()%>"/>
 
+
 <!-- Content wrapper -->
 <div class="content-wrapper">
 
@@ -158,18 +159,5 @@
         </div>
 
     </div>
+    <!-- / Content -->
 
-
-
-
-    <%--            <!-- Content wrapper -->--%>
-    <%--            <div class="content-wrapper">--%>
-    <%--                <!-- Content -->--%>
-
-    <%--                <div class="container-xxl flex-grow-1 container-p-y">--%>
-    <%--                    <div class="row">--%>
-    <%--                        <div class="row">--%>
-    <%--                        </div>--%>
-    <%--                    </div>--%>
-    <%--                </div>--%>
-<%--            </div>--%>
